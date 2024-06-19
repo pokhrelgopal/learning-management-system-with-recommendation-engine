@@ -68,7 +68,7 @@ const RegisterForm = () => {
 
   return (
     <form className="w-full lg:w-96" onSubmit={(e) => e.preventDefault()}>
-      <h2 className="text-2xl mb-6 font-bold">Create an account</h2>
+      <h2 className="text-3xl mb-6 font-bold">Create an account</h2>
       <div className="form-group">
         <Label htmlFor="name" className="text-lg">
           Full Name

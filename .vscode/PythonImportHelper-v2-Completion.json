@@ -1228,7 +1228,7 @@
         "kind": 6,
         "importPath": "backend.users.serializers",
         "description": "backend.users.serializers",
-        "peekOfCode": "class MyTokenObtainPairSerializer(TokenObtainPairSerializer):\n    @classmethod\n    def get_token(cls, user):\n        token = super().get_token(user)\n        token[\"email\"] = user.email\n        return token\nclass UserSerializer(serializers.ModelSerializer):\n    password = serializers.CharField(write_only=True)\n    class Meta:\n        model = User",
+        "peekOfCode": "class MyTokenObtainPairSerializer(TokenObtainPairSerializer):\n    @classmethod\n    def get_token(cls, user):\n        token = super().get_token(user)\n        token[\"role\"] = user.role\n        return token\nclass UserSerializer(serializers.ModelSerializer):\n    password = serializers.CharField(write_only=True)\n    class Meta:\n        model = User",
         "detail": "backend.users.serializers",
         "documentation": {}
     },

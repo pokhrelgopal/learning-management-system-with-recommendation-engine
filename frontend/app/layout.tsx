@@ -3,6 +3,7 @@ import { Alata } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 const alata = Alata({ subsets: ["latin"], weight: ["400"] });
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={alata.className}>
-        {children} <Toaster richColors closeButton position="top-right" />
-      </body>
+      <Providers>
+        <body className={alata.className}>
+          {children} <Toaster richColors closeButton position="top-right" />
+        </body>
+      </Providers>
     </html>
   );
 }

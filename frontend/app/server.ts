@@ -1,20 +1,27 @@
 import axios from "axios";
+import { endpoints } from "./endpoints";
 
-export const url = "http://127.0.0.1:8000/api/v1/";
+const getToken = (): string | null => localStorage.getItem("access");
 
-export const endpoints = {
-  user: {
-    register: url + "user/",
-    login: url + "user/token/",
-    me: url + "user/get_user/",
-  },
+const createHeaders = () => {
+  const token = getToken();
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
-export const register = async (data: any) => {
-  try {
-    const res = await axios.post(endpoints.user.register, data);
-    return res;
-  } catch (error: any) {
-    return error.response.data;
-  }
+export const register = async (data: any) =>
+  await axios.post(endpoints.user.register, data);
+
+export const login = async (data: any) =>
+  await axios.post(endpoints.user.login, data);
+
+export const getMe = async () =>
+  await axios.get(endpoints.user.me, createHeaders());
+
+export const getCourses = async () => {
+  const res = await axios.get(endpoints.courses.list);
+  return res.data;
 };

@@ -51,12 +51,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {!loading && <span>{props.children}</span>}
-        {loading && (
-          <>
-            Loading
-            <Loader2 size={24} className="animate-spin ml-2" />
-          </>
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <Loader2 className="animate-spin" size={20} />
+            <span className="sr-only">Loading...</span>
+            <span className="text-lg">Loading</span>
+          </span>
+        ) : (
+          props.children
         )}
       </Comp>
     );
