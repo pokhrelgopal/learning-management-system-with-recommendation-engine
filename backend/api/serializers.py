@@ -49,6 +49,23 @@ class CourseSerializer(serializers.ModelSerializer):
         return SectionSerializer(obj.sections.all(), many=True).data
 
 
+class CourseListSerializer(serializers.ModelSerializer):
+    instructor = UserListSerializer(read_only=True)
+    category = CategoryListSerializer(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "category",
+            "instructor",
+            "price",
+            "thumbnail",
+        ]
+
+
 class CategorySerializer(serializers.ModelSerializer):
     courses = CourseSerializer(many=True, read_only=True)
 
@@ -91,7 +108,58 @@ class ModuleSerializer(serializers.ModelSerializer):
             "title",
             "video",
             "order",
+            "is_preview",
             "section_id",
             "created_at",
             "updated_at",
+        ]
+
+
+class CartSerializer(serializers.ModelSerializer):
+    course = CourseListSerializer(read_only=True)
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(), source="course", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+
+    class Meta:
+        model = Cart
+        fields = ["id", "course", "course_id", "user_id"]
+
+
+class EnrollmentSerializer(serializers.ModelSerializer):
+    course = CourseListSerializer(read_only=True)
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(), source="course", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+
+    class Meta:
+        model = Enrollment
+        fields = ["id", "course", "course_id", "user_id"]
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    course = CourseListSerializer(read_only=True)
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(), source="course", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+
+    class Meta:
+        model = Payment
+        fields = [
+            "id",
+            "pidx",
+            "course_id",
+            "amount",
+            "course",
+            "user_id",
+            "created_at",
         ]

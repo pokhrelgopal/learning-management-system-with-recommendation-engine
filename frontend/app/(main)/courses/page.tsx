@@ -54,7 +54,11 @@ const Courses = () => {
           </Button>
         </div>
       </div>
-      <div>{data?.length > 0 && <CourseContainer courses={courses} />}</div>
+      {courses?.length > 0 ? (
+        <div>{data?.length > 0 && <CourseContainer courses={courses} />}</div>
+      ) : (
+        <h2 className="text-2xl text-center my-40">No courses found.</h2>
+      )}
     </>
   );
 };

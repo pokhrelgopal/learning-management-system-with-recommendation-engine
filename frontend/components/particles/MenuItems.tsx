@@ -14,10 +14,20 @@ const items = [
     name: "Courses",
     link: "/courses",
   },
+  {
+    id: 3,
+    name: "About",
+    link: "#",
+  },
+  {
+    id: 4,
+    name: "Contact",
+    link: "#",
+  },
 ];
 
 const MenuItems = () => {
-  const activeNavClass = "underline underline-offset-8";
+  const activeNavClass = "underline underline-offset-4";
   const currentPath = usePathname();
 
   return (
@@ -28,7 +38,7 @@ const MenuItems = () => {
           return (
             <Link key={item.id} href={item.link}>
               <li
-                className={`cursor-pointer text-darkGreen text-lg ease-in-out ${isActive}`}
+                className={`cursor-pointer text-darkGreen text ease-in-out ${isActive}`}
                 key={item.id}
               >
                 {item.name}

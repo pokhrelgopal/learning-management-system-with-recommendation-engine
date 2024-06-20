@@ -3,10 +3,12 @@ import { LogIn } from "lucide-react";
 import React from "react";
 import CartComponent from "../elements/CartComponent";
 import { logout } from "@/lib/utils";
+import Mode from "./Mode";
 
 const UserButtons = () => {
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-5">
+      <Mode />
       <CartComponent />
       <LogIn onClick={() => logout()} className="w-6 h-6 cursor-pointer" />
     </div>

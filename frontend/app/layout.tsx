@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <Providers>
         <body className={alata.className}>
-          {children} <Toaster richColors closeButton position="top-right" />
+          {children} <Toaster richColors closeButton position="top-center" />
         </body>
       </Providers>
     </html>

@@ -1,15 +1,44 @@
+import { addToCart } from "@/app/server";
+import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
 interface Props {
   course: any;
 }
 const CourseCard = ({ course }: Props) => {
-  const handleAddToCart = (id: any) => {
-    showToast("success", "Course added to cart");
+  const { user } = useUser();
+  const queryClient = useQueryClient();
+  console.log(course?.thumbnail);
+  const handleAddToCart = async (id: any) => {
+    if (!user) {
+      showToast("error", "Please login to add to cart.");
+      return;
+    }
+    try {
+      const payload = {
+        course_id: id,
+        user_id: user?.id,
+      };
+      const res = await addToCart(payload);
+      if (res.status === 201) {
+        queryClient.invalidateQueries("cart" as InvalidateQueryFilters);
+        showToast("success", `${course?.title} added to cart.`);
+      }
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        showToast("error", "Course already in cart.");
+        return;
+      }
+      if (error.response?.status === 403) {
+        showToast("error", "You are enrolled in this course.");
+        return;
+      }
+      showToast("error", "Failed to add to cart.");
+    }
   };
   return (
     <div className="block rounded-lg border p-4 shadow-sm shadow-indigo-100">
@@ -19,7 +48,7 @@ const CourseCard = ({ course }: Props) => {
           alt={course?.title}
           width={300}
           height={200}
-          className="rounded-lg border w-full object-cover"
+          className="rounded-lg border w-full object-cover h-44"
         />
       </Link>
       <div className="mt-2">

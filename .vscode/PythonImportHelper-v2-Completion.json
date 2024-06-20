@@ -25,6 +25,86 @@
         "documentation": {}
     },
     {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
@@ -122,6 +202,14 @@
     },
     {
         "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "IntegrityError",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -190,6 +278,78 @@
         "description": "django.contrib",
         "isExtraImport": true,
         "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Course",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Module",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Section",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Cart",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Enrollment",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Payment",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "api.models",
+        "description": "api.models",
+        "isExtraImport": true,
+        "detail": "api.models",
         "documentation": {}
     },
     {
@@ -297,30 +457,6 @@
         "documentation": {}
     },
     {
-        "label": "*",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Course",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
         "label": "UserListSerializer",
         "importPath": "users.serializers",
         "description": "users.serializers",
@@ -353,38 +489,6 @@
         "documentation": {}
     },
     {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "include",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
         "label": "DefaultRouter",
         "importPath": "rest_framework.routers",
         "description": "rest_framework.routers",
@@ -398,55 +502,6 @@
         "description": "rest_framework.routers",
         "isExtraImport": true,
         "detail": "rest_framework.routers",
-        "documentation": {}
-    },
-    {
-        "label": "rest_framework.permissions",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAdminUser",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "SAFE_METHODS",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAuthenticated",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
-        "documentation": {}
-    },
-    {
-        "label": "IsAdminUser",
-        "importPath": "rest_framework.permissions",
-        "description": "rest_framework.permissions",
-        "isExtraImport": true,
-        "detail": "rest_framework.permissions",
         "documentation": {}
     },
     {
@@ -530,6 +585,46 @@
         "documentation": {}
     },
     {
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAdminUser",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "SAFE_METHODS",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAdminUser",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -568,6 +663,30 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -756,6 +875,42 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0007_module_is_preview",
+        "description": "backend.api.migrations.0007_module_is_preview",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0006_alter_module_video\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"module\",\n            name=\"is_preview\",\n            field=models.BooleanField(default=False),\n        ),",
+        "detail": "backend.api.migrations.0007_module_is_preview",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0008_cart",
+        "description": "backend.api.migrations.0008_cart",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0007_module_is_preview\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Cart\",\n            fields=[\n                (",
+        "detail": "backend.api.migrations.0008_cart",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0009_enrollment_payment",
+        "description": "backend.api.migrations.0009_enrollment_payment",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0008_cart\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Enrollment\",\n            fields=[\n                (",
+        "detail": "backend.api.migrations.0009_enrollment_payment",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0010_payment_pidx",
+        "description": "backend.api.migrations.0010_payment_pidx",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0009_enrollment_payment\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"payment\",\n            name=\"pidx\",\n            field=models.CharField(blank=True, max_length=100, null=True),\n        ),",
+        "detail": "backend.api.migrations.0010_payment_pidx",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -796,7 +951,34 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class Module(models.Model):\n    title = models.CharField(max_length=150)\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"modules\"\n    )\n    order = models.PositiveIntegerField()\n    video = models.FileField(upload_to=\"videos/\")\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):",
+        "peekOfCode": "class Module(models.Model):\n    title = models.CharField(max_length=150)\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"modules\"\n    )\n    order = models.PositiveIntegerField()\n    video = models.FileField(upload_to=\"videos/\")\n    is_preview = models.BooleanField(default=False)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Cart",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Cart(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"cart\")\n    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"carts\")\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.course.title}\"\n    def can_change(self, user):\n        return user == self.user or user.is_superuser\n    class Meta:",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Enrollment",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Enrollment(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"enrollments\")\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"enrollments\"\n    )\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.course.title}\"\n    def can_change(self, user):",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Payment",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Payment(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"payments\")\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"payments\"\n    )\n    pidx = models.CharField(max_length=100, null=True, blank=True)\n    amount = models.DecimalField(max_digits=10, decimal_places=2)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -815,6 +997,15 @@
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
         "peekOfCode": "class CourseSerializer(serializers.ModelSerializer):\n    instructor = UserListSerializer(read_only=True)\n    category = CategoryListSerializer(read_only=True)\n    instructor_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.filter(role=\"instructor\"),\n        source=\"instructor\",\n        write_only=True,\n    )\n    category_id = serializers.PrimaryKeyRelatedField(\n        queryset=Category.objects.all(),",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CourseListSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class CourseListSerializer(serializers.ModelSerializer):\n    instructor = UserListSerializer(read_only=True)\n    category = CategoryListSerializer(read_only=True)\n    class Meta:\n        model = Course\n        fields = [\n            \"id\",\n            \"title\",\n            \"slug\",\n            \"category\",",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -846,11 +1037,38 @@
         "documentation": {}
     },
     {
+        "label": "CartSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class CartSerializer(serializers.ModelSerializer):\n    course = CourseListSerializer(read_only=True)\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    class Meta:\n        model = Cart",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "EnrollmentSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class EnrollmentSerializer(serializers.ModelSerializer):\n    course = CourseListSerializer(read_only=True)\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    class Meta:\n        model = Enrollment",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "PaymentSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class PaymentSerializer(serializers.ModelSerializer):\n    course = CourseListSerializer(read_only=True)\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    class Meta:\n        model = Payment",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.api.urls",
         "description": "backend.api.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"modules\", ModuleViewSet, basename=\"modules\")\nurlpatterns = []\nurlpatterns += router.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"modules\", ModuleViewSet, basename=\"modules\")\nrouter.register(r\"carts\", CartViewSet, basename=\"carts\")\nrouter.register(r\"payments\", PaymentViewSet, basename=\"payments\")\nrouter.register(r\"enrollments\", EnrollmentViewSet, basename=\"enrollments\")\nurlpatterns = []\nurlpatterns += router.urls",
         "detail": "backend.api.urls",
         "documentation": {}
     },
@@ -868,7 +1086,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").all()\n    serializer_class = CourseSerializer",
+        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -877,7 +1095,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").all()\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    @action(detail=False, methods=[\"GET\"])\n    # ! This is a custom action that returns published courses\n    def get_published_courses(self, request):",
+        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True\n    )\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    @action(detail=False, methods=[\"GET\"])",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -886,7 +1104,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all()\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\nclass ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all()",
+        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all().select_related(\"course\")\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\nclass ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all().select_related(\"section\")",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -895,7 +1113,34 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all()\n    serializer_class = ModuleSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "peekOfCode": "class ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all().select_related(\"section\")\n    serializer_class = ModuleSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\n    @action(detail=False, methods=[\"GET\"], permission_classes=[])\n    def get_preview(self, request):",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "CartViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class CartViewSet(ModelViewSet):\n    queryset = Cart.objects.all().select_related(\"course\")\n    serializer_class = CartSerializer\n    permission_classes = [IsAuthenticated]\n    def get_queryset(self):\n        return Cart.objects.filter(user=self.request.user)\n    def create(self, request, *args, **kwargs):\n        course_id = request.data.get(\"course_id\")\n        if not course_id:\n            return Response(",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "PaymentViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class PaymentViewSet(ModelViewSet):\n    queryset = Payment.objects.all()\n    serializer_class = PaymentSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "EnrollmentViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class EnrollmentViewSet(ModelViewSet):\n    queryset = Enrollment.objects.all().select_related(\"course\")\n    serializer_class = EnrollmentSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1057,7 +1302,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nMEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nSTATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1066,7 +1311,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nMEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nSTATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1075,7 +1320,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nMEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nSTATIC_URL = \"static/\"\nSTATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1084,7 +1329,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "USE_TZ = True\nSTATIC_URL = \"static/\"\nMEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "USE_TZ = True\nSTATIC_URL = \"static/\"\nSTATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1093,7 +1338,16 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "STATIC_URL = \"static/\"\nMEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "STATIC_URL = \"static/\"\nSTATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "detail": "backend.core.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_DIRS",
+        "kind": 5,
+        "importPath": "backend.core.settings",
+        "description": "backend.core.settings",
+        "peekOfCode": "STATICFILES_DIRS = [\n    BASE_DIR / \"static\",\n]\nMEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1102,7 +1356,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "MEDIA_URL = \"media/\"\nMEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "MEDIA_URL = \"/media/\"\nMEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1111,7 +1365,16 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, \"media\")\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "peekOfCode": "MEDIA_ROOT = BASE_DIR / \"media\"\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
+        "detail": "backend.core.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_ROOT",
+        "kind": 5,
+        "importPath": "backend.core.settings",
+        "description": "backend.core.settings",
+        "peekOfCode": "STATIC_ROOT = BASE_DIR / \"staticfiles\"\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"\nAUTH_USER_MODEL = \"users.User\"",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -1138,7 +1401,7 @@
         "kind": 5,
         "importPath": "backend.core.urls",
         "description": "backend.core.urls",
-        "peekOfCode": "v = settings.API_VERSION\nurlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(f\"api/{v}/user/\", include(\"users.urls\")),\n    path(f\"api/{v}/\", include(\"api.urls\")),\n    path(\"\", SpectacularSwaggerView.as_view(url_name=\"schema\"), name=\"swagger-ui\"),\n    path(\"schema/\", SpectacularAPIView.as_view(), name=\"schema\"),\n]\nurlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "peekOfCode": "v = settings.API_VERSION\nurlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(f\"api/{v}/user/\", include(\"users.urls\")),\n    path(f\"api/{v}/\", include(\"api.urls\")),\n    path(\"\", SpectacularSwaggerView.as_view(url_name=\"schema\"), name=\"swagger-ui\"),\n    path(\"schema/\", SpectacularAPIView.as_view(), name=\"schema\"),\n]\nurlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\nurlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)",
         "detail": "backend.core.urls",
         "documentation": {}
     },
@@ -1147,7 +1410,7 @@
         "kind": 5,
         "importPath": "backend.core.urls",
         "description": "backend.core.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(f\"api/{v}/user/\", include(\"users.urls\")),\n    path(f\"api/{v}/\", include(\"api.urls\")),\n    path(\"\", SpectacularSwaggerView.as_view(url_name=\"schema\"), name=\"swagger-ui\"),\n    path(\"schema/\", SpectacularAPIView.as_view(), name=\"schema\"),\n]\nurlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(f\"api/{v}/user/\", include(\"users.urls\")),\n    path(f\"api/{v}/\", include(\"api.urls\")),\n    path(\"\", SpectacularSwaggerView.as_view(url_name=\"schema\"), name=\"swagger-ui\"),\n    path(\"schema/\", SpectacularAPIView.as_view(), name=\"schema\"),\n]\nurlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\nurlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)",
         "detail": "backend.core.urls",
         "documentation": {}
     },

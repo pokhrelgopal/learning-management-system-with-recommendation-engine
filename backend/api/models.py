@@ -86,11 +86,12 @@ class Module(models.Model):
     )
     order = models.PositiveIntegerField()
     video = models.FileField(upload_to="videos/")
+    is_preview = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.title} :: {self.section.title}"
+        return f"{self.title} :: {self.section.title}  :: {self.section.course.title}"
 
     def can_change(self, user):
         return self.section.can_change(user)
@@ -100,3 +101,68 @@ class Module(models.Model):
         verbose_name_plural = "Modules"
         ordering = ["order"]
         unique_together = ["section", "title"]
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="carts")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.course.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "cart"
+        verbose_name_plural = "Carts"
+        unique_together = ["user", "course"]
+
+
+class Enrollment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="enrollments")
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="enrollments"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.course.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "enrollment"
+        verbose_name_plural = "Enrollments"
+        unique_together = ["user", "course"]
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payments")
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="payments"
+    )
+    pidx = models.CharField(max_length=100, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.course.title} :: {self.amount}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    def save(self, *args, **kwargs):
+        enrollment = Enrollment(user=self.user, course=self.course)
+        enrollment.save()
+        super(Payment, self).save(*args, **kwargs)
+
+    class Meta:
+        db_table = "payment"
+        verbose_name_plural = "Payments"
+        unique_together = ["user", "course"]
