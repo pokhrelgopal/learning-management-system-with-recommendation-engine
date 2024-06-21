@@ -6,6 +6,7 @@ export const endpoints = {
     register: url + "user/",
     login: url + "user/token/",
     me: url + "user/get_user/",
+    update: (id: string) => url + `user/${id}/`,
   },
   courses: {
     list: url + "courses/",
@@ -43,5 +44,10 @@ export const endpoints = {
   reply: {
     reply: url + "replies/",
     delete: (id: string) => url + `replies/${id}/`,
+  },
+  progress: {
+    progress: url + "progress/",
+    courseProgress: (courseId: string) =>
+      url + `progress/get_course_progress/?course_id=${courseId}`,
   },
 };

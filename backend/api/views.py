@@ -287,3 +287,50 @@ class ReplyViewSet(ModelViewSet):
             return Response(
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )
+
+
+class ProgressViewSet(ModelViewSet):
+    queryset = Progress.objects.all().select_related("section", "user")
+    serializer_class = ProgressSerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def get_course_progress(self, request):
+        course_id = request.query_params.get("course_id")
+        if not course_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "course_id required in query parameter."},
+            )
+        try:
+            completed_sections = Progress.objects.filter(
+                Q(user=request.user)
+                & Q(section__course__id=course_id)
+                & Q(completed=True)
+            ).count()
+            total_sections = Section.objects.filter(course__id=course_id).count()
+            completed_percentage = (completed_sections / total_sections) * 100
+            return Response(
+                {
+                    "completed_percentage": completed_percentage,
+                }
+            )
+        except Course.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
+            )

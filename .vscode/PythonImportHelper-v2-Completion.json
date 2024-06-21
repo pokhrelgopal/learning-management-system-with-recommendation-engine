@@ -57,19 +57,11 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -250,6 +242,38 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -946,6 +970,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0014_alter_reply_options_progress",
+        "description": "backend.api.migrations.0014_alter_reply_options_progress",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0013_alter_discussion_unique_together\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name=\"reply\",\n            options={\"verbose_name_plural\": \"Replies\"},\n        ),",
+        "detail": "backend.api.migrations.0014_alter_reply_options_progress",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -1032,6 +1065,15 @@
         "importPath": "backend.api.models",
         "description": "backend.api.models",
         "peekOfCode": "class Reply(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"replies\")\n    discussion = models.ForeignKey(\n        Discussion, on_delete=models.CASCADE, related_name=\"replies\"\n    )\n    message = models.TextField()\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.discussion.section.title}\"",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Progress",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Progress(models.Model):\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"progresses\"\n    )\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"progresses\")\n    completed = models.BooleanField(default=False)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def can_change(self, user):\n        return user == self.user",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -1135,6 +1177,15 @@
         "documentation": {}
     },
     {
+        "label": "ProgressSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class ProgressSerializer(serializers.ModelSerializer):\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    class Meta:\n        model = Progress\n        fields = [\"id\", \"section_id\", \"user_id\", \"completed\", \"created_at\"]",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.api.urls",
@@ -1230,6 +1281,15 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class ReplyViewSet(ModelViewSet):\n    queryset = Reply.objects.all().select_related(\"user\", \"discussion\")\n    serializer_class = ReplySerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "ProgressViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class ProgressViewSet(ModelViewSet):\n    queryset = Progress.objects.all().select_related(\"section\", \"user\")\n    serializer_class = ProgressSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
         "detail": "backend.api.views",
         "documentation": {}
     },

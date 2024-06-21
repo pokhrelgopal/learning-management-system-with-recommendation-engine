@@ -206,3 +206,25 @@ class Reply(models.Model):
     class Meta:
         db_table = "reply"
         verbose_name_plural = "Replies"
+
+
+class Progress(models.Model):
+    section = models.ForeignKey(
+        Section, on_delete=models.CASCADE, related_name="progresses"
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="progresses")
+    completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def can_change(self, user):
+        return user == self.user
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.section.title} :: Progress"
+
+    class Meta:
+        verbose_name_plural = "Progress Report"
+        ordering = ["-created_at"]
+        db_table = "progress"
+        unique_together = ["section", "user"]

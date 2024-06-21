@@ -24,6 +24,9 @@ export const getMe = async () => {
   return res.data;
 };
 
+export const updateUser = async (id: string, data: any) =>
+  await axios.patch(endpoints.user.update(id), data, createHeaders());
+
 // ! ============ Courses ============ !
 export const getCourses = async () => {
   const res = await axios.get(endpoints.courses.list);
@@ -97,3 +100,15 @@ export const createReply = async (data: any) =>
 
 export const deleteReply = async (id: string) =>
   await axios.delete(endpoints.reply.delete(id), createHeaders());
+
+// ! ============ Progress ============ !
+export const courseProgress = async (courseId: string) => {
+  const res = await axios.get(
+    endpoints.progress.courseProgress(courseId),
+    createHeaders()
+  );
+  return res.data;
+};
+
+export const createProgress = async (data: any) =>
+  await axios.post(endpoints.progress.progress, data, createHeaders());

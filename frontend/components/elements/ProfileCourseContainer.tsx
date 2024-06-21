@@ -5,6 +5,9 @@ import { PlayCircle } from "lucide-react";
 import React from "react";
 import EnrollWarning from "./EnrollWarning";
 import SelectedSection from "./SelectedSection";
+import { createProgress } from "@/app/server";
+import useUser from "@/hooks/useUser";
+import showToast from "@/lib/toaster";
 
 type Props = {
   course: any;
@@ -14,9 +17,41 @@ const ProfileCourseContainer = ({ course }: Props) => {
   const [selectedSection, setSelectedSection] = React.useState(
     course.sections[0]
   );
+  const { user } = useUser();
   const activeClass = "border-r-indigo-700";
   const { enrolled } = useEnrollment(course.id);
   if (!enrolled) return <EnrollWarning slug={course.slug} />;
+  const handleVideoEnd = async () => {
+    try {
+      const payload = {
+        section_id: selectedSection.id,
+        user_id: user?.id,
+        completed: true,
+      };
+      const res = await createProgress(payload);
+      if (res.status === 201) {
+        const nextSection = course.sections.find(
+          (section: any) => section.order === selectedSection.order + 1
+        );
+        if (nextSection) {
+          setSelectedSection(nextSection);
+          showToast(
+            "success",
+            "Progress saved and moving to the next section!"
+          );
+        } else {
+          showToast(
+            "success",
+            "Progress saved! You have completed the course."
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      showToast("error", "An error occurred. Please try again.");
+    }
+  };
+
   return (
     <article className="flex">
       <aside className="w-96 fixed bg-gray-50 h-screen border-r">
@@ -33,9 +68,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
                 onClick={() => setSelectedSection(section)}
               >
                 <PlayCircle size={24} />
-                <span>
-                  {section.order}. {section.title}
-                </span>
+                <span>{section.title}</span>
               </p>
             );
           })}
@@ -47,6 +80,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
           height="240"
           controls
           autoPlay
+          onEnded={handleVideoEnd}
           className="w-full"
         >
           <source src={mediaUrl + selectedSection.video} type="video/mp4" />

@@ -30,8 +30,15 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        for key, value in validated_data.items():
-            setattr(instance, key, value)
+        instance.full_name = validated_data.get("full_name", instance.full_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.profile_image = validated_data.get(
+            "profile_image", instance.profile_image
+        )
+
+        password = validated_data.get("password")
+        if password:
+            instance.set_password(password)
         instance.save()
         return instance
 

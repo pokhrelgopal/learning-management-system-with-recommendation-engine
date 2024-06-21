@@ -213,3 +213,16 @@ class ReplySerializer(serializers.ModelSerializer):
     class Meta:
         model = Reply
         fields = ["id", "user", "user_id", "discussion_id", "message", "created_at"]
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    section_id = serializers.PrimaryKeyRelatedField(
+        queryset=Section.objects.all(), source="section", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+
+    class Meta:
+        model = Progress
+        fields = ["id", "section_id", "user_id", "completed", "created_at"]
