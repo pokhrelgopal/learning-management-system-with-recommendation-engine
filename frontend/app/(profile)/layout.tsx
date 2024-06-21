@@ -5,7 +5,7 @@ import React from "react";
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main>
-      <header className="sticky top-0 border-b bg-white">
+      <header className="z-50 sticky top-0 border-b bg-white">
         <ProfileHeader />
       </header>
       <div>{children}</div>

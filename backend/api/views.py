@@ -182,3 +182,108 @@ class EnrollmentViewSet(ModelViewSet):
             return Response(
                 status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
             )
+
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all().select_related("course", "user")
+    serializer_class = ReviewSerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            course_id = request.data.get("course_id")
+            if not course_id:
+                return Response(
+                    status=status.HTTP_406_NOT_ACCEPTABLE,
+                    data={"detail": "course_id required in request body."},
+                )
+            user = request.user
+            course = Course.objects.get(id=course_id)
+
+            if not Enrollment.objects.filter(user=user, course=course).exists():
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"detail": "Not Enrolled."},
+                )
+
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def my_reviews(self, request):
+        if request.user.is_anonymous:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        reviews = Review.objects.filter(user=request.user)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+
+class DiscussionViewSet(ModelViewSet):
+    queryset = Discussion.objects.all().select_related("user", "section")
+    serializer_class = DiscussionSerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def get_section_discussions(self, section):
+        section_id = section.query_params.get("section_id")
+        if not section_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "section_id required in query parameter."},
+            )
+        try:
+            discussions = Discussion.objects.filter(
+                section__id=section_id
+            ).select_related("user")
+            serializer = DiscussionSerializer(discussions, many=True)
+            return Response(serializer.data)
+        except Discussion.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND, data={"detail": "Section not found."}
+            )
+
+
+class ReplyViewSet(ModelViewSet):
+    queryset = Reply.objects.all().select_related("user", "discussion")
+    serializer_class = ReplySerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )

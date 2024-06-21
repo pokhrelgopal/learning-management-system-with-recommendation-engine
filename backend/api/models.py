@@ -144,3 +144,65 @@ class Payment(models.Model):
         db_table = "payment"
         verbose_name_plural = "Payments"
         unique_together = ["user", "course"]
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="reviews")
+    rating = models.PositiveIntegerField()
+    review = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.course.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "review"
+        verbose_name_plural = "Reviews"
+        unique_together = ["user", "course"]
+
+
+class Discussion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="discussions")
+    section = models.ForeignKey(
+        Section, on_delete=models.CASCADE, related_name="discussions"
+    )
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.section.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "discussion"
+        verbose_name_plural = "Discussions"
+        ordering = ["-created_at"]
+        unique_together = ["user", "section", "message"]
+
+
+class Reply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="replies")
+    discussion = models.ForeignKey(
+        Discussion, on_delete=models.CASCADE, related_name="replies"
+    )
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.discussion.section.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "reply"
+        verbose_name_plural = "Replies"

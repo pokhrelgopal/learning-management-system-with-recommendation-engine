@@ -41,35 +41,19 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -210,6 +194,62 @@
     },
     {
         "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -297,47 +337,7 @@
         "documentation": {}
     },
     {
-        "label": "Category",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Course",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Section",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Cart",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Enrollment",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Payment",
+        "label": "*",
         "importPath": "api.models",
         "description": "api.models",
         "isExtraImport": true,
@@ -928,6 +928,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0012_discussion_reply_review",
+        "description": "backend.api.migrations.0012_discussion_reply_review",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0011_section_is_free_section_video_delete_module\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Discussion\",\n            fields=[\n                (",
+        "detail": "backend.api.migrations.0012_discussion_reply_review",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0013_alter_discussion_unique_together",
+        "description": "backend.api.migrations.0013_alter_discussion_unique_together",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0012_discussion_reply_review\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterUniqueTogether(\n            name=\"discussion\",\n            unique_together={(\"user\", \"section\", \"message\")},\n        ),",
+        "detail": "backend.api.migrations.0013_alter_discussion_unique_together",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -991,6 +1009,33 @@
         "documentation": {}
     },
     {
+        "label": "Review",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Review(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"reviews\")\n    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"reviews\")\n    rating = models.PositiveIntegerField()\n    review = models.TextField()\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.course.title}\"\n    def can_change(self, user):",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Discussion",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Discussion(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"discussions\")\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"discussions\"\n    )\n    message = models.TextField()\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.section.title}\"",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Reply",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Reply(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"replies\")\n    discussion = models.ForeignKey(\n        Discussion, on_delete=models.CASCADE, related_name=\"replies\"\n    )\n    message = models.TextField()\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.user.full_name} :: {self.discussion.section.title}\"",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
         "label": "CategoryListSerializer",
         "kind": 6,
         "importPath": "backend.api.serializers",
@@ -1022,7 +1067,7 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class CategorySerializer(serializers.ModelSerializer):\n    courses = CourseSerializer(many=True, read_only=True)\n    class Meta:\n        model = Category\n        fields = [\"id\", \"name\", \"courses\"]\nclass SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    class Meta:",
+        "peekOfCode": "class CategorySerializer(serializers.ModelSerializer):\n    courses = CourseSerializer(many=True, read_only=True)\n    class Meta:\n        model = Category\n        fields = [\"id\", \"name\", \"courses\"]\nclass SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    discussions = serializers.SerializerMethodField(read_only=True)",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1031,7 +1076,7 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",\n            \"title\",\n            \"order\",",
+        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    discussions = serializers.SerializerMethodField(read_only=True)\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",\n            \"title\",",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1063,11 +1108,38 @@
         "documentation": {}
     },
     {
+        "label": "ReviewSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class ReviewSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    user = UserListSerializer(read_only=True)\n    class Meta:\n        model = Review",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "DiscussionSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class DiscussionSerializer(serializers.ModelSerializer):\n    user = UserListSerializer(read_only=True)\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    replies = serializers.SerializerMethodField(read_only=True)\n    class Meta:",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "ReplySerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class ReplySerializer(serializers.ModelSerializer):\n    user = UserListSerializer(read_only=True)\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    discussion_id = serializers.PrimaryKeyRelatedField(\n        queryset=Discussion.objects.all(), source=\"discussion\", write_only=True\n    )\n    class Meta:\n        model = Reply",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.api.urls",
         "description": "backend.api.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"carts\", CartViewSet, basename=\"carts\")\nrouter.register(r\"payments\", PaymentViewSet, basename=\"payments\")\nrouter.register(r\"enrollments\", EnrollmentViewSet, basename=\"enrollments\")\nurlpatterns = []\nurlpatterns += router.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"carts\", CartViewSet, basename=\"carts\")\nrouter.register(r\"payments\", PaymentViewSet, basename=\"payments\")\nrouter.register(r\"enrollments\", EnrollmentViewSet, basename=\"enrollments\")\nrouter.register(r\"reviews\", ReviewViewSet, basename=\"reviews\")\nrouter.register(r\"discussions\", DiscussionViewSet, basename=\"discussions\")\nrouter.register(r\"replies\", ReplyViewSet, basename=\"replies\")",
         "detail": "backend.api.urls",
         "documentation": {}
     },
@@ -1131,6 +1203,33 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class EnrollmentViewSet(ModelViewSet):\n    queryset = Enrollment.objects.all().select_related(\"course\")\n    serializer_class = EnrollmentSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "ReviewViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class ReviewViewSet(ModelViewSet):\n    queryset = Review.objects.all().select_related(\"course\", \"user\")\n    serializer_class = ReviewSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "DiscussionViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class DiscussionViewSet(ModelViewSet):\n    queryset = Discussion.objects.all().select_related(\"user\", \"section\")\n    serializer_class = DiscussionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "ReplyViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class ReplyViewSet(ModelViewSet):\n    queryset = Reply.objects.all().select_related(\"user\", \"discussion\")\n    serializer_class = ReplySerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
         "detail": "backend.api.views",
         "documentation": {}
     },

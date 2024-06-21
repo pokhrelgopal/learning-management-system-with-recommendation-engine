@@ -71,3 +71,29 @@ export const createEnrollment = async (data: any) =>
 // ! ============ Payments ============ !
 export const createPayment = async (data: any) =>
   await axios.post(endpoints.payment.payment, data, createHeaders());
+
+// ! ============ Rating ============ !
+export const createRating = async (data: any) =>
+  await axios.post(endpoints.review.review, data, createHeaders());
+
+// ! ============ Discussion ============ !
+export const getSectionDiscussion = async (sectionId: string) => {
+  const res = await axios.get(
+    endpoints.discussion.sectionDiscussion(sectionId),
+    createHeaders()
+  );
+  return res.data;
+};
+
+export const createDiscussion = async (data: any) =>
+  await axios.post(endpoints.discussion.discussion, data, createHeaders());
+
+export const deleteDiscussion = async (id: string) =>
+  await axios.delete(endpoints.discussion.delete(id), createHeaders());
+
+// ! ============ Reply ============ !
+export const createReply = async (data: any) =>
+  await axios.post(endpoints.reply.reply, data, createHeaders());
+
+export const deleteReply = async (id: string) =>
+  await axios.delete(endpoints.reply.delete(id), createHeaders());

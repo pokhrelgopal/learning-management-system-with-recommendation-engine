@@ -31,4 +31,17 @@ export const endpoints = {
   payment: {
     payment: url + "payments/",
   },
+  review: {
+    review: url + "reviews/",
+  },
+  discussion: {
+    discussion: url + "discussions/",
+    delete: (id: string) => url + `discussions/${id}/`,
+    sectionDiscussion: (sectionId: string) =>
+      url + `discussions/get_section_discussions?section_id=${sectionId}`,
+  },
+  reply: {
+    reply: url + "replies/",
+    delete: (id: string) => url + `replies/${id}/`,
+  },
 };

@@ -49,14 +49,11 @@ const ProfileHeader = (props: Props) => {
           ) : (
             <div>
               <Popover>
-                <PopoverTrigger>
-                  <Button
-                    variant={"secondary"}
-                    className="flex items-center gap-2"
-                  >
+                <PopoverTrigger className="">
+                  <p className="flex items-center gap-2">
                     <span>{user?.full_name}</span>
                     <ChevronDownCircle size={16} />
-                  </Button>
+                  </p>
                 </PopoverTrigger>
                 <PopoverContent>
                   <ul className="flex flex-col divide-y space-y-2">

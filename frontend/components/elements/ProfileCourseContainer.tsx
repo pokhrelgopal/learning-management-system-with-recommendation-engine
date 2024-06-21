@@ -1,11 +1,10 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
 import useEnrollment from "@/hooks/useEnrollment";
-import { ArrowRightCircle, PlayCircle, ShieldAlert } from "lucide-react";
-import Link from "next/link";
+import { PlayCircle } from "lucide-react";
 import React from "react";
-import { Button } from "../ui/button";
 import EnrollWarning from "./EnrollWarning";
+import SelectedSection from "./SelectedSection";
 
 type Props = {
   course: any;
@@ -54,7 +53,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
           Your browser does not support the video tag.
         </video>
         <div className="p-5">
-          <h2 className="text-3xl font-bold"> {selectedSection.title}</h2>
+          <SelectedSection section={selectedSection} />
         </div>
       </section>
     </article>

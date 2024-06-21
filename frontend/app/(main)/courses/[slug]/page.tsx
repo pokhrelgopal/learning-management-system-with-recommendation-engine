@@ -1,6 +1,7 @@
 "use client";
 import { getCourseDetail } from "@/app/server";
 import CourseInfoCard from "@/components/elements/CourseInfoCard";
+import CourseReviews from "@/components/elements/CourseReviews";
 import CourseSections from "@/components/elements/CourseSections";
 import Error from "@/components/elements/Error";
 import PreviewComponent from "@/components/elements/PreviewComponent";
@@ -29,6 +30,7 @@ const CourseSingle = ({ params }: any) => {
         </div>
         <div className="mt-5">
           <CourseSections sections={data?.sections} />
+          <CourseReviews courseId={data.id} reviews={data?.reviews} />
         </div>
       </div>
       <div className="col-span-2">

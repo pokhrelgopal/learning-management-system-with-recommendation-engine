@@ -25,6 +25,7 @@ class CourseSerializer(serializers.ModelSerializer):
         required=False,
     )
     sections = serializers.SerializerMethodField(read_only=True)
+    reviews = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Course
@@ -43,10 +44,14 @@ class CourseSerializer(serializers.ModelSerializer):
             "updated_at",
             "is_published",
             "sections",
+            "reviews",
         ]
 
     def get_sections(self, obj):
         return SectionSerializer(obj.sections.all(), many=True).data
+
+    def get_reviews(self, obj):
+        return ReviewSerializer(obj.reviews.all(), many=True).data
 
 
 class CourseListSerializer(serializers.ModelSerializer):
@@ -78,6 +83,7 @@ class SectionSerializer(serializers.ModelSerializer):
     course_id = serializers.PrimaryKeyRelatedField(
         queryset=Course.objects.all(), source="course", write_only=True
     )
+    discussions = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Section
@@ -90,7 +96,11 @@ class SectionSerializer(serializers.ModelSerializer):
             "course_id",
             "created_at",
             "updated_at",
+            "discussions",
         ]
+
+    def get_discussions(self, obj):
+        return DiscussionSerializer(obj.discussions.all(), many=True).data
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -141,3 +151,65 @@ class PaymentSerializer(serializers.ModelSerializer):
             "user_id",
             "created_at",
         ]
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(), source="course", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+    user = UserListSerializer(read_only=True)
+
+    class Meta:
+        model = Review
+        fields = [
+            "id",
+            "course_id",
+            "user_id",
+            "user",
+            "rating",
+            "review",
+            "created_at",
+        ]
+
+
+class DiscussionSerializer(serializers.ModelSerializer):
+    user = UserListSerializer(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+    section_id = serializers.PrimaryKeyRelatedField(
+        queryset=Section.objects.all(), source="section", write_only=True
+    )
+    replies = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Discussion
+        fields = [
+            "id",
+            "user",
+            "user_id",
+            "section_id",
+            "message",
+            "created_at",
+            "replies",
+        ]
+
+    def get_replies(self, obj):
+        return ReplySerializer(obj.replies.all(), many=True).data
+
+
+class ReplySerializer(serializers.ModelSerializer):
+    user = UserListSerializer(read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+    discussion_id = serializers.PrimaryKeyRelatedField(
+        queryset=Discussion.objects.all(), source="discussion", write_only=True
+    )
+
+    class Meta:
+        model = Reply
+        fields = ["id", "user", "user_id", "discussion_id", "message", "created_at"]
