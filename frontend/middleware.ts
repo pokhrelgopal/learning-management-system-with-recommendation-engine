@@ -62,4 +62,13 @@ export function middleware(req: AuthenticatedRequest) {
   ) {
     return NextResponse.rewrite(new URL("/", req.url));
   }
+  if (
+    !isLoggedIn &&
+    (req.nextUrl.pathname.includes("/profile") ||
+      req.nextUrl.pathname.includes("/profile/courses") ||
+      req.nextUrl.pathname.includes("/instructor") ||
+      req.nextUrl.pathname.includes("/instructor/courses"))
+  ) {
+    return NextResponse.rewrite(new URL("/", req.url));
+  }
 }

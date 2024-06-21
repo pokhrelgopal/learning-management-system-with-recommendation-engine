@@ -33,10 +33,9 @@ export const getCourseDetail = async (slug: string) => {
   const res = await axios.get(endpoints.courses.detail(slug));
   return res.data;
 };
-
-// ! ============ Modules ============ !
+// ! ============ Sections============ !
 export const getPreview = async (courseId: string) => {
-  const res = await axios.get(endpoints.modules.preview(courseId));
+  const res = await axios.get(endpoints.sections.preview(courseId));
   return res.data;
 };
 

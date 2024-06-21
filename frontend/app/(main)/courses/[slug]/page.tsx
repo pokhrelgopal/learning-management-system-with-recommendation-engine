@@ -6,8 +6,6 @@ import Error from "@/components/elements/Error";
 import PreviewComponent from "@/components/elements/PreviewComponent";
 import Spinner from "@/components/elements/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { PlayCircle } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 const CourseSingle = ({ params }: any) => {

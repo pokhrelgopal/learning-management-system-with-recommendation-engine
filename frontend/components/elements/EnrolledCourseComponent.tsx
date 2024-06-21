@@ -8,7 +8,8 @@ import Error from "@/components/elements/Error";
 import { getMyEnrollments } from "@/app/server";
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle } from "lucide-react";
-import CourseCard from "./CourseCard";
+import ProfileCourseCard from "./ProfileCourseCard";
+
 const EnrolledCourseComponent = () => {
   const router = useRouter();
   const { data, isLoading, error } = useQuery({
@@ -18,10 +19,10 @@ const EnrolledCourseComponent = () => {
 
   if (isLoading) return <Spinner />;
   if (error) return <Error />;
-  console.log(data);
+
   return (
     <div>
-      <h1 className="text-3xl font-bold my-5">My Courses</h1>
+      <h1 className="text-2xl font-bold my-5">Enrolled Courses</h1>
       {data?.length === 0 && (
         <>
           <p className="text-lg">You are not enrolled in any courses yet.</p>
@@ -31,9 +32,9 @@ const EnrolledCourseComponent = () => {
           </Button>
         </>
       )}
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
         {data?.map((item: any) => (
-          <CourseCard key={item.id} course={item?.course} />
+          <ProfileCourseCard key={item.id} course={item?.course} />
         ))}
       </div>
     </div>

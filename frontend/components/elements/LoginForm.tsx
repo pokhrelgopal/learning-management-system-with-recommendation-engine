@@ -45,7 +45,7 @@ const LoginForm = () => {
         router.push("/");
       }
     } catch (error: any) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         showToast("error", "Invalid email or password.");
       } else {
         showToast("error", "An error occurred. Please try again.");

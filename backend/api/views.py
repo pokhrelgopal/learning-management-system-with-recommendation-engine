@@ -60,23 +60,12 @@ class SectionViewSet(ModelViewSet):
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
-
-class ModuleViewSet(ModelViewSet):
-    queryset = Module.objects.all().select_related("section")
-    serializer_class = ModuleSerializer
-    permission_classes = [CustomPermission]
-
-    def get_permissions(self):
-        if self.action == "create":
-            self.permission_classes = [IsAuthenticated]
-        return super().get_permissions()
-
     @action(detail=False, methods=["GET"], permission_classes=[])
     def get_preview(self, request):
         course_id = request.query_params.get("course_id")
         course = Course.objects.get(id=course_id)
-        modules = Module.objects.filter(section__course=course, is_preview=True)
-        serializer = ModuleSerializer(modules, many=True)
+        modules = Section.objects.filter(course=course, is_free=True)
+        serializer = SectionSerializer(modules, many=True)
         return Response(serializer.data)
 
 

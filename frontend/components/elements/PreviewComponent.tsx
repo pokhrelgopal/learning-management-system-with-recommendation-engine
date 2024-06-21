@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { PlayCircle, VideoIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { getPreview } from "@/app/server";
 import Spinner from "./Spinner";
 import { mediaUrl } from "@/app/endpoints";
 import Image from "next/image";
 import { ScrollArea } from "../ui/scroll-area";
+import { getPreview } from "@/app/server";
 
 interface Props {
   course: any;

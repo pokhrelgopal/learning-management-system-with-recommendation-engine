@@ -12,7 +12,6 @@ interface Props {
 const CourseCard = ({ course }: Props) => {
   const { user } = useUser();
   const queryClient = useQueryClient();
-  console.log(course?.thumbnail);
   const handleAddToCart = async (id: any) => {
     if (!user) {
       showToast("error", "Please login to add to cart.");

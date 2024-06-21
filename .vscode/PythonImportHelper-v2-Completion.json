@@ -201,6 +201,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -290,14 +306,6 @@
     },
     {
         "label": "Course",
-        "importPath": "api.models",
-        "description": "api.models",
-        "isExtraImport": true,
-        "detail": "api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Module",
         "importPath": "api.models",
         "description": "api.models",
         "isExtraImport": true,
@@ -911,6 +919,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0011_section_is_free_section_video_delete_module",
+        "description": "backend.api.migrations.0011_section_is_free_section_video_delete_module",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0010_payment_pidx\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"section\",\n            name=\"is_free\",\n            field=models.BooleanField(default=False),\n        ),",
+        "detail": "backend.api.migrations.0011_section_is_free_section_video_delete_module",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -942,16 +959,7 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class Section(models.Model):\n    title = models.CharField(max_length=150)\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"sections\"\n    )\n    order = models.PositiveIntegerField()\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.title} :: {self.course.title}\"",
-        "detail": "backend.api.models",
-        "documentation": {}
-    },
-    {
-        "label": "Module",
-        "kind": 6,
-        "importPath": "backend.api.models",
-        "description": "backend.api.models",
-        "peekOfCode": "class Module(models.Model):\n    title = models.CharField(max_length=150)\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"modules\"\n    )\n    order = models.PositiveIntegerField()\n    video = models.FileField(upload_to=\"videos/\")\n    is_preview = models.BooleanField(default=False)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
+        "peekOfCode": "class Section(models.Model):\n    title = models.CharField(max_length=150)\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"sections\"\n    )\n    order = models.PositiveIntegerField()\n    is_free = models.BooleanField(default=False)\n    video = models.FileField(upload_to=\"videos/\", null=True, blank=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -1014,7 +1022,7 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class CategorySerializer(serializers.ModelSerializer):\n    courses = CourseSerializer(many=True, read_only=True)\n    class Meta:\n        model = Category\n        fields = [\"id\", \"name\", \"courses\"]\nclass SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    modules = serializers.SerializerMethodField(read_only=True)",
+        "peekOfCode": "class CategorySerializer(serializers.ModelSerializer):\n    courses = CourseSerializer(many=True, read_only=True)\n    class Meta:\n        model = Category\n        fields = [\"id\", \"name\", \"courses\"]\nclass SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    class Meta:",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1023,16 +1031,7 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    modules = serializers.SerializerMethodField(read_only=True)\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",\n            \"title\",",
-        "detail": "backend.api.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "ModuleSerializer",
-        "kind": 6,
-        "importPath": "backend.api.serializers",
-        "description": "backend.api.serializers",
-        "peekOfCode": "class ModuleSerializer(serializers.ModelSerializer):\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    class Meta:\n        model = Module\n        fields = [\n            \"id\",\n            \"title\",\n            \"video\",",
+        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",\n            \"title\",\n            \"order\",",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1068,7 +1067,7 @@
         "kind": 5,
         "importPath": "backend.api.urls",
         "description": "backend.api.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"modules\", ModuleViewSet, basename=\"modules\")\nrouter.register(r\"carts\", CartViewSet, basename=\"carts\")\nrouter.register(r\"payments\", PaymentViewSet, basename=\"payments\")\nrouter.register(r\"enrollments\", EnrollmentViewSet, basename=\"enrollments\")\nurlpatterns = []\nurlpatterns += router.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"categories\", CategoryViewSet, basename=\"categories\")\nrouter.register(r\"courses\", CourseViewSet, basename=\"courses\")\nrouter.register(r\"sections\", SectionViewSet, basename=\"sections\")\nrouter.register(r\"carts\", CartViewSet, basename=\"carts\")\nrouter.register(r\"payments\", PaymentViewSet, basename=\"payments\")\nrouter.register(r\"enrollments\", EnrollmentViewSet, basename=\"enrollments\")\nurlpatterns = []\nurlpatterns += router.urls",
         "detail": "backend.api.urls",
         "documentation": {}
     },
@@ -1104,16 +1103,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all().select_related(\"course\")\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\nclass ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all().select_related(\"section\")",
-        "detail": "backend.api.views",
-        "documentation": {}
-    },
-    {
-        "label": "ModuleViewSet",
-        "kind": 6,
-        "importPath": "backend.api.views",
-        "description": "backend.api.views",
-        "peekOfCode": "class ModuleViewSet(ModelViewSet):\n    queryset = Module.objects.all().select_related(\"section\")\n    serializer_class = ModuleSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\n    @action(detail=False, methods=[\"GET\"], permission_classes=[])\n    def get_preview(self, request):",
+        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all().select_related(\"course\")\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\n    @action(detail=False, methods=[\"GET\"], permission_classes=[])\n    def get_preview(self, request):",
         "detail": "backend.api.views",
         "documentation": {}
     },

@@ -80,7 +80,7 @@ const PaymentSuccess = () => {
             </p>
             <p> Have a great day! </p>
             <div className="py-10 text-center">
-              <Link href="/courses">
+              <Link href="/profile/courses">
                 <Button loading={paying} size={"lg"}>
                   Go to course
                   <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />

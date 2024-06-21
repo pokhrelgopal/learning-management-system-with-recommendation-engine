@@ -78,7 +78,6 @@ class SectionSerializer(serializers.ModelSerializer):
     course_id = serializers.PrimaryKeyRelatedField(
         queryset=Course.objects.all(), source="course", write_only=True
     )
-    modules = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Section
@@ -86,30 +85,9 @@ class SectionSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "order",
-            "course_id",
-            "created_at",
-            "updated_at",
-            "modules",
-        ]
-
-    def get_modules(self, obj):
-        return ModuleSerializer(obj.modules.all(), many=True).data
-
-
-class ModuleSerializer(serializers.ModelSerializer):
-    section_id = serializers.PrimaryKeyRelatedField(
-        queryset=Section.objects.all(), source="section", write_only=True
-    )
-
-    class Meta:
-        model = Module
-        fields = [
-            "id",
-            "title",
+            "is_free",
             "video",
-            "order",
-            "is_preview",
-            "section_id",
+            "course_id",
             "created_at",
             "updated_at",
         ]

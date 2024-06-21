@@ -6,6 +6,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import { initiatePayment } from "@/utils/khalti";
 import showToast from "@/lib/toaster";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   courseId: string;
@@ -34,22 +35,23 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
       }
       router.push(payment_url);
     } catch (error) {
-      console.log(error);
       showToast("error", "Failed to initiate payment.");
     } finally {
       setPaying(false);
     }
   };
   return (
-    <>
+    <div className="space-y-3">
       {enrolled ? (
-        <Button
-          loading={isLoading}
-          className="text-lg w-full flex items-center gap-3"
-        >
-          Go to Course
-          <ArrowRightCircle className="w-5 h-5 inline-block" />
-        </Button>
+        <Link className="pt-2" href={`/profile/courses/${course?.slug}`}>
+          <Button
+            loading={isLoading}
+            className="text-lg w-full flex items-center gap-3"
+          >
+            Go to Course
+            <ArrowRightCircle className="w-5 h-5 inline-block" />
+          </Button>
+        </Link>
       ) : (
         <ConfirmationDialog
           title="Enroll Now ?"
@@ -58,7 +60,7 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
           buttonContent={
             <Button
               loading={isLoading || paying}
-              className="text-lg w-full flex items-center gap-3"
+              className="text-lg w-full flex items-center gap-3 mt-3"
             >
               <BadgeDollarSignIcon className="w-5 h-5 inline-block" />
               Enroll Now
@@ -66,7 +68,7 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
           }
         />
       )}
-    </>
+    </div>
   );
 };
 

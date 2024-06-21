@@ -16,13 +16,8 @@ const items = [
   },
   {
     id: 3,
-    name: "About",
-    link: "#",
-  },
-  {
-    id: 4,
-    name: "Contact",
-    link: "#",
+    name: "Profile",
+    link: "/profile",
   },
 ];
 

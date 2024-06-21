@@ -63,6 +63,8 @@ class Section(models.Model):
         Course, on_delete=models.CASCADE, related_name="sections"
     )
     order = models.PositiveIntegerField()
+    is_free = models.BooleanField(default=False)
+    video = models.FileField(upload_to="videos/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -77,30 +79,6 @@ class Section(models.Model):
         verbose_name_plural = "Sections"
         ordering = ["order"]
         unique_together = ["course", "title"]
-
-
-class Module(models.Model):
-    title = models.CharField(max_length=150)
-    section = models.ForeignKey(
-        Section, on_delete=models.CASCADE, related_name="modules"
-    )
-    order = models.PositiveIntegerField()
-    video = models.FileField(upload_to="videos/")
-    is_preview = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.title} :: {self.section.title}  :: {self.section.course.title}"
-
-    def can_change(self, user):
-        return self.section.can_change(user)
-
-    class Meta:
-        db_table = "module"
-        verbose_name_plural = "Modules"
-        ordering = ["order"]
-        unique_together = ["section", "title"]
 
 
 class Cart(models.Model):

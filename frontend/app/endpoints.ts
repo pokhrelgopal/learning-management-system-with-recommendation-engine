@@ -13,9 +13,9 @@ export const endpoints = {
     teacherCourses: url + "courses/get_my_courses/",
     publishedCourses: url + "courses/get_published_courses/",
   },
-  modules: {
+  sections: {
     preview: (courseId: string) =>
-      url + `modules/get_preview?course_id=${courseId}`,
+      url + `sections/get_preview?course_id=${courseId}`,
   },
   cart: {
     cart: url + "carts/",
