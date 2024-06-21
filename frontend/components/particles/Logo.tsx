@@ -12,7 +12,7 @@ const Logo = () => {
         width={400}
         height={400}
       /> */}
-      <span className="font-bold text-xl">LearnHub</span>
+      <span className="font-bold text-3xl">LearnHub</span>
     </Link>
   );
 };

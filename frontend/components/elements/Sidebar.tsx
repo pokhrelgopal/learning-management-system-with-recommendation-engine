@@ -17,7 +17,7 @@ const teacherMenu = [
   },
   {
     title: "Create Course",
-    href: "/instructor/course/create",
+    href: "/instructor/create-course",
   },
   {
     title: "Students",
@@ -60,7 +60,9 @@ const Sidebar = () => {
   return (
     <div className="flex h-screen flex-col justify-between border-e bg-white w-full">
       <div className="px-4 py-6">
-        <Logo />
+        <div className="px-4">
+          <Logo />
+        </div>
         <ul className="mt-6 space-y-1">
           {user?.role === "instructor" &&
             teacherMenu.map((menu, index) => {

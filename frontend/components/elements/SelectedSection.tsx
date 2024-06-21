@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import showToast from "@/lib/toaster";
 import useUser from "@/hooks/useUser";
 import DiscussionCard from "./DiscussionCard";
+import { Link } from "lucide-react";
+import { mediaUrl } from "@/app/endpoints";
 
 type Props = {
   section: any;
@@ -23,7 +25,6 @@ const SelectedSection = ({ section }: Props) => {
     queryFn: () => getSectionDiscussion(section?.id),
     enabled: !!section?.id,
   });
-
   const { user, isLoading: userLoading } = useUser();
   const queryClient = useQueryClient();
   const [message, setMessage] = React.useState("");
@@ -64,6 +65,20 @@ const SelectedSection = ({ section }: Props) => {
   return (
     <div className="mb-20">
       <h2 className="text-3xl font-bold">{section?.title}</h2>
+      <div className="flex justify-end">
+        {section.attachments?.map((attachment: any) => {
+          return (
+            <div key={attachment.id}>
+              <a target="_blank" href={mediaUrl + attachment.file}>
+                <Button variant={"secondary"} className="text-lg">
+                  {attachment.name}
+                  <Link className="ml-3" size={20} />
+                </Button>
+              </a>
+            </div>
+          );
+        })}
+      </div>
       <div>
         <h2 className="text-2xl font-bold my-5">Discussions</h2>
         <div className="mb-4 space-y-2">

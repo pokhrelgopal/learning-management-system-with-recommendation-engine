@@ -13,6 +13,7 @@ router.register(r"reviews", ReviewViewSet, basename="reviews")
 router.register(r"discussions", DiscussionViewSet, basename="discussions")
 router.register(r"replies", ReplyViewSet, basename="replies")
 router.register(r"progress", ProgressViewSet, basename="progress")
+router.register(r"attachments", AttachmentViewSet, basename="attachments")
 
 urlpatterns = []
 

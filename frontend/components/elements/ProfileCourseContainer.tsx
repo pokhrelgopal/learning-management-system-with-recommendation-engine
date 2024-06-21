@@ -46,8 +46,10 @@ const ProfileCourseContainer = ({ course }: Props) => {
           );
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.response.status === 409) {
+        return;
+      }
       showToast("error", "An error occurred. Please try again.");
     }
   };

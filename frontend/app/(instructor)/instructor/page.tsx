@@ -1,7 +1,21 @@
+"use client";
+import { getStats } from "@/app/server";
+import Spinner from "@/components/elements/Spinner";
+import { useQuery } from "@tanstack/react-query";
 import { BookOpen, CircleDollarSign, Users } from "lucide-react";
 import React from "react";
 
 const Instructor = () => {
+  const {
+    data: stats,
+    isLoading,
+    error,
+  } = useQuery<any>({
+    queryKey: ["stats"],
+    queryFn: () => getStats(),
+  });
+  if (isLoading) return <Spinner />;
+  const { courses, published_courses, students, income } = stats;
   return (
     <article className="mt-5">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
@@ -11,7 +25,7 @@ const Instructor = () => {
             <BookOpen size={32} className="block" />
           </p>
           <div>
-            <p className="text-3xl font-bold mt-3">22</p>
+            <p className="text-3xl font-bold mt-3">{courses}</p>
             <p className="text-lg">Courses</p>
           </div>
         </div>
@@ -20,7 +34,7 @@ const Instructor = () => {
             <Users size={32} className="block" />
           </p>
           <div>
-            <p className="text-3xl font-bold mt-3">238</p>
+            <p className="text-3xl font-bold mt-3">{students}</p>
             <p className="text-lg">Students</p>
           </div>
         </div>
@@ -29,7 +43,7 @@ const Instructor = () => {
             <CircleDollarSign size={32} className="block" />
           </p>
           <div>
-            <p className="text-3xl font-bold mt-3">$ 12300</p>
+            <p className="text-3xl font-bold mt-3">$ {income}</p>
             <p className="text-lg">Income</p>
           </div>
         </div>

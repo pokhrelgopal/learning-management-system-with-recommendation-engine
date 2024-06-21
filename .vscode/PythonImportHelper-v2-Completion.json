@@ -65,19 +65,11 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -186,6 +178,94 @@
     },
     {
         "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -334,6 +414,15 @@
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "django.utils.timezone",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.utils.timezone",
+        "description": "django.utils.timezone",
+        "detail": "django.utils.timezone",
         "documentation": {}
     },
     {
@@ -577,6 +666,14 @@
         "documentation": {}
     },
     {
+        "label": "Sum",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "action",
         "importPath": "rest_framework.decorators",
         "description": "rest_framework.decorators",
@@ -751,15 +848,6 @@
         "description": "django.core.wsgi",
         "isExtraImport": true,
         "detail": "django.core.wsgi",
-        "documentation": {}
-    },
-    {
-        "label": "django.utils.timezone",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "django.utils.timezone",
-        "description": "django.utils.timezone",
-        "detail": "django.utils.timezone",
         "documentation": {}
     },
     {
@@ -979,6 +1067,51 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0015_attachment",
+        "description": "backend.api.migrations.0015_attachment",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0014_alter_reply_options_progress\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Attachment\",\n            fields=[\n                (\n                    \"id\",",
+        "detail": "backend.api.migrations.0015_attachment",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0016_attachment_created_at_attachment_updated_at",
+        "description": "backend.api.migrations.0016_attachment_created_at_attachment_updated_at",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0015_attachment\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"attachment\",\n            name=\"created_at\",\n            field=models.DateTimeField(\n                auto_now_add=True, default=django.utils.timezone.now",
+        "detail": "backend.api.migrations.0016_attachment_created_at_attachment_updated_at",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0017_alter_course_title",
+        "description": "backend.api.migrations.0017_alter_course_title",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0016_attachment_created_at_attachment_updated_at\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"course\",\n            name=\"title\",\n            field=models.CharField(max_length=150, unique=True),\n        ),",
+        "detail": "backend.api.migrations.0017_alter_course_title",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0018_alter_course_unique_together",
+        "description": "backend.api.migrations.0018_alter_course_unique_together",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0017_alter_course_title\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterUniqueTogether(\n            name=\"course\",\n            unique_together={(\"title\", \"instructor\")},\n        ),",
+        "detail": "backend.api.migrations.0018_alter_course_unique_together",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0019_alter_course_thumbnail",
+        "description": "backend.api.migrations.0019_alter_course_thumbnail",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0018_alter_course_unique_together\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"course\",\n            name=\"thumbnail\",\n            field=models.ImageField(\n                blank=True,",
+        "detail": "backend.api.migrations.0019_alter_course_thumbnail",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -992,7 +1125,7 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class Category(models.Model):\n    name = models.CharField(max_length=100)\n    def __str__(self):\n        return self.name\n    class Meta:\n        db_table = \"category\"\n        verbose_name_plural = \"Categories\"\nclass Course(models.Model):\n    title = models.CharField(max_length=150)\n    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)",
+        "peekOfCode": "class Category(models.Model):\n    name = models.CharField(max_length=100)\n    def __str__(self):\n        return self.name\n    class Meta:\n        db_table = \"category\"\n        verbose_name_plural = \"Categories\"\nclass Course(models.Model):\n    title = models.CharField(max_length=150, unique=True)\n    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -1001,7 +1134,7 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class Course(models.Model):\n    title = models.CharField(max_length=150)\n    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)\n    description = models.TextField(null=True, blank=True)\n    category = models.ForeignKey(\n        Category,\n        on_delete=models.CASCADE,\n        related_name=\"courses\",\n        null=True,\n        blank=True,",
+        "peekOfCode": "class Course(models.Model):\n    title = models.CharField(max_length=150, unique=True)\n    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)\n    description = models.TextField(null=True, blank=True)\n    category = models.ForeignKey(\n        Category,\n        on_delete=models.CASCADE,\n        related_name=\"courses\",\n        null=True,\n        blank=True,",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -1078,6 +1211,15 @@
         "documentation": {}
     },
     {
+        "label": "Attachment",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Attachment(models.Model):\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"attachments\"\n    )\n    name = models.CharField(max_length=100)\n    file = models.FileField(upload_to=\"attachments/\")\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.section.title} :: {self.file}\"",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
         "label": "CategoryListSerializer",
         "kind": 6,
         "importPath": "backend.api.serializers",
@@ -1118,7 +1260,7 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    discussions = serializers.SerializerMethodField(read_only=True)\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",\n            \"title\",",
+        "peekOfCode": "class SectionSerializer(serializers.ModelSerializer):\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    discussions = serializers.SerializerMethodField(read_only=True)\n    attachments = serializers.SerializerMethodField(read_only=True)\n    class Meta:\n        model = Section\n        fields = [\n            \"id\",",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1186,6 +1328,15 @@
         "documentation": {}
     },
     {
+        "label": "AttachmentSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class AttachmentSerializer(serializers.ModelSerializer):\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    class Meta:\n        model = Attachment\n        fields = [\"id\", \"section_id\", \"name\", \"file\", \"created_at\"]",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.api.urls",
@@ -1208,7 +1359,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True",
+        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter()\n    serializer_class = CourseSerializer",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1217,7 +1368,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True\n    )\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    @action(detail=False, methods=[\"GET\"])",
+        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter()\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    def create(self, request, *args, **kwargs):\n        try:\n            if not request.user.role == \"instructor\":",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1290,6 +1441,15 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class ProgressViewSet(ModelViewSet):\n    queryset = Progress.objects.all().select_related(\"section\", \"user\")\n    serializer_class = ProgressSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "AttachmentViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class AttachmentViewSet(ModelViewSet):\n    queryset = Attachment.objects.all()\n    serializer_class = AttachmentSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
         "detail": "backend.api.views",
         "documentation": {}
     },

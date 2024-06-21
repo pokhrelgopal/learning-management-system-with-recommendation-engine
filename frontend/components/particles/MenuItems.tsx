@@ -33,7 +33,7 @@ const MenuItems = () => {
           return (
             <Link key={item.id} href={item.link}>
               <li
-                className={`cursor-pointer text-darkGreen text ease-in-out ${isActive}`}
+                className={`cursor-pointer text-lg text ease-in-out ${isActive}`}
                 key={item.id}
               >
                 {item.name}

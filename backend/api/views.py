@@ -9,6 +9,7 @@ from api.serializers import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import IntegrityError
+from django.db.models import Sum
 
 
 class CategoryViewSet(ModelViewSet):
@@ -22,14 +23,25 @@ class CategoryViewSet(ModelViewSet):
 
 
 class CourseViewSet(ModelViewSet):
-    queryset = Course.objects.select_related("instructor", "category").filter(
-        is_published=True
-    )
+    queryset = Course.objects.select_related("instructor", "category").filter()
     serializer_class = CourseSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ["title"]
     permission_classes = [CustomPermission]
     lookup_field = "slug"
+
+    def create(self, request, *args, **kwargs):
+        try:
+            if not request.user.role == "instructor":
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"detail": "You are not an instructor."},
+                )
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
 
     @action(detail=False, methods=["GET"])
     # ! This is a custom action that returns published courses
@@ -46,8 +58,31 @@ class CourseViewSet(ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN, data={"detail": "Forbidden"}
             )
         courses = Course.objects.filter(instructor=request.user)
-        serializer = CourseSerializer(courses, many=True)
+        serializer = CourseListSerializer(courses, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["GET"])
+    def get_stats(self, request):
+        if not request.user.role == "instructor":
+            return Response(
+                status=status.HTTP_403_FORBIDDEN, data={"detail": "Forbidden"}
+            )
+        courses = Course.objects.filter(instructor=request.user).count()
+        published_courses = Course.objects.filter(
+            instructor=request.user, is_published=True
+        ).count()
+        students = Enrollment.objects.filter(course__instructor=request.user).count()
+        total_earning = Payment.objects.filter(
+            course__instructor=request.user
+        ).aggregate(total_earning=Sum("amount"))
+        return Response(
+            {
+                "courses": courses,
+                "published_courses": published_courses,
+                "students": students,
+                "income": total_earning["total_earning"] or 0.0,
+            }
+        )
 
 
 class SectionViewSet(ModelViewSet):
@@ -333,4 +368,25 @@ class ProgressViewSet(ModelViewSet):
         except Course.DoesNotExist:
             return Response(
                 status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
+            )
+
+
+class AttachmentViewSet(ModelViewSet):
+    queryset = Attachment.objects.all()
+    serializer_class = AttachmentSerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )

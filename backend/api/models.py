@@ -15,7 +15,7 @@ class Category(models.Model):
 
 
 class Course(models.Model):
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(
@@ -33,7 +33,7 @@ class Course(models.Model):
     )
     thumbnail = models.ImageField(
         upload_to="thumbnail_images/",
-        default="thumbnail_images/thumbnail.png",
+        default="thumbnail_images/default.png",
         null=True,
         blank=True,
     )
@@ -55,6 +55,7 @@ class Course(models.Model):
         db_table = "course"
         verbose_name_plural = "Courses"
         ordering = ["-created_at"]
+        unique_together = ["title", "instructor"]
 
 
 class Section(models.Model):
@@ -228,3 +229,23 @@ class Progress(models.Model):
         ordering = ["-created_at"]
         db_table = "progress"
         unique_together = ["section", "user"]
+
+
+class Attachment(models.Model):
+    section = models.ForeignKey(
+        Section, on_delete=models.CASCADE, related_name="attachments"
+    )
+    name = models.CharField(max_length=100)
+    file = models.FileField(upload_to="attachments/")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.section.title} :: {self.file}"
+
+    def can_change(self, user):
+        return self.section.can_change(user)
+
+    class Meta:
+        db_table = "attachment"
+        verbose_name_plural = "Attachments"

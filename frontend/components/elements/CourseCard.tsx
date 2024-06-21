@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
+import { mediaUrl } from "@/app/endpoints";
 interface Props {
   course: any;
 }
@@ -43,7 +44,7 @@ const CourseCard = ({ course }: Props) => {
     <div className="block rounded-lg border p-4 shadow-sm shadow-indigo-100">
       <Link href={`/courses/${course?.slug}`}>
         <Image
-          src={course?.thumbnail}
+          src={mediaUrl + course?.thumbnail}
           alt={course?.title}
           width={300}
           height={200}

@@ -68,6 +68,7 @@ class CourseListSerializer(serializers.ModelSerializer):
             "instructor",
             "price",
             "thumbnail",
+            "is_published",
         ]
 
 
@@ -84,6 +85,7 @@ class SectionSerializer(serializers.ModelSerializer):
         queryset=Course.objects.all(), source="course", write_only=True
     )
     discussions = serializers.SerializerMethodField(read_only=True)
+    attachments = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Section
@@ -97,10 +99,14 @@ class SectionSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "discussions",
+            "attachments",
         ]
 
     def get_discussions(self, obj):
         return DiscussionSerializer(obj.discussions.all(), many=True).data
+
+    def get_attachments(self, obj):
+        return AttachmentSerializer(obj.attachments.all(), many=True).data
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -226,3 +232,13 @@ class ProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Progress
         fields = ["id", "section_id", "user_id", "completed", "created_at"]
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    section_id = serializers.PrimaryKeyRelatedField(
+        queryset=Section.objects.all(), source="section", write_only=True
+    )
+
+    class Meta:
+        model = Attachment
+        fields = ["id", "section_id", "name", "file", "created_at"]

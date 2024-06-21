@@ -3,7 +3,7 @@ import { endpoints } from "./endpoints";
 
 const getToken = (): string | null => localStorage.getItem("token");
 
-const createHeaders = () => {
+const createHeaders: any = () => {
   const token = getToken();
   return {
     headers: {
@@ -27,20 +27,54 @@ export const getMe = async () => {
 export const updateUser = async (id: string, data: any) =>
   await axios.patch(endpoints.user.update(id), data, createHeaders());
 
+// ! ============ Categories ============ !
+export const getCategories = async () => {
+  const res = await axios.get(endpoints.categories.list);
+  return res.data;
+};
 // ! ============ Courses ============ !
 export const getCourses = async () => {
-  const res = await axios.get(endpoints.courses.list);
+  const res = await axios.get(endpoints.courses.published);
+  return res.data;
+};
+// export const getAllCourses = async () => {
+//   const res = await axios.get(endpoints.courses.list);
+//   return res.data;
+// };
+export const getMyCourses = async () => {
+  const res = await axios.get(
+    endpoints.courses.teacherCourses,
+    createHeaders()
+  );
+  return res.data;
+};
+export const getStats = async () => {
+  const res = await axios.get(endpoints.courses.getStats, createHeaders());
   return res.data;
 };
 export const getCourseDetail = async (slug: string) => {
   const res = await axios.get(endpoints.courses.detail(slug));
   return res.data;
 };
+export const createCourse = async (data: any) =>
+  await axios.post(endpoints.courses.list, data, createHeaders());
+
+export const updateCourse = async (slug: string, data: any) =>
+  await axios.patch(endpoints.courses.detail(slug), data, createHeaders());
 // ! ============ Sections============ !
 export const getPreview = async (courseId: string) => {
   const res = await axios.get(endpoints.sections.preview(courseId));
   return res.data;
 };
+
+export const createSection = async (data: any) =>
+  await axios.post(endpoints.sections.section, data, createHeaders());
+
+export const updateSection = async (id: string, data: any) =>
+  await axios.patch(endpoints.sections.update(id), data, createHeaders());
+
+export const deleteSection = async (id: string) =>
+  await axios.delete(endpoints.sections.update(id), createHeaders());
 
 // ! ============ Cart ============ !
 export const getCart = async () => {
