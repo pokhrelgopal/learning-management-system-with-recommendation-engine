@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { Switch } from "@/components/ui/switch";
 import { updateSection } from "@/app/server";
 import showToast from "@/lib/toaster";
+import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
 
 type Props = {
   section: any;
@@ -26,6 +27,8 @@ const EditSectionDialog = ({ section }: Props) => {
   const [isFree, setIsFree] = React.useState(section?.is_free);
   const [updating, setUpdating] = React.useState(false);
   const [videoFile, setVideoFile] = React.useState<File | null>(null);
+
+  const queryClient = useQueryClient();
 
   const handleUpdateSection = async () => {
     try {
@@ -41,6 +44,7 @@ const EditSectionDialog = ({ section }: Props) => {
       const res = await updateSection(section.id, payload);
       if (res.status === 200) {
         showToast("success", "Section updated successfully.");
+        queryClient.invalidateQueries("course" as InvalidateQueryFilters);
       }
 
       setTimeout(() => {

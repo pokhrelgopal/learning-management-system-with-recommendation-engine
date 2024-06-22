@@ -41,8 +41,17 @@ const CourseUpdateForm = ({ course }: Props) => {
       showToast("error", "Category is required.");
       return;
     }
+    if (!description.trim()) {
+      showToast("error", "Description is required.");
+      return;
+    }
+    if (description.trim().length < 15) {
+      showToast("error", "Description must be at least 15 characters.");
+      return;
+    }
+
     if (price < 10) {
-      showToast("error", "Price must be greater than 10.");
+      showToast("error", "Price must be greater than $10.");
       return;
     }
 
@@ -103,9 +112,15 @@ const CourseUpdateForm = ({ course }: Props) => {
           `Course ${isPublished ? "unpublished" : "published"} successfully.`
         );
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.request?.status === 403) {
+        showToast(
+          "error",
+          "You cannot unpublish a course with students enrolled."
+        );
+        return;
+      }
       showToast("error", "Failed to update course.");
-      console.log(error);
     } finally {
       setUpdating(false);
     }

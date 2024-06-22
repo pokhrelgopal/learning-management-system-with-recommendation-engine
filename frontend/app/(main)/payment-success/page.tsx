@@ -12,11 +12,11 @@ const PaymentSuccess = () => {
   const { user, isLoading, error } = useUser();
   const [paying, setPaying] = React.useState(false);
   const searchParams = useSearchParams();
-  const pidx = searchParams.get("pidx");
-  const amount = searchParams.get("amount");
-  const status = searchParams.get("status");
-  const purchase_order_id = searchParams.get("purchase_order_id");
-  const transaction_id = searchParams.get("transaction_id");
+  const pidx = searchParams.get("pidx") ?? "";
+  const amount = searchParams.get("amount") ?? "";
+  const status = searchParams.get("status") ?? "";
+  const purchase_order_id = searchParams.get("purchase_order_id") ?? "";
+  const transaction_id = searchParams.get("transaction_id") ?? "";
 
   React.useEffect(() => {
     if (
@@ -37,7 +37,7 @@ const PaymentSuccess = () => {
           course_id: purchase_order_id,
           user_id: user?.id,
           pidx: pidx,
-          amount,
+          amount: parseFloat(amount) / 100,
         };
         await createPayment(data);
       } catch (error) {

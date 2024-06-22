@@ -6,6 +6,7 @@ import { deleteSection } from "@/app/server";
 import showToast from "@/lib/toaster";
 import AddSectionDialog from "./AddSectionDialog";
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
+import AddResourceDialog from "./AddResourceDialog";
 type Props = {
   courseId: any;
   sections: any[];
@@ -48,6 +49,10 @@ const SectionContainer = ({ sections, courseId }: Props) => {
               <h2 className="text-lg">{section.title}</h2>
             </div>
             <div className="flex items-center gap-4">
+              <AddResourceDialog
+                attachments={section.attachments}
+                sectionId={section.id}
+              />
               <EditSectionDialog section={section} />
               <ConfirmationDialog
                 buttonContent={

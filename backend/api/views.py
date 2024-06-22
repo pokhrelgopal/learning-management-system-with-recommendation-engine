@@ -43,6 +43,17 @@ class CourseViewSet(ModelViewSet):
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )
 
+    def update(self, request, *args, **kwargs):
+        # user cant unpublish a course if it has students enrolled
+        if request.data.get("is_published") == False:
+            course = Course.objects.get(slug=kwargs["slug"])
+            if Enrollment.objects.filter(course=course).exists():
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"detail": "Can't unpublish course with students enrolled."},
+                )
+        return super().update(request, *args, **kwargs)
+
     @action(detail=False, methods=["GET"])
     # ! This is a custom action that returns published courses
     def get_published_courses(self, request):

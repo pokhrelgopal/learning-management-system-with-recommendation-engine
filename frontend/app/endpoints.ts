@@ -25,6 +25,10 @@ export const endpoints = {
     preview: (courseId: string) =>
       url + `sections/get_preview?course_id=${courseId}`,
   },
+  attachment: {
+    attachment: url + "attachments/",
+    delete: (id: string) => url + `attachments/${id}/`,
+  },
   cart: {
     cart: url + "carts/",
     removeFromCart: (id: string) => url + `carts/${id}/`,

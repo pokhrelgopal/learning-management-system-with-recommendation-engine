@@ -37,10 +37,6 @@ export const getCourses = async () => {
   const res = await axios.get(endpoints.courses.published);
   return res.data;
 };
-// export const getAllCourses = async () => {
-//   const res = await axios.get(endpoints.courses.list);
-//   return res.data;
-// };
 export const getMyCourses = async () => {
   const res = await axios.get(
     endpoints.courses.teacherCourses,
@@ -146,3 +142,10 @@ export const courseProgress = async (courseId: string) => {
 
 export const createProgress = async (data: any) =>
   await axios.post(endpoints.progress.progress, data, createHeaders());
+
+// ! ============ Attachment ============ !
+export const createAttachment = async (data: any) =>
+  await axios.post(endpoints.attachment.attachment, data, createHeaders());
+
+export const deleteAttachment = async (id: string) =>
+  await axios.delete(endpoints.attachment.delete(id), createHeaders());
