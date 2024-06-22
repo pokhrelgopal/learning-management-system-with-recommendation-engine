@@ -92,7 +92,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
           <source src={mediaUrl + selectedSection.video} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="p-5">
+        <div className="mt-5">
           <SelectedSection section={selectedSection} />
         </div>
       </section>

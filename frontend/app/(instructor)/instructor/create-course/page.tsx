@@ -57,7 +57,7 @@ const CreateCourse = () => {
         <Input
           type="text"
           placeholder="Eg. Introduction to Programming"
-          className="mt-3 w-full xl:w-1/2 p-6 text-lg border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out"
+          className="mt-3 w-full xl:w-1/2 p-6 text-lg border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />

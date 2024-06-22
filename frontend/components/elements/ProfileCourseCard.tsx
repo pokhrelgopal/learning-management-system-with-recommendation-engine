@@ -30,8 +30,11 @@ const ProfileCourseCard = ({ course }: Props) => {
       </Link>
       <div className="mt-2">
         <dl>
-          <div className="flex justify-end mb-1">
-            <p>{completed_percentage}% Completed</p>
+          <div className="flex justify-end mb-1 items-center">
+            <span className="text-lg">
+              {completed_percentage < 100 ? `${completed_percentage}%` : ""}{" "}
+              Completed
+            </span>
             {completed_percentage === 100 && (
               <Trophy
                 size={20}
