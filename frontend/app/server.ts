@@ -149,3 +149,15 @@ export const createAttachment = async (data: any) =>
 
 export const deleteAttachment = async (id: string) =>
   await axios.delete(endpoints.attachment.delete(id), createHeaders());
+
+// ! ============ Certificate ============ !
+export const createCertificate = async (data: any) =>
+  await axios.post(endpoints.certificate.certificate, data, createHeaders());
+
+export const getCertificate = async (courseId: string) => {
+  const res = await axios.get(
+    endpoints.certificate.getCertificate(courseId),
+    createHeaders()
+  );
+  return res.data;
+};

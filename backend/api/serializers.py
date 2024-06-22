@@ -2,6 +2,7 @@ from rest_framework import serializers
 from api.models import *
 from users.models import User
 from users.serializers import UserListSerializer
+from utils.generate import certificate
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
@@ -242,3 +243,29 @@ class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
         fields = ["id", "section_id", "name", "file", "created_at"]
+
+
+class CertificateSerializer(serializers.ModelSerializer):
+    course = CourseListSerializer(read_only=True)
+    user = UserListSerializer(read_only=True)
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(), source="course", write_only=True
+    )
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source="user", write_only=True
+    )
+
+    def save(self, **kwargs):
+        certification = super(CertificateSerializer, self).save(**kwargs)
+        course_name = certification.course.title
+        student_name = certification.user.full_name
+        teacher_name = certification.course.instructor.full_name
+
+        certificate_file_path = certificate(student_name, teacher_name, course_name)
+        certification.file = certificate_file_path
+        certification.save()
+        return certification
+
+    class Meta:
+        model = Certificate
+        fields = ["id", "course", "user", "course_id", "file", "user_id", "created_at"]

@@ -14,6 +14,7 @@ router.register(r"discussions", DiscussionViewSet, basename="discussions")
 router.register(r"replies", ReplyViewSet, basename="replies")
 router.register(r"progress", ProgressViewSet, basename="progress")
 router.register(r"attachments", AttachmentViewSet, basename="attachments")
+router.register(r"certificates", CertificateViewSet, basename="notifications")
 
 urlpatterns = []
 

@@ -19,10 +19,6 @@ const teacherMenu = [
     title: "Create Course",
     href: "/instructor/create-course",
   },
-  {
-    title: "Students",
-    href: "/instructor/students",
-  },
 ];
 const adminMenu = [
   {
@@ -40,16 +36,6 @@ const adminMenu = [
   {
     title: "Instructors",
     href: "/admin/instructors",
-  },
-];
-const studentMenu = [
-  {
-    title: "Profile",
-    href: "/profile",
-  },
-  {
-    title: "Courses",
-    href: "/profile/courses",
   },
 ];
 
@@ -80,20 +66,6 @@ const Sidebar = () => {
             })}
           {user?.role === "admin" &&
             adminMenu.map((menu, index) => {
-              const isActive = currentPath === menu.href ? active : "";
-              return (
-                <li key={index}>
-                  <Link
-                    href={menu.href}
-                    className={`block rounded-lg px-4 py-2 text-lg font-medium ${isActive}`}
-                  >
-                    {menu.title}
-                  </Link>
-                </li>
-              );
-            })}
-          {user?.role === "student" &&
-            studentMenu.map((menu, index) => {
               const isActive = currentPath === menu.href ? active : "";
               return (
                 <li key={index}>

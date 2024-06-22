@@ -21,7 +21,14 @@ const SectionContainer = ({ sections, courseId }: Props) => {
         showToast("success", "Section deleted successfully.");
         queryClient.invalidateQueries("course" as InvalidateQueryFilters);
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        showToast(
+          "error",
+          "You can't delete section if students are enrolled in the course."
+        );
+        return;
+      }
       showToast("error", "Failed to delete section.");
       console.error(error);
     }

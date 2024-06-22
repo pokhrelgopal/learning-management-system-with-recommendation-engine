@@ -114,6 +114,10 @@ class Enrollment(models.Model):
     def can_change(self, user):
         return user == self.user or user.is_superuser
 
+    def save(self, *args, **kwargs):
+        Cart.objects.filter(user=self.user, course=self.course).delete()
+        super(Enrollment, self).save(*args, **kwargs)
+
     class Meta:
         db_table = "enrollment"
         verbose_name_plural = "Enrollments"
@@ -249,3 +253,26 @@ class Attachment(models.Model):
     class Meta:
         db_table = "attachment"
         verbose_name_plural = "Attachments"
+
+
+class Certificate(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="certificates"
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="certificates"
+    )
+    file = models.FileField(upload_to="certificates/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} :: {self.course.title}"
+
+    def can_change(self, user):
+        return user == self.user or user.is_superuser
+
+    class Meta:
+        db_table = "certificate"
+        verbose_name_plural = "Certificates"
+        unique_together = ["user", "course"]

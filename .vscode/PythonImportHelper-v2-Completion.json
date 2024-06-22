@@ -73,35 +73,19 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -273,6 +257,38 @@
         "documentation": {}
     },
     {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
@@ -338,6 +354,38 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -591,6 +639,14 @@
         "description": "users.serializers",
         "isExtraImport": true,
         "detail": "users.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "certificate",
+        "importPath": "utils.generate",
+        "description": "utils.generate",
+        "isExtraImport": true,
+        "detail": "utils.generate",
         "documentation": {}
     },
     {
@@ -907,6 +963,39 @@
         "documentation": {}
     },
     {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageFont",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
@@ -1112,6 +1201,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0020_certificate",
+        "description": "backend.api.migrations.0020_certificate",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0019_alter_course_thumbnail\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Certificate\",\n            fields=[\n                (",
+        "detail": "backend.api.migrations.0020_certificate",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0021_alter_certificate_file",
+        "description": "backend.api.migrations.0021_alter_certificate_file",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0020_certificate\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"certificate\",\n            name=\"file\",\n            field=models.FileField(blank=True, null=True, upload_to=\"certificates/\"),\n        ),",
+        "detail": "backend.api.migrations.0021_alter_certificate_file",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -1216,6 +1323,15 @@
         "importPath": "backend.api.models",
         "description": "backend.api.models",
         "peekOfCode": "class Attachment(models.Model):\n    section = models.ForeignKey(\n        Section, on_delete=models.CASCADE, related_name=\"attachments\"\n    )\n    name = models.CharField(max_length=100)\n    file = models.FileField(upload_to=\"attachments/\")\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f\"{self.section.title} :: {self.file}\"",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Certificate",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Certificate(models.Model):\n    user = models.ForeignKey(\n        User, on_delete=models.CASCADE, related_name=\"certificates\"\n    )\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"certificates\"\n    )\n    file = models.FileField(upload_to=\"certificates/\", null=True, blank=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -1332,7 +1448,16 @@
         "kind": 6,
         "importPath": "backend.api.serializers",
         "description": "backend.api.serializers",
-        "peekOfCode": "class AttachmentSerializer(serializers.ModelSerializer):\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    class Meta:\n        model = Attachment\n        fields = [\"id\", \"section_id\", \"name\", \"file\", \"created_at\"]",
+        "peekOfCode": "class AttachmentSerializer(serializers.ModelSerializer):\n    section_id = serializers.PrimaryKeyRelatedField(\n        queryset=Section.objects.all(), source=\"section\", write_only=True\n    )\n    class Meta:\n        model = Attachment\n        fields = [\"id\", \"section_id\", \"name\", \"file\", \"created_at\"]\nclass CertificateSerializer(serializers.ModelSerializer):\n    course = CourseListSerializer(read_only=True)\n    user = UserListSerializer(read_only=True)",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CertificateSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class CertificateSerializer(serializers.ModelSerializer):\n    course = CourseListSerializer(read_only=True)\n    user = UserListSerializer(read_only=True)\n    course_id = serializers.PrimaryKeyRelatedField(\n        queryset=Course.objects.all(), source=\"course\", write_only=True\n    )\n    user_id = serializers.PrimaryKeyRelatedField(\n        queryset=User.objects.all(), source=\"user\", write_only=True\n    )\n    def save(self, **kwargs):",
         "detail": "backend.api.serializers",
         "documentation": {}
     },
@@ -1377,7 +1502,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all().select_related(\"course\")\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\n    @action(detail=False, methods=[\"GET\"], permission_classes=[])\n    def get_preview(self, request):",
+        "peekOfCode": "class SectionViewSet(ModelViewSet):\n    queryset = Section.objects.all().select_related(\"course\")\n    serializer_class = SectionSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()\n    def destroy(self, request, *args, **kwargs):\n        section = self.get_object()",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1450,6 +1575,15 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class AttachmentViewSet(ModelViewSet):\n    queryset = Attachment.objects.all()\n    serializer_class = AttachmentSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "CertificateViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class CertificateViewSet(ModelViewSet):\n    queryset = Certificate.objects.all().select_related(\"user\", \"course\")\n    serializer_class = CertificateSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1847,6 +1981,15 @@
         "description": "backend.users.views",
         "peekOfCode": "class UserViewSet(ModelViewSet):\n    queryset = User.objects.all()\n    serializer_class = UserSerializer\n    def get_permissions(self):\n        if self.action == \"create\":\n            self.permission_classes = []\n        elif self.action == \"list\":\n            self.permission_classes = [IsAdminUser]\n        elif self.action in [\"retrieve\", \"update\", \"destroy\"]:\n            self.permission_classes = [CustomPermission]",
         "detail": "backend.users.views",
+        "documentation": {}
+    },
+    {
+        "label": "certificate",
+        "kind": 2,
+        "importPath": "backend.utils.generate",
+        "description": "backend.utils.generate",
+        "peekOfCode": "def certificate(student_name, instructor_name, course_name):\n    # Get the base directory of the current file\n    base_dir = os.path.dirname(os.path.abspath(__file__))\n    # Define the correct paths for the certificate template and fonts\n    certificate_path = os.path.join(base_dir, \"certificate.png\")\n    font1_path = os.path.join(base_dir, \"fonts\", \"norwester.otf\")\n    font2_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    font3_path = os.path.join(base_dir, \"fonts\", \"Signature.otf\")\n    font4_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    # Open the certificate template image",
+        "detail": "backend.utils.generate",
         "documentation": {}
     },
     {

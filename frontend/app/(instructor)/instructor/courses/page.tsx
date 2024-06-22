@@ -16,7 +16,7 @@ const InstructorCourses = () => {
   return (
     <article className="mt-5">
       <h1 className="text-3xl font-bold mb-6">My Courses</h1>
-      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
         {data?.map((course: any) => (
           <TeacherCourseCard key={course.id} course={course} />
         ))}

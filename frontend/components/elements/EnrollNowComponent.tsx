@@ -43,7 +43,7 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
   return (
     <div className="space-y-3">
       {enrolled ? (
-        <Link className="pt-2" href={`/profile/courses/${course?.slug}`}>
+        <Link className="pt-2" href={`/my-courses/${course?.slug}`}>
           <Button
             loading={isLoading}
             className="text-lg w-full flex items-center gap-3"

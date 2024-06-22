@@ -37,16 +37,20 @@ const CourseUpdateForm = ({ course }: Props) => {
       showToast("error", "Title is required.");
       return;
     }
+    if (description.length < 15) {
+      showToast("error", "Description must be at least 15 characters.");
+      return;
+    }
+    if (title.length > 70) {
+      showToast("error", "Title must be at most 70 characters.");
+      return;
+    }
     if (!category) {
       showToast("error", "Category is required.");
       return;
     }
     if (!description.trim()) {
       showToast("error", "Description is required.");
-      return;
-    }
-    if (description.trim().length < 15) {
-      showToast("error", "Description must be at least 15 characters.");
       return;
     }
 
@@ -58,8 +62,8 @@ const CourseUpdateForm = ({ course }: Props) => {
     try {
       setUpdating(true);
       const payload = new FormData();
-      payload.append("title", title);
-      payload.append("description", description);
+      payload.append("title", title.trim());
+      payload.append("description", description.trim());
       payload.append(
         "category_id",
         category || data.find((cat: any) => cat.name === category).id

@@ -77,13 +77,13 @@ const DiscussionCard = ({ discussion, queryClient }: Props) => {
     <div className="p-2 bg-gray-50 rounded-lg" key={discussion.id}>
       <div>
         <div className="flex items-center justify-between gap-2 text-lg">
-          <div>
+          <div className="flex items-center gap-2">
             <Image
               src={mediaUrl + discussion.user?.profile_image}
               alt={discussion.user?.name || "User"}
-              width={32}
-              height={32}
-              className="rounded-full"
+              width={80}
+              height={80}
+              className="rounded-full h-8 w-8 object-cover"
             />
             <p>{discussion.user?.full_name}</p>
           </div>
@@ -148,7 +148,7 @@ const DiscussionCard = ({ discussion, queryClient }: Props) => {
                       alt={reply.user?.name || "User"}
                       width={32}
                       height={32}
-                      className="rounded-full"
+                      className="h-12 w-12 rounded-full"
                     />
                     <p>{reply.user?.full_name}</p>
                   </div>

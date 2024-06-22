@@ -28,7 +28,7 @@ const AddSectionDialog = ({ queryClient, courseId }: Props) => {
   const [updating, setUpdating] = React.useState(false);
   const [videoFile, setVideoFile] = React.useState<File | null>(null);
   const handleCreateSection = async () => {
-    if (!title.trim() || !order.trim()) {
+    if (!title.trim() || !order.trim() || !videoFile) {
       showToast("error", "Fill all fields.");
       return;
     }
@@ -47,6 +47,10 @@ const AddSectionDialog = ({ queryClient, courseId }: Props) => {
       if (res.status === 201) {
         showToast("success", "Section created successfully.");
         queryClient.invalidateQueries("course");
+        setTitle("");
+        setOrder("");
+        setIsFree(false);
+        setVideoFile(null);
       }
 
       setTimeout(() => {
@@ -56,7 +60,6 @@ const AddSectionDialog = ({ queryClient, courseId }: Props) => {
       console.error(error);
       showToast("error", "Failed to create section.");
       setUpdating(false);
-      location.reload();
     }
   };
 

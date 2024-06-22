@@ -44,9 +44,9 @@ const UserMenu = () => {
               <Image
                 src={`http://127.0.0.1:8000${user?.profile_image}`}
                 alt={user?.full_name ?? "No Image Found"}
-                width={40}
-                height={40}
-                className="rounded-full"
+                width={150}
+                height={150}
+                className="rounded-full h-12 w-12 object-cover border-2 border-indigo-500 p-1"
               />
 
               <p className="flex flex-col items-start">
@@ -59,25 +59,25 @@ const UserMenu = () => {
           )}
         </div>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="w-[200px]">
         <div className="space-y-2">
           <Button
-            className="w-full"
+            className="w-full flex items-center justify-start"
             variant={"secondary"}
             onClick={() => logout()}
           >
-            <LogOut size={16} className="mr-4" />
-            Logout
+            <LogOut size={18} className="mr-4" />
+            <span>Logout</span>
           </Button>
           <Button
-            className="w-full"
+            className="w-full flex items-center justify-start"
             variant={"secondary"}
             onClick={() => {
               router.push("/");
             }}
           >
-            <ArrowLeftCircle size={16} className="mr-4" />
-            Back to Website
+            <ArrowLeftCircle size={18} className="mr-4" />
+            <span> Back to Website</span>
           </Button>
         </div>
       </PopoverContent>

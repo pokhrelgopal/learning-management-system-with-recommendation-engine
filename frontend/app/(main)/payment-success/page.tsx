@@ -7,7 +7,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import Spinner from "@/components/elements/Spinner";
 import { createPayment } from "@/app/server";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 const PaymentSuccess = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { user, isLoading, error } = useUser();
   const [paying, setPaying] = React.useState(false);
@@ -40,6 +42,7 @@ const PaymentSuccess = () => {
           amount: parseFloat(amount) / 100,
         };
         await createPayment(data);
+        queryClient.invalidateQueries("cart" as InvalidateQueryFilters);
       } catch (error) {
         console.log(error);
       } finally {
@@ -56,6 +59,7 @@ const PaymentSuccess = () => {
     status,
     pidx,
     amount,
+    queryClient,
   ]);
   if (isLoading) return <Spinner />;
   return (
@@ -80,7 +84,7 @@ const PaymentSuccess = () => {
             </p>
             <p> Have a great day! </p>
             <div className="py-10 text-center">
-              <Link href="/profile/courses">
+              <Link href="/my-courses">
                 <Button loading={paying} size={"lg"}>
                   Go to course
                   <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />

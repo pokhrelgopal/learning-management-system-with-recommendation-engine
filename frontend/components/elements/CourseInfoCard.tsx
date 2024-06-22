@@ -102,7 +102,7 @@ const CourseInfoCard = ({ course }: Props) => {
             alt={course?.instructor?.name || "Instructor"}
             width={50}
             height={50}
-            className="rounded-full"
+            className="rounded-full h-12 w-12 object-cover"
           />
           <p className="flex flex-col">
             <span className="text-lg">{course?.instructor?.full_name}</span>

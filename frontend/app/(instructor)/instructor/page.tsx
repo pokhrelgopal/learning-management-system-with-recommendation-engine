@@ -35,7 +35,7 @@ const Instructor = () => {
           </p>
           <div>
             <p className="text-3xl font-bold mt-3">{students}</p>
-            <p className="text-lg">Students</p>
+            <p className="text-lg">{students === 1 ? "Student" : "Students"}</p>
           </div>
         </div>
         <div className="w-full shadow border-l-4 border-indigo-600 p-4 flex items-center gap-4">

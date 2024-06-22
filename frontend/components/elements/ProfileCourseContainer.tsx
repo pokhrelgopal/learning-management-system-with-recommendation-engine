@@ -1,14 +1,15 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
 import useEnrollment from "@/hooks/useEnrollment";
-import { PlayCircle, Scroll } from "lucide-react";
+import { PlayCircle } from "lucide-react";
 import React from "react";
 import EnrollWarning from "./EnrollWarning";
 import SelectedSection from "./SelectedSection";
 import { createProgress } from "@/app/server";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
-import Image from "next/image";
+import { courseProgress } from "@/app/server";
+import { useQuery } from "@tanstack/react-query";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
@@ -19,6 +20,11 @@ const ProfileCourseContainer = ({ course }: Props) => {
   const [selectedSection, setSelectedSection] = React.useState(
     course.sections[0]
   );
+  const { data, isLoading } = useQuery({
+    queryKey: ["courseProgress", course?.id],
+    queryFn: () => courseProgress(course?.id),
+    enabled: !!course?.id,
+  });
   const { user } = useUser();
   const activeClass = "bg-indigo-700 text-white";
   const { enrolled } = useEnrollment(course.id);
@@ -37,15 +43,10 @@ const ProfileCourseContainer = ({ course }: Props) => {
         );
         if (nextSection) {
           setSelectedSection(nextSection);
-          showToast(
-            "success",
-            "Progress saved and moving to the next section!"
-          );
+          showToast("success", "Progress saved !");
         } else {
-          showToast(
-            "success",
-            "Progress saved! You have completed the course."
-          );
+          showToast("success", "Progress saved !");
+          return;
         }
       }
     } catch (error: any) {
@@ -55,7 +56,6 @@ const ProfileCourseContainer = ({ course }: Props) => {
       showToast("error", "An error occurred. Please try again.");
     }
   };
-
   return (
     <article className="flex gap-8">
       <ScrollArea className="max-h-screen">

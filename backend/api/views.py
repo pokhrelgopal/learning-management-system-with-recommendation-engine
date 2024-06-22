@@ -106,6 +106,16 @@ class SectionViewSet(ModelViewSet):
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
+    def destroy(self, request, *args, **kwargs):
+        section = self.get_object()
+        if Enrollment.objects.filter(course=section.course).exists():
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"detail": "Can't delete section with students enrolled."},
+            )
+
+        return super().destroy(request, *args, **kwargs)
+
     @action(detail=False, methods=["GET"], permission_classes=[])
     def get_preview(self, request):
         course_id = request.query_params.get("course_id")
@@ -132,7 +142,6 @@ class CartViewSet(ModelViewSet):
             )
         try:
             user = request.user
-            print(course_id, user)
             course = Course.objects.get(id=course_id)
             if Enrollment.objects.filter(user=user, course=course).exists():
                 return Response(
@@ -400,4 +409,59 @@ class AttachmentViewSet(ModelViewSet):
         except IntegrityError:
             return Response(
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+
+class CertificateViewSet(ModelViewSet):
+    queryset = Certificate.objects.all().select_related("user", "course")
+    serializer_class = CertificateSerializer
+    permission_classes = [CustomPermission]
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            self.permission_classes = [IsAdminUser]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
+    def get_certificate(self, request):
+        course_id = request.query_params.get("course_id")
+        if not course_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "course_id required in query parameter."},
+            )
+        # ! Check if the user is enrolled in the course
+
+        if not Enrollment.objects.filter(
+            Q(user=request.user) & Q(course__id=course_id)
+        ).exists():
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"detail": "Not Enrolled in the course."},
+            )
+
+        try:
+            certificate = Certificate.objects.get(
+                Q(user=request.user) & Q(course__id=course_id)
+            )
+            serializer = CertificateSerializer(certificate)
+            return Response(serializer.data)
+        except Certificate.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Certificate not found."},
+            )
+        except Course.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
             )

@@ -19,6 +19,10 @@ const CreateCourse = () => {
       showToast("error", "Title is required.");
       return;
     }
+    if (title.trim().length > 70) {
+      showToast("error", "Title must be less than 70 characters.");
+      return;
+    }
     try {
       if (!user) {
         return;
