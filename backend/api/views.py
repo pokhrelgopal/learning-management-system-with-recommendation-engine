@@ -82,7 +82,11 @@ class CourseViewSet(ModelViewSet):
         published_courses = Course.objects.filter(
             instructor=request.user, is_published=True
         ).count()
-        students = Enrollment.objects.filter(course__instructor=request.user).count()
+        students = (
+            Enrollment.objects.filter(course__instructor=request.user)
+            .exclude(user=request.user)
+            .count()
+        )
         total_earning = Payment.objects.filter(
             course__instructor=request.user
         ).aggregate(total_earning=Sum("amount"))
