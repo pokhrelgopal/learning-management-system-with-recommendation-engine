@@ -1,7 +1,7 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
 import useEnrollment from "@/hooks/useEnrollment";
-import { PlayCircle } from "lucide-react";
+import { ArrowRightCircle, PlayCircle, ShieldAlert } from "lucide-react";
 import React from "react";
 import EnrollWarning from "./EnrollWarning";
 import SelectedSection from "./SelectedSection";
@@ -11,6 +11,8 @@ import showToast from "@/lib/toaster";
 import { courseProgress } from "@/app/server";
 import { useQuery } from "@tanstack/react-query";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 type Props = {
   course: any;
@@ -20,11 +22,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
   const [selectedSection, setSelectedSection] = React.useState(
     course.sections[0]
   );
-  const { data, isLoading } = useQuery({
-    queryKey: ["courseProgress", course?.id],
-    queryFn: () => courseProgress(course?.id),
-    enabled: !!course?.id,
-  });
+
   const { user } = useUser();
   const activeClass = "bg-indigo-700 text-white";
   const { enrolled } = useEnrollment(course.id);
@@ -56,6 +54,34 @@ const ProfileCourseContainer = ({ course }: Props) => {
       showToast("error", "An error occurred. Please try again.");
     }
   };
+  if (!course.is_published) {
+    return (
+      <div>
+        <div className="bg-gray-100 mt-10">
+          <div className="bg-white p-6  md:mx-auto">
+            <ShieldAlert className="w-16 h-16 text-red-500 mx-auto mb-5" />
+            <div className="text-center">
+              <h3 className="md:text-3xl text-base text-gray-900 font-semibold text-center">
+                Access Denied!
+              </h3>
+              <p className="text-gray-600 my-2 text-lg">
+                This course is not published yet.
+              </p>
+
+              <div className="py-10 text-center">
+                <Link href={`/courses`} passHref>
+                  <Button size={"lg"} className="text-lg">
+                    Back to Courses
+                    <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <article className="flex gap-8">
       <ScrollArea className="max-h-screen">

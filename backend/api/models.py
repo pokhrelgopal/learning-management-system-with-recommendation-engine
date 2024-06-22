@@ -44,6 +44,7 @@ class Course(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Course, self).save(*args, **kwargs)
+        Enrollment.objects.get_or_create(user=self.instructor, course=self)
 
     def can_change(self, user):
         return user == self.instructor or user.is_superuser

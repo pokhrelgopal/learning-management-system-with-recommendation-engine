@@ -27,6 +27,7 @@ const ProfileCourseCard = ({ course }: Props) => {
     queryKey: ["courseProgress", course?.id],
     queryFn: () => courseProgress(course?.id),
     enabled: !!course?.id,
+    retry: 0,
   });
   const completed_percentage = data?.completed_percentage || 0;
 
