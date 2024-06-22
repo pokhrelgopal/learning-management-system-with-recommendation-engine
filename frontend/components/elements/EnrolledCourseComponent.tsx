@@ -22,7 +22,6 @@ const EnrolledCourseComponent = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold my-5">Enrolled Courses</h1>
       {data?.length === 0 && (
         <>
           <p className="text-lg">You are not enrolled in any courses yet.</p>

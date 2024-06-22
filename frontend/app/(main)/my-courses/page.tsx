@@ -2,11 +2,7 @@ import EnrolledCourseComponent from "@/components/elements/EnrolledCourseCompone
 import React from "react";
 
 const ProfileCourses = () => {
-  return (
-    <div className="mx-10">
-      <EnrolledCourseComponent />
-    </div>
-  );
+  return <EnrolledCourseComponent />;
 };
 
 export default ProfileCourses;

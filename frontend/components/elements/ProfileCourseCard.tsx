@@ -5,6 +5,7 @@ import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { courseProgress } from "@/app/server";
 import { useQuery } from "@tanstack/react-query";
+import { Trophy } from "lucide-react";
 
 interface Props {
   course: any;
@@ -18,7 +19,7 @@ const ProfileCourseCard = ({ course }: Props) => {
   const completed_percentage = data?.completed_percentage || 0;
   return (
     <div className="block rounded-lg border p-4 shadow-sm shadow-indigo-100">
-      <Link href={`/profile/courses/${course?.slug}`}>
+      <Link href={`/my-courses/${course?.slug}`}>
         <Image
           src={mediaUrl + course?.thumbnail}
           alt={course?.title}
@@ -30,7 +31,13 @@ const ProfileCourseCard = ({ course }: Props) => {
       <div className="mt-2">
         <dl>
           <div className="flex justify-end mb-1">
-            {completed_percentage}% Completed
+            <p>{completed_percentage}% Completed</p>
+            {completed_percentage === 100 && (
+              <Trophy
+                size={20}
+                className="text-yellow-600 ml-2 cursor-pointer"
+              />
+            )}
           </div>
           <div className="flex items-center justify-between mb-2">
             <Progress value={completed_percentage} />

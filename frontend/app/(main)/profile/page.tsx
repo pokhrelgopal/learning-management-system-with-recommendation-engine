@@ -12,8 +12,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = React.useState("personal-details");
   const active = "bg-white text-indigo-600";
   return (
-    <div className="mx-10 mt-5">
-      <h2 className="text-2xl font-bold mb-6">Update Profile</h2>
+    <div className="mt-5">
       <div className="flex gap-10">
         <div className="bg-gray-100 min-w-80 p-4 rounded-xl h-fit">
           <ul className="space-y-3">
@@ -71,7 +70,7 @@ const ChangePassword = () => {
         setConfirmPassword("");
       }
     } catch (error) {
-      showToast("error", "An error occurred");
+      showToast("error", "An error occurred while updating password.");
     } finally {
       setUpdating(false);
     }
@@ -163,7 +162,11 @@ const PersonalDetails = () => {
         showToast("success", "Details updated successfully");
         queryClient.invalidateQueries("me" as InvalidateQueryFilters);
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.data?.email) {
+        showToast("error", error.response.data.email[0]);
+        return;
+      }
       showToast("error", "An error occurred");
     } finally {
       setUpdating(false);

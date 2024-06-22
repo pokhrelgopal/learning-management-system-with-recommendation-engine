@@ -19,10 +19,15 @@ const items = [
     name: "Profile",
     link: "/profile",
   },
+  {
+    id: 4,
+    name: "My Learning",
+    link: "/my-courses",
+  },
 ];
 
 const MenuItems = () => {
-  const activeNavClass = "underline underline-offset-4";
+  const activeNavClass = "underline underline-offset-8";
   const currentPath = usePathname();
 
   return (

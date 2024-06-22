@@ -69,6 +69,6 @@ export function middleware(req: AuthenticatedRequest) {
       req.nextUrl.pathname.includes("/instructor") ||
       req.nextUrl.pathname.includes("/instructor/courses"))
   ) {
-    return NextResponse.rewrite(new URL("/", req.url));
+    return NextResponse.rewrite(new URL("/login", req.url));
   }
 }

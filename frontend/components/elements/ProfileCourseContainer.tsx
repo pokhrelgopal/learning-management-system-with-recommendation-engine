@@ -1,13 +1,15 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
 import useEnrollment from "@/hooks/useEnrollment";
-import { PlayCircle } from "lucide-react";
+import { PlayCircle, Scroll } from "lucide-react";
 import React from "react";
 import EnrollWarning from "./EnrollWarning";
 import SelectedSection from "./SelectedSection";
 import { createProgress } from "@/app/server";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
+import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   course: any;
@@ -18,7 +20,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
     course.sections[0]
   );
   const { user } = useUser();
-  const activeClass = "border-r-indigo-700";
+  const activeClass = "bg-indigo-700 text-white";
   const { enrolled } = useEnrollment(course.id);
   if (!enrolled) return <EnrollWarning slug={course.slug} />;
   const handleVideoEnd = async () => {
@@ -55,27 +57,29 @@ const ProfileCourseContainer = ({ course }: Props) => {
   };
 
   return (
-    <article className="flex">
-      <aside className="w-96 fixed bg-gray-50 h-screen border-r">
-        {course.sections
-          .sort((a: any, b: any) => a.order - b.order)
-          .map((section: any) => {
-            const isActive = selectedSection.id === section.id;
-            return (
-              <p
-                key={section.id}
-                className={`cursor-pointer bg-white pl-10 py-5 border-b border-r-4 ${
-                  isActive ? activeClass : "border-r-white"
-                } flex items-center gap-2`}
-                onClick={() => setSelectedSection(section)}
-              >
-                <PlayCircle size={24} />
-                <span>{section.title}</span>
-              </p>
-            );
-          })}
-      </aside>
-      <section className="ml-96 p-1 w-full">
+    <article className="flex gap-8">
+      <ScrollArea className="max-h-screen">
+        <aside className="w-[500px] max-h-screen space-y-2">
+          {course.sections
+            .sort((a: any, b: any) => a.order - b.order)
+            .map((section: any) => {
+              const isActive = selectedSection.id === section.id;
+              return (
+                <p
+                  key={section.id}
+                  className={`cursor-pointer pl-2 border-r-4 py-5 bg-gray-50 rounded-lg ${
+                    isActive ? activeClass : ""
+                  } flex items-center gap-2`}
+                  onClick={() => setSelectedSection(section)}
+                >
+                  <PlayCircle size={29} className="ml-1" />
+                  <span>{section.title}</span>
+                </p>
+              );
+            })}
+        </aside>
+      </ScrollArea>
+      <section className="p-1 w-full">
         <video
           key={selectedSection.id} // Add key to ensure re-render
           width="320"
