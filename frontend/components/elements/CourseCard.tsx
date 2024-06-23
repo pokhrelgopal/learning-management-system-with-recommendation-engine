@@ -44,7 +44,11 @@ const CourseCard = ({ course }: Props) => {
     <div className="block rounded-lg border p-4 shadow-sm shadow-indigo-100">
       <Link href={`/courses/${course?.slug}`}>
         <Image
-          src={mediaUrl + course?.thumbnail}
+          src={
+            course?.thumbnail.startsWith("http")
+              ? course?.thumbnail
+              : mediaUrl + course?.thumbnail
+          }
           alt={course?.title}
           width={300}
           height={200}

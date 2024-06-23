@@ -161,3 +161,8 @@ export const getCertificate = async (courseId: string) => {
   );
   return res.data;
 };
+// ! ============ Recommendation ============ !
+export const recommendation = async (slug: string) => {
+  const res = await axios.get(endpoints.recommendation.recommendation(slug));
+  return res.data;
+};

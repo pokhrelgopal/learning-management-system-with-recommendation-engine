@@ -66,4 +66,7 @@ export const endpoints = {
     getCertificate: (courseId: string) =>
       url + `certificates/get_certificate?course_id=${courseId}`,
   },
+  recommendation: {
+    recommendation: (slug: string) => url + `recommendation?course=${slug}`,
+  },
 };

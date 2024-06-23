@@ -810,6 +810,39 @@
         "documentation": {}
     },
     {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "CountVectorizer",
+        "importPath": "sklearn.feature_extraction.text",
+        "description": "sklearn.feature_extraction.text",
+        "isExtraImport": true,
+        "detail": "sklearn.feature_extraction.text",
+        "documentation": {}
+    },
+    {
+        "label": "PorterStemmer",
+        "importPath": "nltk.stem.porter",
+        "description": "nltk.stem.porter",
+        "isExtraImport": true,
+        "detail": "nltk.stem.porter",
+        "documentation": {}
+    },
+    {
+        "label": "cosine_similarity",
+        "importPath": "sklearn.metrics.pairwise",
+        "description": "sklearn.metrics.pairwise",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics.pairwise",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -1584,6 +1617,33 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class CertificateViewSet(ModelViewSet):\n    queryset = Certificate.objects.all().select_related(\"user\", \"course\")\n    serializer_class = CertificateSerializer\n    permission_classes = [CustomPermission]\n    def get_permissions(self):\n        if self.action in [\"list\", \"retrieve\"]:\n            self.permission_classes = [IsAdminUser]\n        elif self.action == \"create\":\n            self.permission_classes = [IsAuthenticated]\n        return super().get_permissions()",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "RecommendedCourseViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class RecommendedCourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True\n    )\n    serializer_class = CourseListSerializer\n    def get_queryset(self):\n        current_slug = self.request.query_params.get(\"course\", None)\n        if not current_slug:\n            return Course.objects.none()\n        courses = Course.objects.filter(is_published=True).values_list(",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "stem",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def stem(text):\n    y = []\n    for i in text.split():\n        y.append(ps.stem(i))\n    return \" \".join(y)\nclass CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "ps",
+        "kind": 5,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "ps = PorterStemmer()\ndef stem(text):\n    y = []\n    for i in text.split():\n        y.append(ps.stem(i))\n    return \" \".join(y)\nclass CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):",
         "detail": "backend.api.views",
         "documentation": {}
     },

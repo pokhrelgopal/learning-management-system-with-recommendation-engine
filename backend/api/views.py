@@ -11,6 +11,22 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import IntegrityError
 from django.db.models import Sum
 
+# ! Recommendation
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.stem.porter import PorterStemmer
+from sklearn.metrics.pairwise import cosine_similarity
+
+ps = PorterStemmer()
+
+
+def stem(text):
+    y = []
+    for i in text.split():
+        y.append(ps.stem(i))
+
+    return " ".join(y)
+
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
@@ -472,3 +488,74 @@ class CertificateViewSet(ModelViewSet):
             return Response(
                 status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
             )
+
+
+class RecommendedCourseViewSet(ModelViewSet):
+    queryset = Course.objects.select_related("instructor", "category").filter(
+        is_published=True
+    )
+    serializer_class = CourseListSerializer
+
+    def get_queryset(self):
+        current_slug = self.request.query_params.get("course", None)
+        if not current_slug:
+            return Course.objects.none()
+
+        courses = Course.objects.filter(is_published=True).values_list(
+            "id", "title", "description", "instructor", "category", "slug"
+        )
+        instructors = User.objects.values_list("id", "full_name")
+        categories = Category.objects.values_list("id", "name")
+
+        courses_df = pd.DataFrame(
+            courses,
+            columns=["id", "title", "description", "instructor", "category", "slug"],
+        )
+        instructors_df = pd.DataFrame(instructors, columns=["id", "full_name"])
+        categories_df = pd.DataFrame(categories, columns=["id", "name"])
+
+        instructors_df["full_name"] = instructors_df["full_name"].str.replace(" ", "")
+        categories_df["name"] = categories_df["name"].str.replace(" ", "")
+
+        courses_df["instructor"] = courses_df["instructor"].map(
+            dict(instructors_df.values.tolist())
+        )
+        courses_df["category"] = courses_df["category"].map(
+            dict(categories_df.values.tolist())
+        )
+
+        courses_df["tags"] = (
+            courses_df["title"]
+            + " "
+            + courses_df["description"]
+            + " "
+            + courses_df["instructor"]
+            + " "
+            + courses_df["category"]
+            + " "
+        )
+        courses_df["tags"] = courses_df["tags"].apply(stem)
+
+        cv = CountVectorizer(max_features=5000, stop_words="english")
+        vector = cv.fit_transform(courses_df["tags"]).toarray()
+        similarity = cosine_similarity(vector)
+
+        def recommend_courses(course_slug):
+            if course_slug not in courses_df["slug"].values:
+                return []
+            course_index = courses_df[courses_df["slug"] == course_slug].index[0]
+            similar_courses = list(enumerate(similarity[course_index]))
+            sorted_similar_courses = sorted(
+                similar_courses, key=lambda x: x[1], reverse=True
+            )
+            recommended_courses = []
+            for i in sorted_similar_courses[1:5]:
+                recommended_courses.append(courses_df.iloc[i[0]]["title"])
+            return recommended_courses
+
+        recommended_courses = recommend_courses(current_slug)
+        if not recommended_courses:
+            return Course.objects.none()
+
+        queryset = Course.objects.filter(title__in=recommended_courses)
+        return queryset
