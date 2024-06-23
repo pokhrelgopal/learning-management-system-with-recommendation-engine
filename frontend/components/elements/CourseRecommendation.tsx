@@ -20,7 +20,6 @@ const CourseRecommendation = ({ slug }: Props) => {
         <SkeletonCourseLoader />
         <SkeletonCourseLoader />
         <SkeletonCourseLoader />
-        <SkeletonCourseLoader />
       </div>
     );
 

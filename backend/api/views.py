@@ -545,6 +545,7 @@ class RecommendedCourseViewSet(ModelViewSet):
                 return []
             course_index = courses_df[courses_df["slug"] == course_slug].index[0]
             similar_courses = list(enumerate(similarity[course_index]))
+            print(similar_courses)
             sorted_similar_courses = sorted(
                 similar_courses, key=lambda x: x[1], reverse=True
             )
