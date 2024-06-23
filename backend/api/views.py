@@ -44,10 +44,13 @@ class CourseViewSet(ModelViewSet):
             )
 
     def update(self, request, *args, **kwargs):
-        # user cant unpublish a course if it has students enrolled
         if request.data.get("is_published") == False:
             course = Course.objects.get(slug=kwargs["slug"])
-            if Enrollment.objects.filter(course=course).exists():
+            if (
+                Enrollment.objects.filter(course=course)
+                .exclude(user=request.user)
+                .exists()
+            ):
                 return Response(
                     status=status.HTTP_403_FORBIDDEN,
                     data={"detail": "Can't unpublish course with students enrolled."},

@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { updateSection } from "@/app/server";
 import showToast from "@/lib/toaster";
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
+import { mediaUrl } from "@/app/endpoints";
 
 type Props = {
   section: any;
@@ -61,7 +62,6 @@ const EditSectionDialog = ({ section }: Props) => {
       setVideoFile(e.target.files[0]);
     }
   };
-
   return (
     <AlertDialog>
       <AlertDialogTrigger>
@@ -96,9 +96,6 @@ const EditSectionDialog = ({ section }: Props) => {
             />
           </div>
           <div className="form-group mt-2">
-            <Label htmlFor="isFree" className="text-lg">
-              Status
-            </Label>
             <div className="mt-1 flex items-center gap-2">
               <Label htmlFor="isFree" className="text-lg">
                 Not Free
@@ -113,6 +110,14 @@ const EditSectionDialog = ({ section }: Props) => {
             </div>
           </div>
           <div className="form-group mt-2">
+            <div className="my-1">
+              <video
+                src={mediaUrl + section?.video}
+                controls
+                autoPlay={true}
+                className="mt-1 w-full"
+              ></video>
+            </div>
             <Label htmlFor="video" className="text-lg">
               Video
             </Label>

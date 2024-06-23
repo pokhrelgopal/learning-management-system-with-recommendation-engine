@@ -20,7 +20,6 @@ const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    console.log(fullName, email, password, confirmPassword, role);
     if (!fullName || !email || !password || !confirmPassword) {
       showToast("error", "Please fill all fields.");
       return;
@@ -33,8 +32,8 @@ const RegisterForm = () => {
       showToast("error", "Please enter a valid email.");
       return;
     }
-    if (password.length < 8) {
-      showToast("error", "Password should have at least 8 characters.");
+    if (password.length < 6) {
+      showToast("error", "Password should have at least 6 characters.");
       return;
     }
     if (password !== confirmPassword) {
