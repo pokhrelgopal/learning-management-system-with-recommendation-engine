@@ -714,22 +714,6 @@
         "documentation": {}
     },
     {
-        "label": "Q",
-        "importPath": "django.db.models",
-        "description": "django.db.models",
-        "isExtraImport": true,
-        "detail": "django.db.models",
-        "documentation": {}
-    },
-    {
-        "label": "Sum",
-        "importPath": "django.db.models",
-        "description": "django.db.models",
-        "isExtraImport": true,
-        "detail": "django.db.models",
-        "documentation": {}
-    },
-    {
         "label": "action",
         "importPath": "rest_framework.decorators",
         "description": "rest_framework.decorators",
@@ -807,6 +791,38 @@
         "description": "rest_framework.permissions",
         "isExtraImport": true,
         "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "Sum",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "F",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Q",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "TruncDate",
+        "importPath": "django.db.models.functions",
+        "description": "django.db.models.functions",
+        "isExtraImport": true,
+        "detail": "django.db.models.functions",
         "documentation": {}
     },
     {
@@ -1626,6 +1642,15 @@
         "importPath": "backend.api.views",
         "description": "backend.api.views",
         "peekOfCode": "class RecommendedCourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter(\n        is_published=True\n    )\n    serializer_class = CourseListSerializer\n    def get_queryset(self):\n        current_slug = self.request.query_params.get(\"course\", None)\n        if not current_slug:\n            return Course.objects.none()\n        courses = Course.objects.filter(is_published=True).values_list(",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "AdminPanelViewSet",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class AdminPanelViewSet(ModelViewSet):\n    queryset = User.objects.all()\n    serializer_class = CourseListSerializer\n    permission_classes = [IsAdminUser]\n    @action(detail=False, methods=[\"GET\"])\n    def get_stats(self, request):\n        total_users = User.objects.exclude(role=\"admin\").count()\n        total_instructors = User.objects.filter(role=\"instructor\").count()\n        total_students = User.objects.filter(role=\"student\").count()\n        total_courses = Course.objects.count()",
         "detail": "backend.api.views",
         "documentation": {}
     },

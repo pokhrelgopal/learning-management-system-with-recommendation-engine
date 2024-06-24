@@ -1,4 +1,5 @@
 "use client";
+import { mediaUrl } from "@/app/endpoints";
 import { updateUser } from "@/app/server";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
 import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+import { ImageUp } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const Profile = () => {
@@ -116,6 +119,9 @@ const PersonalDetails = () => {
   const { user, isLoading } = useUser();
   const [fullName, setFullName] = React.useState(user?.full_name || "");
   const [email, setEmail] = React.useState(user?.email || "");
+  const [profile, setProfile] = React.useState(mediaUrl + user?.profile_image);
+  const [profileFile, setProfileFile] = React.useState<File | null>(null);
+
   const queryClient = useQueryClient();
   React.useEffect(() => {
     setFullName(user?.full_name || "");
@@ -136,10 +142,6 @@ const PersonalDetails = () => {
       showToast("error", "Full name should only have alphabets and spaces.");
       return;
     }
-    if (fullName === user?.full_name && email === user?.email) {
-      showToast("error", "No changes made.");
-      return;
-    }
     if (email !== user?.email && !/^\S+@\S+\.\S+$/.test(email)) {
       showToast("error", "Invalid email address.");
       return;
@@ -150,11 +152,11 @@ const PersonalDetails = () => {
     }
     try {
       setUpdating(true);
-      let payload: { full_name: string; email?: string } = {
-        full_name: fullName,
-      };
-      if (email !== user?.email) {
-        payload = { full_name: fullName, email };
+      const payload = new FormData();
+      payload.append("full_name", fullName);
+      payload.append("email", email);
+      if (profileFile) {
+        payload.append("profile_image", profileFile);
       }
       if (!user) return;
       const res = await updateUser(user?.id, payload);
@@ -172,10 +174,45 @@ const PersonalDetails = () => {
       setUpdating(false);
     }
   };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileFile(e.target.files[0]);
+      setProfile(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const handleImageClick = () => {
+    const fileInput = document.getElementById("fileInput");
+    if (!fileInput) return;
+    fileInput.click();
+  };
   return (
     <div className="w-1/2">
       <h2 className="text-2xl font-bold mb-6">Update Details</h2>
       <form onSubmit={(e) => e.preventDefault()}>
+        <div className="relative mb-6 flex justify-center">
+          <Image
+            src={profile}
+            alt="Profile Image"
+            width={500}
+            height={500}
+            className="rounded-full h-32 w-32 object-cover"
+          />
+          <span className="absolute bottom-0 right-48 cursor-pointer bg-green-500 rounded-full">
+            <ImageUp
+              onClick={handleImageClick}
+              size={24}
+              className="text-white p-1"
+            />
+          </span>
+          <Input
+            id="fileInput"
+            type="file"
+            className="mt-3 hidden"
+            onChange={handleFileChange}
+          />
+        </div>
         <div className="mb-3">
           <Label className="text-lg" htmlFor="current-password">
             Full Name

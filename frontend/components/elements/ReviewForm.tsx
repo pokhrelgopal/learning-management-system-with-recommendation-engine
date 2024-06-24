@@ -12,14 +12,14 @@ import { createRating } from "@/app/server";
 import { Button } from "../ui/button";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
-import { QueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
+import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
 
 type Props = {
   courseId: string;
 };
 
 const ReviewForm = ({ courseId }: Props) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const [review, setReview] = React.useState("");
   const [rating, setRating] = React.useState(1);
   const [loading, setLoading] = React.useState(false);

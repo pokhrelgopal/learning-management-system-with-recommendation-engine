@@ -42,6 +42,7 @@ export const endpoints = {
   },
   payment: {
     payment: url + "payments/",
+    details: url + "payments/get_details/", // ! Admin only path
   },
   review: {
     review: url + "reviews/",
@@ -68,5 +69,9 @@ export const endpoints = {
   },
   recommendation: {
     recommendation: (slug: string) => url + `recommendation?course=${slug}`,
+  },
+  admin: {
+    // http://127.0.0.1:8000/api/v1/admin/get_stats
+    getStats: url + "admin/get_stats/",
   },
 };

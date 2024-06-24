@@ -16,6 +16,7 @@ router.register(r"progress", ProgressViewSet, basename="progress")
 router.register(r"attachments", AttachmentViewSet, basename="attachments")
 router.register(r"certificates", CertificateViewSet, basename="notifications")
 router.register(r"recommendation", RecommendedCourseViewSet, basename="recommendation")
+router.register(r"admin", AdminPanelViewSet, basename="admin")
 
 urlpatterns = []
 

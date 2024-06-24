@@ -166,3 +166,13 @@ export const recommendation = async (slug: string) => {
   const res = await axios.get(endpoints.recommendation.recommendation(slug));
   return res.data;
 };
+// ! ============ Admin ============ !
+export const getAdminStats = async () => {
+  const res = await axios.get(endpoints.admin.getStats, createHeaders());
+  return res.data;
+};
+
+export const getPaymentDetails = async () => {
+  const res = await axios.get(endpoints.payment.details, createHeaders());
+  return res.data;
+};

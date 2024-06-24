@@ -1,6 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
 from users.permissions import *
-from django.db.models import Q
 from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,12 +8,13 @@ from api.serializers import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import IntegrityError
-from django.db.models import Sum
+from django.db.models import Sum, F, Q
+from django.db.models.functions import TruncDate
 
 # ! Recommendation
-import pandas as pd
+import pandas as pd  # type: ignore
 from sklearn.feature_extraction.text import CountVectorizer
-from nltk.stem.porter import PorterStemmer
+from nltk.stem.porter import PorterStemmer  # type: ignore
 from sklearn.metrics.pairwise import cosine_similarity
 
 ps = PorterStemmer()
@@ -212,6 +212,17 @@ class PaymentViewSet(ModelViewSet):
             return Response(
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_details(self, request):
+        payments = (
+            Payment.objects.annotate(date=TruncDate("created_at"))
+            .values("date")
+            .annotate(total_amount=Sum("amount"))
+            .order_by("date")
+        )
+
+        return Response(payments)
 
 
 class EnrollmentViewSet(ModelViewSet):
@@ -545,7 +556,6 @@ class RecommendedCourseViewSet(ModelViewSet):
                 return []
             course_index = courses_df[courses_df["slug"] == course_slug].index[0]
             similar_courses = list(enumerate(similarity[course_index]))
-            print(similar_courses)
             sorted_similar_courses = sorted(
                 similar_courses, key=lambda x: x[1], reverse=True
             )
@@ -560,3 +570,33 @@ class RecommendedCourseViewSet(ModelViewSet):
 
         queryset = Course.objects.filter(title__in=recommended_courses)
         return queryset
+
+
+# ! Data for Admin Panel
+class AdminPanelViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = CourseListSerializer
+    permission_classes = [IsAdminUser]
+
+    @action(detail=False, methods=["GET"])
+    def get_stats(self, request):
+        total_users = User.objects.exclude(role="admin").count()
+        total_instructors = User.objects.filter(role="instructor").count()
+        total_students = User.objects.filter(role="student").count()
+        total_courses = Course.objects.count()
+        total_enrollments = Enrollment.objects.exclude(
+            Q(user__role="instructor") & Q(course__instructor=F("user"))
+        ).count()
+        total_payments = Payment.objects.aggregate(total_payments=Sum("amount"))[
+            "total_payments"
+        ]
+        return Response(
+            {
+                "total_users": total_users,
+                "total_instructors": total_instructors,
+                "total_students": total_students,
+                "total_courses": total_courses,
+                "total_enrollments": total_enrollments,
+                "total_payments": total_payments or 0.0,
+            }
+        )

@@ -28,12 +28,12 @@ const CourseReviews = ({ reviews, courseId }: Props) => {
                       alt={review.user?.name || "User"}
                       width={32}
                       height={32}
-                      className="rounded-full"
+                      className="rounded-full h-10 w-10 object-cover"
                     />
                     <p>{review.user?.full_name}</p>
                   </div>
-                  <div className="ml-10">
-                    <p className="my-">
+                  <div className="ml-11">
+                    <p className="my-1">
                       <StarComponent count={parseInt(review.rating)} />
                     </p>
                     <p className="text-gray-600">{review?.review}</p>
