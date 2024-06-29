@@ -57,6 +57,11 @@ export const createCourse = async (data: any) =>
 
 export const updateCourse = async (slug: string, data: any) =>
   await axios.patch(endpoints.courses.detail(slug), data, createHeaders());
+
+export const getAllCourses = async () => {
+  const res = await axios.get(endpoints.courses.allCourses, createHeaders());
+  return res.data;
+};
 // ! ============ Sections============ !
 export const getPreview = async (courseId: string) => {
   const res = await axios.get(endpoints.sections.preview(courseId));

@@ -14,7 +14,7 @@ const AdminInstructor = () => {
   if (isLoading) {
     return <Spinner />;
   }
-
+  console.log(data);
   return (
     <div className="mt-5">
       <h1 className="text-3xl font-bold mb-6">Instructors</h1>

@@ -18,6 +18,7 @@ export const endpoints = {
     publishedCourses: url + "courses/get_published_courses/",
     getStats: url + "courses/get_stats/",
     published: url + "courses/get_published_courses/",
+    allCourses: url + "courses/get_all_courses/",
   },
   sections: {
     section: url + "sections/",

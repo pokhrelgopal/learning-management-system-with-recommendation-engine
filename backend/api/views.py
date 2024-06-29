@@ -91,6 +91,12 @@ class CourseViewSet(ModelViewSet):
         serializer = CourseListSerializer(courses, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_all_courses(self, request):
+        courses = Course.objects.all()
+        serializer = CourseListSerializer(courses, many=True)
+        return Response(serializer.data)
+
     @action(detail=False, methods=["GET"])
     def get_stats(self, request):
         if not request.user.role == "instructor":
