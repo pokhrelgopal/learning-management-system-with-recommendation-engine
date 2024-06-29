@@ -89,19 +89,11 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
         "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -289,6 +281,22 @@
         "documentation": {}
     },
     {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "migrations",
         "importPath": "django.db",
         "description": "django.db",
@@ -354,6 +362,22 @@
     },
     {
         "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -1265,6 +1289,15 @@
         "description": "backend.api.migrations.0021_alter_certificate_file",
         "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0020_certificate\"),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"certificate\",\n            name=\"file\",\n            field=models.FileField(blank=True, null=True, upload_to=\"certificates/\"),\n        ),",
         "detail": "backend.api.migrations.0021_alter_certificate_file",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0022_alter_course_instructor",
+        "description": "backend.api.migrations.0022_alter_course_instructor",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0021_alter_certificate_file\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name=\"course\",\n            name=\"instructor\",\n            field=models.ForeignKey(",
+        "detail": "backend.api.migrations.0022_alter_course_instructor",
         "documentation": {}
     },
     {

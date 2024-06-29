@@ -62,3 +62,13 @@ class UserViewSet(ModelViewSet):
     # ! This is a custom action that returns the current user
     def get_user(self, request):
         return Response(UserSerializer(request.user).data)
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_students(self, request):
+        students = User.objects.filter(role="student")
+        return Response(UserSerializer(students, many=True).data)
+
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_instructors(self, request):
+        instructors = User.objects.filter(role="instructor")
+        return Response(UserSerializer(instructors, many=True).data)

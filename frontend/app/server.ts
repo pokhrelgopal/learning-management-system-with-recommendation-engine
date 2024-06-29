@@ -176,3 +176,13 @@ export const getPaymentDetails = async () => {
   const res = await axios.get(endpoints.payment.details, createHeaders());
   return res.data;
 };
+
+export const getStudents = async () => {
+  const res = await axios.get(endpoints.admin.getStudents, createHeaders());
+  return res.data;
+};
+
+export const getInstructors = async () => {
+  const res = await axios.get(endpoints.admin.getInstructors, createHeaders());
+  return res.data;
+};

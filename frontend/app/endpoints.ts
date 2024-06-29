@@ -71,7 +71,8 @@ export const endpoints = {
     recommendation: (slug: string) => url + `recommendation?course=${slug}`,
   },
   admin: {
-    // http://127.0.0.1:8000/api/v1/admin/get_stats
     getStats: url + "admin/get_stats/",
+    getStudents: url + "user/get_students/",
+    getInstructors: url + "user/get_instructors/",
   },
 };

@@ -23,6 +23,8 @@ class UserSerializer(serializers.ModelSerializer):
             "full_name",
             "role",
             "profile_image",
+            "enrollments",
+            "courses",
         ]
 
     def create(self, validated_data):
@@ -44,6 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = [

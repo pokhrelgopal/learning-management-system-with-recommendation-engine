@@ -26,7 +26,7 @@ class Course(models.Model):
         blank=True,
     )
     instructor = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="instructor"
+        User, on_delete=models.CASCADE, related_name="courses"
     )
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.0, null=True, blank=True
