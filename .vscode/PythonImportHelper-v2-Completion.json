@@ -859,6 +859,14 @@
         "documentation": {}
     },
     {
+        "label": "TfidfVectorizer",
+        "importPath": "sklearn.feature_extraction.text",
+        "description": "sklearn.feature_extraction.text",
+        "isExtraImport": true,
+        "detail": "sklearn.feature_extraction.text",
+        "documentation": {}
+    },
+    {
         "label": "CountVectorizer",
         "importPath": "sklearn.feature_extraction.text",
         "description": "sklearn.feature_extraction.text",

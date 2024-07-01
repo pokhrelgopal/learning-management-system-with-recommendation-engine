@@ -13,7 +13,7 @@ from django.db.models.functions import TruncDate
 
 # ! Recommendation
 import pandas as pd  # type: ignore
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer  # type: ignore
 from nltk.stem.porter import PorterStemmer  # type: ignore
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -553,7 +553,7 @@ class RecommendedCourseViewSet(ModelViewSet):
         )
         courses_df["tags"] = courses_df["tags"].apply(stem)
 
-        cv = CountVectorizer(max_features=5000, stop_words="english")
+        cv = TfidfVectorizer(max_features=5000, stop_words="english")
         vector = cv.fit_transform(courses_df["tags"]).toarray()
         similarity = cosine_similarity(vector)
 

@@ -8,11 +8,10 @@ import SelectedSection from "./SelectedSection";
 import { createProgress } from "@/app/server";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
-import { courseProgress } from "@/app/server";
-import { useQuery } from "@tanstack/react-query";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import Spinner from "./Spinner";
 
 type Props = {
   course: any;
@@ -23,9 +22,9 @@ const ProfileCourseContainer = ({ course }: Props) => {
     course.sections[0]
   );
 
-  const { user } = useUser();
+  const { user, isLoading: userLoading } = useUser();
+  const { enrolled, isLoading: enrollmentLoading } = useEnrollment(course.id);
   const activeClass = "bg-indigo-700 text-white";
-  const { enrolled } = useEnrollment(course.id);
   if (!enrolled) return <EnrollWarning slug={course.slug} />;
   const handleVideoEnd = async () => {
     try {
@@ -54,6 +53,9 @@ const ProfileCourseContainer = ({ course }: Props) => {
       showToast("error", "An error occurred. Please try again.");
     }
   };
+  if (userLoading || enrollmentLoading) {
+    return <Spinner />;
+  }
   if (!course.is_published) {
     return (
       <div>
