@@ -5,7 +5,9 @@ import Spinner from "@/components/elements/Spinner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
+import { initiatePayment } from "@/utils/khalti";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRightCircle, CircleDollarSign } from "lucide-react";
 import Image from "next/image";
@@ -18,7 +20,9 @@ const CheckoutPage = () => {
     queryFn: getCart,
   });
   const [total, setTotal] = useState(0);
+  const [paying, setPaying] = useState(false);
   const router = useRouter();
+  const { user, isLoading: userLoading } = useUser();
 
   useEffect(() => {
     if (cart) {
@@ -29,12 +33,40 @@ const CheckoutPage = () => {
     }
   }, [cart]);
 
-  if (isLoading) {
+  if (isLoading || userLoading) {
     return <Spinner />;
   }
 
   const handlePayNow = async () => {
-    showToast("info", "Payment is not available right now.");
+    try {
+      setPaying(true);
+      const formData = {
+        return_url: `http://localhost:3000/payment-success`,
+        website_url: "http://localhost:3000",
+        amount: total * 100,
+        purchase_order_id: user?.id,
+        purchase_order_name: `${user?.full_name} Cart items`,
+        amount_breakdown: cart?.map((item: any) => ({
+          label: `item.course.title.slice(0, 40) $${
+            item.course.title.length > 40 ? "..." : ""
+          }`,
+          amount: Math.round(parseFloat(item.course.price) * 100),
+        })),
+      };
+      // console.log(formData);
+      const response = await initiatePayment(formData);
+      // console.log(response);
+      const { payment_url } = response;
+      if (!payment_url) {
+        showToast("error", "Failed to initiate payment.");
+        return;
+      }
+      router.push(payment_url);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPaying(false);
+    }
   };
 
   if (!cart || cart.length === 0) {
@@ -96,7 +128,12 @@ const CheckoutPage = () => {
                 >
                   <RadioGroupItem value="khalti" id="r2" checked disabled />
                   <Label htmlFor="r2" className="text-lg">
-                    Khalti Payment
+                    <Image
+                      src="/khalti.png"
+                      alt="khalti"
+                      width={100}
+                      height={50}
+                    />
                   </Label>
                 </RadioGroup>
                 <span className="text-gray-400 text-sm">
@@ -111,7 +148,11 @@ const CheckoutPage = () => {
               <p>$ {total.toFixed(2)}</p>
             </div>
             <div className="mt-4">
-              <Button onClick={handlePayNow} className="w-full">
+              <Button
+                loading={paying}
+                onClick={handlePayNow}
+                className="w-full"
+              >
                 <span className="text-lg">Pay Now</span>
                 <ArrowRightCircle className="ml-3" size={24} />
               </Button>

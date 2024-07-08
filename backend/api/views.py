@@ -230,6 +230,30 @@ class PaymentViewSet(ModelViewSet):
 
         return Response(payments)
 
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_earning_of_instructor(self, request):
+        instructor_id = request.query_params.get("instructor_id")
+        if not instructor_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "instructor_id required in query parameter."},
+            )
+        try:
+            instructor = User.objects.get(id=instructor_id)
+            total_earning = Payment.objects.filter(
+                course__instructor=instructor
+            ).aggregate(total_earning=Sum("amount"))
+            return Response(
+                {
+                    "total_earning": total_earning["total_earning"] or 0.0,
+                }
+            )
+        except User.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Instructor not found."},
+            )
+
 
 class EnrollmentViewSet(ModelViewSet):
     queryset = Enrollment.objects.all().select_related("course")

@@ -8,7 +8,13 @@ import Spinner from "./Spinner";
 import { Button } from "../ui/button";
 import showToast from "@/lib/toaster";
 import Image from "next/image";
-import { Edit } from "lucide-react";
+import {
+  CircleDollarSign,
+  Edit,
+  ImagePlusIcon,
+  List,
+  PenLine,
+} from "lucide-react";
 import SectionContainer from "./SectionContainer";
 
 type Props = {
@@ -150,7 +156,7 @@ const CourseUpdateForm = ({ course }: Props) => {
         >
           <div className="form-group mb-3 p-5 bg-gray-50 shadow-sm rounded-xl">
             <div className="flex items-center gap-2">
-              <Edit size={20} className="text-gray-500" />
+              <PenLine size={20} className="text-gray-500" />
               <Label htmlFor="title" className="text-lg">
                 Course Title
               </Label>
@@ -164,7 +170,7 @@ const CourseUpdateForm = ({ course }: Props) => {
           </div>
           <div className="form-group mb-3 p-5 bg-gray-50 shadow-sm rounded-xl">
             <div className="flex items-center gap-2">
-              <Edit size={20} className="text-gray-500" />
+              <List size={20} className="text-gray-500" />
               <Label htmlFor="category" className="text-lg">
                 Course Category
               </Label>
@@ -199,7 +205,7 @@ const CourseUpdateForm = ({ course }: Props) => {
 
           <div className="form-group mb-3 p-5 bg-gray-50 shadow-sm rounded-xl">
             <div className="flex items-center gap-2">
-              <Edit size={20} className="text-gray-500" />
+              <ImagePlusIcon size={20} className="text-gray-500" />
               <Label htmlFor="thumbnail" className="text-lg">
                 Course Thumbnail
               </Label>
@@ -220,7 +226,7 @@ const CourseUpdateForm = ({ course }: Props) => {
           </div>
           <div className="form-group mb-3 p-5 bg-gray-50 shadow-sm rounded-xl">
             <div className="flex items-center gap-2">
-              <Edit size={20} className="text-gray-500" />
+              <CircleDollarSign size={20} className="text-gray-500" />
               <Label htmlFor="price" className="text-lg">
                 Price
               </Label>

@@ -14,14 +14,13 @@ const AdminInstructor = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  console.log(data);
   return (
     <div className="mt-5">
       <h1 className="text-3xl font-bold mb-6">Instructors</h1>
 
       <div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <table className="min-w-full divide-y-2 divide-gray-200">
             <thead>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-lg text-left text-gray-900">
@@ -32,6 +31,9 @@ const AdminInstructor = () => {
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 text-lg text-left text-gray-900">
                   Courses Created
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 text-lg text-left text-gray-900">
+                  Total Earnings
                 </th>
               </tr>
             </thead>

@@ -44,6 +44,8 @@ export const endpoints = {
   payment: {
     payment: url + "payments/",
     details: url + "payments/get_details/", // ! Admin only path
+    earning: (instructorId: string) =>
+      url + `payments/get_earning_of_instructor?instructor_id=${instructorId}`,
   },
   review: {
     review: url + "reviews/",
