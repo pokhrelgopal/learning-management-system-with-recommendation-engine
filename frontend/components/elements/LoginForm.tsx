@@ -9,6 +9,7 @@ import { login } from "@/app/server";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import Logo from "../particles/Logo";
 
 interface Decoded {
   role: string;
@@ -56,6 +57,9 @@ const LoginForm = () => {
   };
   return (
     <form className="w-96 rounded-lg" onSubmit={(e) => e.preventDefault()}>
+      <div className="my-5 flex justify-center">
+        <Logo />
+      </div>
       <h2 className="text-3xl mb-6 font-bold">Login to your account</h2>
       <div className="form-group">
         <Label htmlFor="email" className="text-lg">

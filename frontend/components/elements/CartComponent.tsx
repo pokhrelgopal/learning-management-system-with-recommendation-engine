@@ -103,10 +103,17 @@ const CartComponent = () => {
                     ))}
                   </div>
                 </ScrollArea>
-                <Button className="mt-5 w-full" variant={"secondary"}>
-                  Proceed to Payment
-                  <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
-                </Button>
+                <Link
+                  onClick={() => {
+                    document.getElementById("close-cart")?.click();
+                  }}
+                  href={"/checkout"}
+                >
+                  <Button className="mt-5 w-full" variant={"secondary"}>
+                    Proceed to Checkout
+                    <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
+                  </Button>
+                </Link>
               </div>
             )}
           </>

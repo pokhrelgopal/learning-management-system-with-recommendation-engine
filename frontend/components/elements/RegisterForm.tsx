@@ -9,6 +9,7 @@ import { RadioGroupItem } from "../ui/radio-group";
 import showToast from "@/lib/toaster";
 import { register } from "@/app/server";
 import { useRouter } from "next/navigation";
+import Logo from "../particles/Logo";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -67,6 +68,9 @@ const RegisterForm = () => {
 
   return (
     <form className="w-full lg:w-96" onSubmit={(e) => e.preventDefault()}>
+      <div className="my-5 flex justify-center">
+        <Logo />
+      </div>
       <h2 className="text-3xl mb-6 font-bold">Create an account</h2>
       <div className="form-group">
         <Label htmlFor="name" className="text-lg">
