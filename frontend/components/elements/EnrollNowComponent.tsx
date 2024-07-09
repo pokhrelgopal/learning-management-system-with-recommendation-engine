@@ -48,8 +48,13 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
             amount: parseFloat(course.price),
           });
           router.push(payment_url);
-        } catch (error) {
-          console.log(error);
+        } catch (error: any) {
+          if (error.response.status === 409) {
+            showToast(
+              "error",
+              "Error Occurred in Khalti Server. Please try again later."
+            );
+          }
         }
       }
     } catch (error) {
