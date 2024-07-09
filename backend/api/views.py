@@ -9,7 +9,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import IntegrityError
 from django.db.models import Sum, F, Q
-from django.db.models.functions import TruncDate
+from django.db.models.functions import TruncMonth
+import calendar
 
 # ! Recommendation
 import pandas as pd  # type: ignore
@@ -221,14 +222,23 @@ class PaymentViewSet(ModelViewSet):
 
     @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
     def get_details(self, request):
+        months = {month: 0 for month in calendar.month_name if month}
         payments = (
-            Payment.objects.annotate(date=TruncDate("created_at"))
-            .values("date")
-            .annotate(total_amount=Sum("amount"))
-            .order_by("date")
+            Payment.objects.annotate(month=TruncMonth("created_at"))
+            .values("month")
+            .annotate(earning=Sum("amount"))
+            .order_by("month")
         )
 
-        return Response(payments)
+        for payment in payments:
+            month_name = calendar.month_name[payment["month"].month]
+            months[month_name] = payment["earning"]
+
+        chart_data = [
+            {"month": month, "earning": earning} for month, earning in months.items()
+        ]
+
+        return Response(chart_data)
 
     @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
     def get_earning_of_instructor(self, request):

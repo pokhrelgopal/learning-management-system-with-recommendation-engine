@@ -1,7 +1,7 @@
 "use client";
 import { getAdminStats } from "@/app/server";
-import AdminLineChart from "@/components/elements/AdminLineChart";
-import AdminChart from "@/components/elements/AdminPieChart";
+import { BarChartExample } from "@/components/charts/BarChartExample";
+import { PieDonutChart } from "@/components/charts/PieDonutChart";
 import Spinner from "@/components/elements/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { BookOpen, CircleDollarSign, Users } from "lucide-react";
@@ -59,14 +59,14 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className="mt-10 grid grid-cols-4 gap-6">
-        <div className="flex justify-center">
-          <AdminChart
-            total_students={total_students}
+        <div className="h-[350px] col-span-2">
+          <PieDonutChart
             total_instructors={total_instructors}
+            total_students={total_students}
           />
         </div>
-        <div className="col-span-3 ">
-          <AdminLineChart />
+        <div className="col-span-2 h-[300px]">
+          <BarChartExample />
         </div>
       </div>
     </div>

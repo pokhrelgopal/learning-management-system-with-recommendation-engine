@@ -23,11 +23,13 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
       const formData = {
         return_url: `http://localhost:3000/payment-success`,
         website_url: "http://localhost:3000",
-        amount: parseFloat(course?.price) * 100,
+        amount: Math.floor(parseFloat(course?.price) * 100),
         purchase_order_id: courseId,
         purchase_order_name: course?.title,
       };
+      console.log(formData);
       const response = await initiatePayment(formData);
+      console.log(response);
       const { payment_url } = response;
       if (!payment_url) {
         showToast("error", "Failed to initiate payment.");
@@ -35,6 +37,7 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
       }
       router.push(payment_url);
     } catch (error) {
+      console.log(error);
       showToast("error", "Failed to initiate payment.");
     } finally {
       setPaying(false);

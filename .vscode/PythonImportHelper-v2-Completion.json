@@ -842,11 +842,20 @@
         "documentation": {}
     },
     {
-        "label": "TruncDate",
+        "label": "TruncMonth",
         "importPath": "django.db.models.functions",
         "description": "django.db.models.functions",
         "isExtraImport": true,
         "detail": "django.db.models.functions",
+        "documentation": {}
+    },
+    {
+        "label": "calendar",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "calendar",
+        "description": "calendar",
+        "detail": "calendar",
         "documentation": {}
     },
     {
