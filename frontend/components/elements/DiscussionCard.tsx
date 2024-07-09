@@ -24,8 +24,8 @@ const DiscussionCard = ({ discussion, queryClient }: Props) => {
     if (!message.trim()) {
       showToast("error", "Message cannot be empty.");
     }
-    if (message.length > 400) {
-      showToast("error", "Message must be at most 400 characters.");
+    if (message.length > 300) {
+      showToast("error", "Message must be at most 300 characters.");
     }
     try {
       setSending(true);
@@ -106,6 +106,45 @@ const DiscussionCard = ({ discussion, queryClient }: Props) => {
         <div className="ml-10 text-lg">
           <p className="text-gray-600">{discussion?.message}</p>
         </div>
+
+        <div className="space-y-5 mt-4">
+          {discussion.replies?.map((reply: any) => {
+            return (
+              <div key={reply.id} className="ml-10">
+                <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={mediaUrl + reply.user?.profile_image}
+                      alt={reply.user?.name || "User"}
+                      width={100}
+                      height={100}
+                      className="h-12 w-12 rounded-full object-cover"
+                    />
+                    <p>{reply.user?.full_name}</p>
+                  </div>
+                  {user?.id == reply.user?.id && (
+                    <div>
+                      <ConfirmationDialog
+                        buttonContent={
+                          <Trash2Icon
+                            size={20}
+                            className="cursor-pointer text-red-600"
+                          />
+                        }
+                        title="Delete Reply"
+                        description="Are you sure you want to delete this reply?"
+                        onConfirm={() => handleDeleteReply(reply.id)}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="ml-14">
+                  <p className="text-gray-600">{reply?.message}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         {viewReplyBox && (
           <div className="ml-10 my-4">
             <Textarea
@@ -137,44 +176,6 @@ const DiscussionCard = ({ discussion, queryClient }: Props) => {
             {viewReplyBox ? "Hide Reply Box" : "Reply to this message"}
           </span>
         </Button>
-        <div className="space-y-5">
-          {discussion.replies?.map((reply: any) => {
-            return (
-              <div key={reply.id} className="ml-10">
-                <div className="flex items-center gap-5">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={mediaUrl + reply.user?.profile_image}
-                      alt={reply.user?.name || "User"}
-                      width={32}
-                      height={32}
-                      className="h-12 w-12 rounded-full"
-                    />
-                    <p>{reply.user?.full_name}</p>
-                  </div>
-                  {user?.id == reply.user?.id && (
-                    <div>
-                      <ConfirmationDialog
-                        buttonContent={
-                          <Trash2Icon
-                            size={20}
-                            className="cursor-pointer text-red-600"
-                          />
-                        }
-                        title="Delete Reply"
-                        description="Are you sure you want to delete this reply?"
-                        onConfirm={() => handleDeleteReply(reply.id)}
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="ml-10">
-                  <p className="text-gray-600">{reply?.message}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );

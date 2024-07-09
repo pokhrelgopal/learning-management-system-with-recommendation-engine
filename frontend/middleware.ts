@@ -65,6 +65,7 @@ export function middleware(req: AuthenticatedRequest) {
   if (
     !isLoggedIn &&
     (req.nextUrl.pathname.includes("/profile") ||
+      req.nextUrl.pathname.includes("/my-courses") ||
       req.nextUrl.pathname.includes("/profile/courses") ||
       req.nextUrl.pathname.includes("/instructor") ||
       req.nextUrl.pathname.includes("/instructor/courses"))
