@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAdminUser
 from users.serializers import UserSerializer
 from rest_framework import status
 from users.models import User
+from django.db.models import Sum
 
 
 class UserViewSet(ModelViewSet):
@@ -70,5 +71,13 @@ class UserViewSet(ModelViewSet):
 
     @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
     def get_instructors(self, request):
+        from api.models import Payment
+
         instructors = User.objects.filter(role="instructor")
+        for instructor in instructors:
+            total_earning = Payment.objects.filter(
+                course__instructor=instructor
+            ).aggregate(total_earning=Sum("amount"))["total_earning"]
+            instructor.total_earning = total_earning if total_earning else 0
+        instructors = sorted(instructors, key=lambda x: x.total_earning, reverse=True)
         return Response(UserSerializer(instructors, many=True).data)

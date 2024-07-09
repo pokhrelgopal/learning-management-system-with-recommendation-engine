@@ -4,7 +4,14 @@ import Spinner from "@/components/elements/Spinner";
 import UserCard from "@/components/elements/UserCard";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 const AdminInstructor = () => {
   const { data, isLoading } = useQuery<any>({
     queryKey: ["getInstructors"],
@@ -18,7 +25,7 @@ const AdminInstructor = () => {
     <div className="mt-5">
       <h1 className="text-3xl font-bold mb-6">Instructors</h1>
 
-      <div>
+      {/* <div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200">
             <thead>
@@ -45,7 +52,25 @@ const AdminInstructor = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
+      <Table className="text-lg">
+        <TableCaption className="text-md">
+          A list of registered teachers.
+        </TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>No. of Courses Created</TableHead>
+            <TableHead className="text-right">Total Earnings</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data?.map((student: any) => {
+            return <UserCard key={student.id} data={student} />;
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 };

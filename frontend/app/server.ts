@@ -117,6 +117,13 @@ export const instructorEarnings = async (instructorId: string) => {
   );
   return res.data;
 };
+export const studentSpending = async (studentId: string) => {
+  const res = await axios.get(
+    endpoints.payment.spending(studentId),
+    createHeaders()
+  );
+  return res.data;
+};
 
 // ! ============ Rating ============ !
 export const createRating = async (data: any) =>

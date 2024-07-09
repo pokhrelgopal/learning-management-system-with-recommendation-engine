@@ -264,6 +264,30 @@ class PaymentViewSet(ModelViewSet):
                 data={"detail": "Instructor not found."},
             )
 
+    @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
+    def get_student_spending(self, request):
+        student_id = request.query_params.get("student_id")
+        if not student_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "student_id required in query parameter."},
+            )
+        try:
+            student = User.objects.get(id=student_id)
+            total_spending = Payment.objects.filter(user=student).aggregate(
+                total_spending=Sum("amount")
+            )
+            return Response(
+                {
+                    "total_spending": total_spending["total_spending"] or 0.0,
+                }
+            )
+        except User.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Student not found."},
+            )
+
 
 class EnrollmentViewSet(ModelViewSet):
     queryset = Enrollment.objects.all().select_related("course")
