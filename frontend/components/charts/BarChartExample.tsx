@@ -29,7 +29,7 @@ export function BarChartExample() {
   const chartConfig = {
     earning: {
       label: "Earnings",
-      color: "hsl(var(--chart-1))",
+      color: "#6574cd",
     },
   } satisfies ChartConfig;
 

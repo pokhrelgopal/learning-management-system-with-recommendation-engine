@@ -31,12 +31,12 @@ export function PieDonutChart({
     {
       browser: "Students",
       users: total_students,
-      fill: "var(--color-chrome)",
+      fill: "#6574cd",
     },
     {
       browser: "Instructors",
       users: total_instructors,
-      fill: "var(--color-safari)",
+      fill: "#e88827",
     },
   ];
 
