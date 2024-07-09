@@ -53,8 +53,6 @@ const ProfileCourseCard = ({ course }: Props) => {
           return;
         }
       }
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ArrowRightCircle } from "lucide-react";
+import { ArrowRightCircle, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -62,6 +62,32 @@ const PaymentSuccess = () => {
     queryClient,
   ]);
   if (isLoading) return <Spinner />;
+  if (status === "User canceled")
+    return (
+      <div>
+        <div className="bg-gray-100 ">
+          <div className="bg-white p-6  md:mx-auto">
+            <X className="text-red-600 w-16 h-16 mx-auto my-6" />
+            <div className="text-center">
+              <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">
+                Payment Cancelled!
+              </h3>
+              <p className="text-gray-600 my-2">
+                It seems you have cancelled the payment.
+              </p>
+              <div className="py-10 text-center">
+                <Link href="/my-courses">
+                  <Button loading={paying} size={"lg"}>
+                    Go to course
+                    <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   return (
     <div>
       <div className="bg-gray-100 ">

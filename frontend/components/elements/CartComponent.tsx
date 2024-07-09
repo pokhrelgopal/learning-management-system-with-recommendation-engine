@@ -63,7 +63,7 @@ const CartComponent = () => {
               </SheetDescription>
             ) : (
               <div>
-                <ScrollArea className="min-h-[80vh]">
+                <ScrollArea className="h-[550px] w-[350px]">
                   <div className="space-y-4 p-2">
                     {cart?.map((item: any) => (
                       <div
@@ -103,17 +103,19 @@ const CartComponent = () => {
                     ))}
                   </div>
                 </ScrollArea>
-                <Link
-                  onClick={() => {
-                    document.getElementById("close-cart")?.click();
-                  }}
-                  href={"/checkout"}
-                >
-                  <Button className="mt-5 w-full" variant={"secondary"}>
-                    Proceed to Checkout
-                    <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
-                  </Button>
-                </Link>
+                <div>
+                  <Link
+                    onClick={() => {
+                      document.getElementById("close-cart")?.click();
+                    }}
+                    href={"/checkout"}
+                  >
+                    <Button className="mt-5 w-full" variant={"secondary"}>
+                      Proceed to Checkout
+                      <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             )}
           </>

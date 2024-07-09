@@ -47,7 +47,7 @@ const CheckoutPage = () => {
         purchase_order_id: user?.id,
         purchase_order_name: `${user?.full_name} Cart items`,
         amount_breakdown: cart?.map((item: any) => ({
-          label: `item.course.title.slice(0, 40) $${
+          label: `${item.course.title.slice(0, 40)} ${
             item.course.title.length > 40 ? "..." : ""
           }`,
           amount: Math.round(parseFloat(item.course.price) * 100),
