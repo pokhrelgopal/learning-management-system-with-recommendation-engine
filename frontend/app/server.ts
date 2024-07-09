@@ -110,6 +110,9 @@ export const createEnrollment = async (data: any) =>
 export const createPayment = async (data: any) =>
   await axios.post(endpoints.payment.payment, data, createHeaders());
 
+export const completePayment = async (data: any) =>
+  await axios.patch(endpoints.payment.complete_payment, data, createHeaders());
+
 export const instructorEarnings = async (instructorId: string) => {
   const res = await axios.get(
     endpoints.payment.earning(instructorId),

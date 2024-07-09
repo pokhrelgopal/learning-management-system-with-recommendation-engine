@@ -220,6 +220,31 @@ class PaymentViewSet(ModelViewSet):
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )
 
+    @action(detail=False, methods=["PATCH"], permission_classes=[IsAuthenticated])
+    def complete_payment(self, request):
+        pidx = request.data.get("pidx")
+        if not pidx:
+            return Response(
+                status=status.HTTP_409_CONFLICT,
+                data={"detail": "pidx is required in the request body."},
+            )
+
+        try:
+            payments = Payment.objects.filter(pidx=pidx)
+            for payment in payments:
+                payment.status = "completed"
+                payment.save()
+
+            return Response(
+                status=status.HTTP_200_OK,
+                data={"detail": "Payment completed."},
+            )
+        except Payment.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"detail": "Payment with given pidx not found."},
+            )
+
     @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
     def get_details(self, request):
         months = {month: 0 for month in calendar.month_name if month}

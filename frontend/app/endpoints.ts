@@ -43,11 +43,12 @@ export const endpoints = {
   },
   payment: {
     payment: url + "payments/",
-    details: url + "payments/get_details/", // ! Admin only path
+    details: url + "payments/get_details/",
     earning: (instructorId: string) =>
       url + `payments/get_earning_of_instructor?instructor_id=${instructorId}`,
     spending: (studentId: string) =>
       url + `payments/get_student_spending?student_id=${studentId}`,
+    complete_payment: url + "payments/complete_payment/",
   },
   review: {
     review: url + "reviews/",

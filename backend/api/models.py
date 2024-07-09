@@ -123,15 +123,25 @@ class Enrollment(models.Model):
         db_table = "enrollment"
         verbose_name_plural = "Enrollments"
         unique_together = ["user", "course"]
+        ordering = ["-created_at"]
 
 
 class Payment(models.Model):
+    STATUS_CHOICES = (
+        ("initiated", "Initiated"),
+        ("pending", "Pending"),
+        ("cancelled", "Cancelled"),
+        ("completed", "Completed"),
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payments")
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="payments"
     )
     pidx = models.CharField(max_length=100, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="initiated"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -142,14 +152,16 @@ class Payment(models.Model):
         return user == self.user or user.is_superuser
 
     def save(self, *args, **kwargs):
-        enrollment = Enrollment(user=self.user, course=self.course)
-        enrollment.save()
+        if self.status == "completed":
+            enrollment = Enrollment(user=self.user, course=self.course)
+            enrollment.save()
         super(Payment, self).save(*args, **kwargs)
 
     class Meta:
         db_table = "payment"
         verbose_name_plural = "Payments"
         unique_together = ["user", "course"]
+        ordering = ["-created_at"]
 
 
 class Review(models.Model):

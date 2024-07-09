@@ -7,6 +7,8 @@ import { initiatePayment } from "@/utils/khalti";
 import showToast from "@/lib/toaster";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { createPayment } from "@/app/server";
+import useUser from "@/hooks/useUser";
 
 type Props = {
   courseId: string;
@@ -14,6 +16,8 @@ type Props = {
 };
 
 const EnrollNowComponent = ({ courseId, course }: Props) => {
+  const { user, isLoading: userLoading } = useUser();
+
   const [paying, setPaying] = React.useState(false);
   const router = useRouter();
   const { enrolled, isLoading } = useEnrollment(courseId);
@@ -30,12 +34,24 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
       console.log(formData);
       const response = await initiatePayment(formData);
       console.log(response);
-      const { payment_url } = response;
+      const { payment_url, pidx } = response;
       if (!payment_url) {
         showToast("error", "Failed to initiate payment.");
         return;
+      } else {
+        try {
+          setPaying(true);
+          await createPayment({
+            course_id: course.id,
+            user_id: user?.id,
+            pidx: pidx,
+            amount: parseFloat(course.price),
+          });
+          router.push(payment_url);
+        } catch (error) {
+          console.log(error);
+        }
       }
-      router.push(payment_url);
     } catch (error) {
       console.log(error);
       showToast("error", "Failed to initiate payment.");

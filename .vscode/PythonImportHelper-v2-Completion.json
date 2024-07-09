@@ -433,6 +433,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1326,6 +1358,33 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0023_payment_status",
+        "description": "backend.api.migrations.0023_payment_status",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0022_alter_course_instructor\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"payment\",\n            name=\"status\",\n            field=models.CharField(\n                choices=[",
+        "detail": "backend.api.migrations.0023_payment_status",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0024_alter_payment_options",
+        "description": "backend.api.migrations.0024_alter_payment_options",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0023_payment_status\"),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name=\"payment\",\n            options={\"ordering\": [\"-created_at\"], \"verbose_name_plural\": \"Payments\"},\n        ),\n    ]",
+        "detail": "backend.api.migrations.0024_alter_payment_options",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0025_alter_enrollment_options",
+        "description": "backend.api.migrations.0025_alter_enrollment_options",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"api\", \"0024_alter_payment_options\"),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name=\"enrollment\",\n            options={\"ordering\": [\"-created_at\"], \"verbose_name_plural\": \"Enrollments\"},\n        ),\n    ]",
+        "detail": "backend.api.migrations.0025_alter_enrollment_options",
+        "documentation": {}
+    },
+    {
         "label": "ApiConfig",
         "kind": 6,
         "importPath": "backend.api.apps",
@@ -1384,7 +1443,7 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class Payment(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"payments\")\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"payments\"\n    )\n    pidx = models.CharField(max_length=100, null=True, blank=True)\n    amount = models.DecimalField(max_digits=10, decimal_places=2)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):",
+        "peekOfCode": "class Payment(models.Model):\n    STATUS_CHOICES = (\n        (\"initiated\", \"Initiated\"),\n        (\"pending\", \"Pending\"),\n        (\"cancelled\", \"Cancelled\"),\n        (\"completed\", \"Completed\"),\n    )\n    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"payments\")\n    course = models.ForeignKey(\n        Course, on_delete=models.CASCADE, related_name=\"payments\"",
         "detail": "backend.api.models",
         "documentation": {}
     },

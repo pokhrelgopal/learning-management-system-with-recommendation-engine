@@ -1,6 +1,6 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
-import { getCart } from "@/app/server";
+import { createPayment, getCart } from "@/app/server";
 import Spinner from "@/components/elements/Spinner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -43,25 +43,34 @@ const CheckoutPage = () => {
       const formData = {
         return_url: `http://localhost:3000/payment-success`,
         website_url: "http://localhost:3000",
-        amount: total * 100,
+        amount: Math.floor(total * 100),
         purchase_order_id: user?.id,
         purchase_order_name: `${user?.full_name} Cart items`,
-        amount_breakdown: cart?.map((item: any) => ({
-          label: `${item.course.title.slice(0, 40)} ${
-            item.course.title.length > 40 ? "..." : ""
-          }`,
-          amount: Math.round(parseFloat(item.course.price) * 100),
-        })),
       };
-      // console.log(formData);
+      console.log(formData);
       const response = await initiatePayment(formData);
-      // console.log(response);
-      const { payment_url } = response;
+      console.log(response);
+      const { payment_url, pidx } = response;
       if (!payment_url) {
         showToast("error", "Failed to initiate payment.");
         return;
+      } else {
+        try {
+          setPaying(true);
+          cart.forEach(async (item: any) => {
+            await createPayment({
+              course_id: item.course.id,
+              user_id: user?.id,
+              pidx: pidx,
+              amount: parseFloat(item.course.price),
+            });
+          });
+          router.push(payment_url);
+        } catch (error) {
+          console.log(error);
+          showToast("error", "Failed to create payment.");
+        }
       }
-      router.push(payment_url);
     } catch (error) {
       console.log(error);
     } finally {

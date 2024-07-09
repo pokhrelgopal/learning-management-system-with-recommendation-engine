@@ -6,7 +6,7 @@ import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import Spinner from "@/components/elements/Spinner";
-import { createPayment } from "@/app/server";
+import { completePayment, createPayment } from "@/app/server";
 import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 const PaymentSuccess = () => {
   const queryClient = useQueryClient();
@@ -36,12 +36,9 @@ const PaymentSuccess = () => {
       try {
         setPaying(true);
         const data = {
-          course_id: purchase_order_id,
-          user_id: user?.id,
           pidx: pidx,
-          amount: parseFloat(amount) / 100,
         };
-        await createPayment(data);
+        await completePayment(data);
         queryClient.invalidateQueries("cart" as InvalidateQueryFilters);
       } catch (error) {
         console.log(error);
