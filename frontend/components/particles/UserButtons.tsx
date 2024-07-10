@@ -1,10 +1,9 @@
 "use client";
-import { ChevronDown, ChevronDownCircle, LogIn } from "lucide-react";
+import { ChevronDownCircle, LogIn } from "lucide-react";
 import React from "react";
 import CartComponent from "../elements/CartComponent";
 import { logout } from "@/lib/utils";
 import Mode from "./Mode";
-import { Button } from "../ui/button";
 import {
   Popover,
   PopoverContent,
@@ -21,13 +20,12 @@ const UserButtons = ({ user }: Props) => {
       <>
         <Mode />
         <CartComponent />
-
         <Popover>
           <PopoverTrigger>
-            <Button className="flex items-center gap-2">
+            <p className="bg-black  px-2.5 py-1.5 rounded-md text-white flex items-center gap-2">
               <span>{user.full_name}</span>
               <ChevronDownCircle size={16} />
-            </Button>
+            </p>
           </PopoverTrigger>
           <PopoverContent className="w-40 space-y-3 p-1">
             <p
