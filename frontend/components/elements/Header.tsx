@@ -22,7 +22,7 @@ const Header = () => {
         ) : (
           <div>
             {user ? (
-              <UserButtons />
+              <UserButtons user={user} />
             ) : (
               <Link href={"/login"}>
                 <Button>

@@ -1,7 +1,7 @@
 import { addToCart } from "@/app/server";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
-import { ShoppingCart } from "lucide-react";
+import { Edit3, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -79,8 +79,9 @@ const CourseCard = ({ course }: Props) => {
           <div>
             <dt className="sr-only">Instructor</dt>
 
-            <dd className="text-sm text-gray-500">
-              By {course?.instructor?.full_name}
+            <dd className="text-sm text-gray-500 flex items-center gap-2">
+              <Edit3 className="w-4 h-4 inline-block" />
+              <span>{course?.instructor?.full_name}</span>
             </dd>
           </div>
         </dl>

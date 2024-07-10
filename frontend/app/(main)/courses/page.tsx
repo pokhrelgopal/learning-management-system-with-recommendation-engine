@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { Search, X } from "lucide-react";
+import SkeletonCourseLoader from "@/components/elements/SkeletonCourseLoader";
 
 const Courses = () => {
   const [query, setQuery] = React.useState("");
@@ -42,7 +43,19 @@ const Courses = () => {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+        <SkeletonCourseLoader />
+      </div>
+    );
   if (error) return <Error />;
 
   return (

@@ -73,7 +73,7 @@ const ProfileCourseCard = ({ course }: Props) => {
           <div className="flex justify-end mb-1 items-center py-1">
             {completed_percentage < 100 && (
               <Button className="cursor-default" variant={"secondary"}>
-                {completed_percentage}% Completed
+                {completed_percentage.toFixed(2)}% Completed
               </Button>
             )}
             {completed_percentage === 100 && (
