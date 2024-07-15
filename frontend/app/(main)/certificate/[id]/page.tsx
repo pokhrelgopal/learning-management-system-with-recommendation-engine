@@ -63,7 +63,7 @@ const CertificatePage = ({ params }: any) => {
         </div>
       ) : (
         <div>
-          <div className="grid grid-cols-6 gap-10">
+          <div className="grid lg:grid-cols-6 gap-10">
             <div className="col-span-4">
               <Image
                 src={mediaUrl + data?.file}

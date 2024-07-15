@@ -85,9 +85,9 @@ const ProfileCourseContainer = ({ course }: Props) => {
     );
   }
   return (
-    <article className="flex gap-8">
-      <ScrollArea className="max-h-screen">
-        <aside className="w-[500px] max-h-screen space-y-2">
+    <article className="flex flex-col-reverse lg:flex-row gap-2 lg:gap-8">
+      <ScrollArea className="lg:max-h-screen">
+        <aside className="w-full lg:w-[500px] lg:max-h-screen space-y-2">
           {course.sections
             .sort((a: any, b: any) => a.order - b.order)
             .map((section: any) => {
@@ -95,7 +95,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
               return (
                 <p
                   key={section.id}
-                  className={`cursor-pointer pl-2 border-r-4 py-5 bg-gray-50 rounded-lg ${
+                  className={`cursor-pointer pl-2 py-5 bg-gray-50 rounded-lg w-full ${
                     isActive ? activeClass : ""
                   } flex items-center gap-2`}
                   onClick={() => setSelectedSection(section)}

@@ -92,8 +92,8 @@ const CheckoutPage = () => {
 
   return (
     <div className="min-h-[400px]">
-      <div className="grid grid-cols-3 gap-10">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="w-full lg:col-span-2">
           <div className="space-y-3">
             {cart?.map((item: any) => (
               <div

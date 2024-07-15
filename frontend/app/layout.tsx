@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Alata } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-// const alata = Alata({ subsets: ["latin"], weight: ["400"] });
 const alata = Alata({ subsets: ["latin"], weight: ["400"] });
 import Providers from "./providers";
 

@@ -7,6 +7,7 @@ import useUser from "@/hooks/useUser";
 import { Button } from "../ui/button";
 import { ArrowRightCircle } from "lucide-react";
 import Link from "next/link";
+import MobileMenu from "./MobileMenu";
 
 const Header = () => {
   const { user, isLoading } = useUser();
@@ -15,12 +16,17 @@ const Header = () => {
       <nav className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-16">
           <Logo />
-          <MenuItems />
+          <div className="hidden lg:block">
+            <MenuItems />
+          </div>
+        </div>
+        <div className="lg:hidden ">
+          <MobileMenu />
         </div>
         {isLoading ? (
           <div className="bg-white h-8 w-64 rounded animate-pulse"></div>
         ) : (
-          <div>
+          <div className="hidden lg:block">
             {user ? (
               <UserButtons user={user} />
             ) : (

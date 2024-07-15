@@ -38,7 +38,7 @@ const PreviewComponent = ({ course, courseId }: Props) => {
         alt={course?.title}
         width={1920}
         height={1080}
-        className="border w-full h-[450px] object-cover rounded-2xl"
+        className="border w-full h-72 lg:h-[450px] object-cover rounded-2xl"
       />
       <AlertDialog>
         <AlertDialogTrigger asChild>

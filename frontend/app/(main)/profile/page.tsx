@@ -16,9 +16,9 @@ const Profile = () => {
   const active = "bg-white text-indigo-600";
   return (
     <div className="mt-5">
-      <div className="flex gap-10">
-        <div className="bg-gray-100 min-w-80 p-4 rounded-xl h-fit">
-          <ul className="space-y-3">
+      <div className="flex flex-col lg:flex-row gap-10">
+        <div className="bg-gray-100 min-w-80 p-2 lg:p-4 rounded-xl h-fit w-fit">
+          <ul className="lg:space-y-3 flex lg:block">
             <li
               onClick={() => setActiveTab("personal-details")}
               className={`cursor-pointer p-3 rounded-xl text-gray-600 ${
@@ -79,7 +79,7 @@ const ChangePassword = () => {
     }
   };
   return (
-    <div className="w-1/2">
+    <div className="lg:w-1/2">
       <h2 className="text-2xl font-bold mb-6">Change Password</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="mb-3">
@@ -188,7 +188,7 @@ const PersonalDetails = () => {
     fileInput.click();
   };
   return (
-    <div className="w-1/2">
+    <div className="lg:w-1/2">
       <h2 className="text-2xl font-bold mb-6">Update Details</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="relative mb-6 flex justify-center">

@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 import showToast from "@/lib/toaster";
 import useUser from "@/hooks/useUser";
 import DiscussionCard from "./DiscussionCard";
-import { Link } from "lucide-react";
+import { ChevronDownCircle, Link } from "lucide-react";
 import { mediaUrl } from "@/app/endpoints";
 
 type Props = {
@@ -29,6 +29,7 @@ const SelectedSection = ({ section }: Props) => {
   const queryClient = useQueryClient();
   const [message, setMessage] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
+  const [showDiscussion, setShowDiscussion] = React.useState(false);
 
   if (isLoading) return <Spinner />;
 
@@ -80,31 +81,45 @@ const SelectedSection = ({ section }: Props) => {
         })}
       </div>
       <div>
-        <h2 className="text-2xl font-bold my-5">Discussions</h2>
-        <div className="mb-4 space-y-2">
-          <Textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type your message"
-            className="w-full text-lg"
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold my-5">Discussions</h2>
+          <ChevronDownCircle
+            size={30}
+            className="cursor-pointer"
+            onClick={() => {
+              setShowDiscussion(!showDiscussion);
+            }}
           />
-          <Button
-            loading={submitting || isLoading || userLoading}
-            onClick={handleSubmit}
-            className="w-40 text-lg"
-          >
-            Send
-          </Button>
         </div>
-        <div className="space-y-3">
-          {data?.map((discussion: any) => (
-            <DiscussionCard
-              queryClient={queryClient}
-              key={discussion.id}
-              discussion={discussion}
-            />
-          ))}
-        </div>
+        {showDiscussion && (
+          <>
+            {" "}
+            <div className="mb-4 space-y-2">
+              <Textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message"
+                className="w-full text-lg"
+              />
+              <Button
+                loading={submitting || isLoading || userLoading}
+                onClick={handleSubmit}
+                className="w-40 text-lg"
+              >
+                Send
+              </Button>
+            </div>
+            <div className="space-y-3">
+              {data?.map((discussion: any) => (
+                <DiscussionCard
+                  queryClient={queryClient}
+                  key={discussion.id}
+                  discussion={discussion}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

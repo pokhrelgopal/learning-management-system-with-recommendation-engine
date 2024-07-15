@@ -23,8 +23,8 @@ const CourseSingle = ({ params }: any) => {
   }
   return (
     <>
-      <div className="grid grid-cols-6 gap-6">
-        <div className="w-full col-span-4">
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+        <div className="w-full lg:col-span-4">
           <PreviewComponent course={data} courseId={data.id} />
           <div className="mt-5">
             <h1 className="text-3xl font-bold mb-3">{data.title}</h1>
@@ -35,7 +35,7 @@ const CourseSingle = ({ params }: any) => {
             <CourseReviews courseId={data.id} reviews={data?.reviews} />
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           <CourseInfoCard course={data} />
         </div>
       </div>

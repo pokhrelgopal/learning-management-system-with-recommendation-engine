@@ -43,7 +43,7 @@ const CartComponent = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <p className="relative">
+        <p className="relative" onClick={() => {}}>
           <ShoppingCart size={24} />
           {!isLoading && (
             <span className="absolute -top-3 -right-3 rounded-full p-1 text-xs w-full h-fit bg-red-500 text-white">
@@ -63,7 +63,7 @@ const CartComponent = () => {
               </SheetDescription>
             ) : (
               <div>
-                <ScrollArea className="h-[550px] w-[350px]">
+                <ScrollArea className="h-[550px] w-full lg:max-w-[350px]">
                   <div className="space-y-4 p-2">
                     {cart?.map((item: any) => (
                       <div
@@ -74,6 +74,9 @@ const CartComponent = () => {
                           <Link
                             onClick={() => {
                               document.getElementById("close-cart")?.click();
+                              document
+                                .getElementById("closeMobileMenu")
+                                ?.click();
                             }}
                             href={`/courses/${item.course.slug}`}
                           >
@@ -91,7 +94,6 @@ const CartComponent = () => {
                             {item.course.title.slice(0, 25)}
                             {item.course.title.length > 25 ? "..." : ""}
                           </h1>
-                          <h1>{item.course.price}</h1>
                         </div>
                         <p
                           onClick={() => handleRemove(item.id)}
