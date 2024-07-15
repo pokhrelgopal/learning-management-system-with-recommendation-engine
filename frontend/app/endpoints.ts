@@ -56,12 +56,14 @@ export const endpoints = {
   discussion: {
     discussion: url + "discussions/",
     delete: (id: string) => url + `discussions/${id}/`,
+    update: (id: string) => url + `discussions/${id}/`,
     sectionDiscussion: (sectionId: string) =>
       url + `discussions/get_section_discussions?section_id=${sectionId}`,
   },
   reply: {
     reply: url + "replies/",
     delete: (id: string) => url + `replies/${id}/`,
+    update: (id: string) => url + `replies/${id}/`,
   },
   progress: {
     progress: url + "progress/",

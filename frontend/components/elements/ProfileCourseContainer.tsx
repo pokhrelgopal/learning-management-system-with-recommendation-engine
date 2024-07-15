@@ -109,7 +109,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
       </ScrollArea>
       <section className="p-1 w-full">
         <video
-          key={selectedSection.id} // Add key to ensure re-render
+          key={selectedSection.id}
           width="320"
           height="240"
           controls

@@ -147,12 +147,18 @@ export const createDiscussion = async (data: any) =>
 export const deleteDiscussion = async (id: string) =>
   await axios.delete(endpoints.discussion.delete(id), createHeaders());
 
+export const updateDiscussion = async (id: string, data: any) =>
+  await axios.patch(endpoints.discussion.update(id), data, createHeaders());
+
 // ! ============ Reply ============ !
 export const createReply = async (data: any) =>
   await axios.post(endpoints.reply.reply, data, createHeaders());
 
 export const deleteReply = async (id: string) =>
   await axios.delete(endpoints.reply.delete(id), createHeaders());
+
+export const updateReply = async (id: string, data: any) =>
+  await axios.patch(endpoints.reply.update(id), data, createHeaders());
 
 // ! ============ Progress ============ !
 export const courseProgress = async (courseId: string) => {

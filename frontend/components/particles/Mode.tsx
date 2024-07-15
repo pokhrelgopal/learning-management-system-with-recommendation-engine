@@ -13,7 +13,7 @@ const Mode = () => {
       loading={isLoading}
       variant={"default"}
       size={"sm"}
-      className="capitalize"
+      className="capitalize bg-white hover:bg-gray-50 text-black border border-gray-200"
       onClick={() => {
         router.push(`/${user?.role}`);
       }}
