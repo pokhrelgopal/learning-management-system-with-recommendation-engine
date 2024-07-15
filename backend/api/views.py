@@ -673,6 +673,10 @@ class AdminPanelViewSet(ModelViewSet):
         total_instructors = User.objects.filter(role="instructor").count()
         total_students = User.objects.filter(role="student").count()
         total_courses = Course.objects.count()
+        """
+        the total number of enrollments in a course while excluding enrollments 
+        where the user is both an instructor and enrolled in their own course.
+        """
         total_enrollments = Enrollment.objects.exclude(
             Q(user__role="instructor") & Q(course__instructor=F("user"))
         ).count()
