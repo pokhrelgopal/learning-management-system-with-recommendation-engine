@@ -29,7 +29,7 @@ const SelectedSection = ({ section }: Props) => {
   const queryClient = useQueryClient();
   const [message, setMessage] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
-  const [showDiscussion, setShowDiscussion] = React.useState(false);
+  const [showDiscussion, setShowDiscussion] = React.useState(true);
 
   if (isLoading) return <Spinner />;
 

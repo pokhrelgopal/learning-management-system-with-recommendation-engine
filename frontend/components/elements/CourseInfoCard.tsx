@@ -13,12 +13,15 @@ import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
 import { addToCart } from "@/app/server";
 import EnrollNowComponent from "./EnrollNowComponent";
+import useEnrollment from "@/hooks/useEnrollment";
+import Spinner from "./Spinner";
 
 interface Props {
   course: any;
 }
 
 const CourseInfoCard = ({ course }: Props) => {
+  const { enrolled, isLoading } = useEnrollment(course.id);
   const { user } = useUser();
   const queryClient = useQueryClient();
   const handleAddToCart = async (id: any) => {
@@ -45,6 +48,9 @@ const CourseInfoCard = ({ course }: Props) => {
       showToast("error", "Failed to add to cart.");
     }
   };
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <div className="bg-gray-50 rounded-xl p-4">
@@ -66,13 +72,13 @@ const CourseInfoCard = ({ course }: Props) => {
           </ul>
         </div>
         <div className="mt-4 space-y-2">
-          <Button
+          {!enrolled&&<Button
             onClick={() => handleAddToCart(course.id)}
             className="text-lg w-full flex items-center gap-3"
           >
             <ShoppingCart className="w-5 h-5 inline-block" />
             <span>Add to Cart</span>
-          </Button>
+          </Button>}
           <EnrollNowComponent course={course} courseId={course.id} />
         </div>
       </div>
