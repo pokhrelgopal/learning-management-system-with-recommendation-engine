@@ -1,7 +1,7 @@
 "use client";
 import { mediaUrl } from "@/app/endpoints";
 import useEnrollment from "@/hooks/useEnrollment";
-import { ArrowRightCircle, PlayCircle, ShieldAlert } from "lucide-react";
+import { ArrowRightCircle, ShieldAlert } from "lucide-react";
 import React from "react";
 import EnrollWarning from "./EnrollWarning";
 import SelectedSection from "./SelectedSection";
@@ -12,6 +12,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Spinner from "./Spinner";
+import CourseSectionCard from "./CourseSectionCard";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 type Props = {
   course: any;
@@ -21,10 +24,10 @@ const ProfileCourseContainer = ({ course }: Props) => {
   const [selectedSection, setSelectedSection] = React.useState(
     course.sections[0]
   );
+  const router = useRouter();
 
   const { user, isLoading: userLoading } = useUser();
   const { enrolled, isLoading: enrollmentLoading } = useEnrollment(course.id);
-  const activeClass = "bg-indigo-700 text-white";
   if (!enrolled) return <EnrollWarning slug={course.slug} />;
   const handleVideoEnd = async () => {
     try {
@@ -41,6 +44,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
         if (nextSection) {
           setSelectedSection(nextSection);
           showToast("success", "Progress saved !");
+          router.refresh();
         } else {
           showToast("success", "Progress saved !");
           return;
@@ -91,18 +95,14 @@ const ProfileCourseContainer = ({ course }: Props) => {
           {course.sections
             .sort((a: any, b: any) => a.order - b.order)
             .map((section: any) => {
-              const isActive = selectedSection.id === section.id;
+              const isActive = selectedSection?.id === section.id;
               return (
-                <p
+                <CourseSectionCard
                   key={section.id}
-                  className={`cursor-pointer pl-2 py-5 bg-gray-50 rounded-lg w-full ${
-                    isActive ? activeClass : ""
-                  } flex items-center gap-2`}
+                  section={section}
+                  isActive={isActive}
                   onClick={() => setSelectedSection(section)}
-                >
-                  <PlayCircle size={29} className="ml-1" />
-                  <span>{section.title}</span>
-                </p>
+                />
               );
             })}
         </aside>

@@ -1650,7 +1650,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter()\n    serializer_class = CourseSerializer",
+        "peekOfCode": "class CategoryViewSet(ModelViewSet):\n    queryset = Category.objects.all()\n    serializer_class = CategorySerializer\n    def get_serializer(self, *args, **kwargs):\n        if self.action == \"list\":\n            return CategoryListSerializer(*args, **kwargs)\n        return super().get_serializer(*args, **kwargs)\nclass CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").all()\n    serializer_class = CourseSerializer",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1659,7 +1659,7 @@
         "kind": 6,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").filter()\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    def create(self, request, *args, **kwargs):\n        try:\n            if not request.user.role == \"instructor\":",
+        "peekOfCode": "class CourseViewSet(ModelViewSet):\n    queryset = Course.objects.select_related(\"instructor\", \"category\").all()\n    serializer_class = CourseSerializer\n    filter_backends = [filters.SearchFilter]\n    search_fields = [\"title\"]\n    permission_classes = [CustomPermission]\n    lookup_field = \"slug\"\n    def create(self, request, *args, **kwargs):\n        try:\n            if not request.user.role == \"instructor\":",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -1902,7 +1902,7 @@
         "kind": 5,
         "importPath": "backend.core.settings",
         "description": "backend.core.settings",
-        "peekOfCode": "SPECTACULAR_SETTINGS = {\n    \"TITLE\": \"My API\",\n    \"DESCRIPTION\": \"This is my API description\",\n    \"VERSION\": \"1.0.0\",\n    \"SERVE_INCLUDE_SCHEMA\": False,\n}\nCORS_ALLOWED_ORIGINS = [\n    \"http://localhost:3000\",\n    \"http://127.0.0.1:3000\",\n]",
+        "peekOfCode": "SPECTACULAR_SETTINGS = {\n    \"TITLE\": \"API for E-Learning Platform\",\n    \"DESCRIPTION\": \"This is the API for an E-Learning Platform\",\n    \"VERSION\": \"1.0.0\",\n    \"SERVE_INCLUDE_SCHEMA\": False,\n}\nCORS_ALLOWED_ORIGINS = [\n    \"http://localhost:3000\",\n    \"http://127.0.0.1:3000\",\n]",
         "detail": "backend.core.settings",
         "documentation": {}
     },
@@ -2190,7 +2190,7 @@
         "kind": 2,
         "importPath": "backend.utils.generate",
         "description": "backend.utils.generate",
-        "peekOfCode": "def certificate(student_name, instructor_name, course_name):\n    # Get the base directory of the current file\n    base_dir = os.path.dirname(os.path.abspath(__file__))\n    # Define the correct paths for the certificate template and fonts\n    certificate_path = os.path.join(base_dir, \"certificate.png\")\n    font1_path = os.path.join(base_dir, \"fonts\", \"norwester.otf\")\n    font2_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    font3_path = os.path.join(base_dir, \"fonts\", \"Signature.otf\")\n    font4_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    # Open the certificate template image",
+        "peekOfCode": "def certificate(student_name, instructor_name, course_name):\n    base_dir = os.path.dirname(os.path.abspath(__file__))\n    certificate_path = os.path.join(base_dir, \"certificate.png\")\n    font1_path = os.path.join(base_dir, \"fonts\", \"norwester.otf\")\n    font2_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    font3_path = os.path.join(base_dir, \"fonts\", \"Signature.otf\")\n    font4_path = os.path.join(base_dir, \"fonts\", \"garamond.ttf\")\n    img = Image.open(certificate_path)\n    draw = ImageDraw.Draw(img)\n    font1 = ImageFont.truetype(font1_path, 110)",
         "detail": "backend.utils.generate",
         "documentation": {}
     },

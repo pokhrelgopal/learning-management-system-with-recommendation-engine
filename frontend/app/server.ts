@@ -169,6 +169,14 @@ export const courseProgress = async (courseId: string) => {
   return res.data;
 };
 
+export const isSectionCompleted = async (sectionId: string) => {
+  const res = await axios.get(
+    endpoints.progress.isSectionCompleted(sectionId),
+    createHeaders()
+  );
+  return res.data;
+};
+
 export const createProgress = async (data: any) =>
   await axios.post(endpoints.progress.progress, data, createHeaders());
 

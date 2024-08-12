@@ -40,7 +40,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class CourseViewSet(ModelViewSet):
-    queryset = Course.objects.select_related("instructor", "category").filter()
+    queryset = Course.objects.select_related("instructor", "category").all()
     serializer_class = CourseSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ["title"]
@@ -124,6 +124,10 @@ class CourseViewSet(ModelViewSet):
                 "income": total_earning["total_earning"] or 0.0,
             }
         )
+
+    @action(detail=False, methods=["GET"])
+    def get_student_count(self, request):
+        pass
 
 
 class SectionViewSet(ModelViewSet):
@@ -486,6 +490,20 @@ class ProgressViewSet(ModelViewSet):
             return Response(
                 status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
             )
+
+    @action(detail=False, methods=["GET"])
+    def is_completed(self, request):
+        section_id = request.query_params.get("section_id")
+        if not section_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "section_id required in query parameter."},
+            )
+        try:
+            progress = Progress.objects.get(section_id=section_id, user=request.user)
+            return Response({"is_completed": progress.completed})
+        except Progress.DoesNotExist:
+            return Response({"is_completed": False})
 
     @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def get_course_progress(self, request):

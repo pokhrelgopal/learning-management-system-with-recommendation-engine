@@ -5,16 +5,13 @@ from django.conf import settings
 
 
 def certificate(student_name, instructor_name, course_name):
-    # Get the base directory of the current file
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    # Define the correct paths for the certificate template and fonts
     certificate_path = os.path.join(base_dir, "certificate.png")
     font1_path = os.path.join(base_dir, "fonts", "norwester.otf")
     font2_path = os.path.join(base_dir, "fonts", "garamond.ttf")
     font3_path = os.path.join(base_dir, "fonts", "Signature.otf")
     font4_path = os.path.join(base_dir, "fonts", "garamond.ttf")
 
-    # Open the certificate template image
     img = Image.open(certificate_path)
     draw = ImageDraw.Draw(img)
 

@@ -146,7 +146,7 @@ class Payment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user.full_name} :: {self.course.title} :: {self.amount}"
+        return f"{self.user.full_name} :: {self.course.title} :: {self.amount} ::{self.status}"
 
     def can_change(self, user):
         return user == self.user or user.is_superuser

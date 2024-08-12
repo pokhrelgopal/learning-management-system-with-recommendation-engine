@@ -69,6 +69,8 @@ export const endpoints = {
     progress: url + "progress/",
     courseProgress: (courseId: string) =>
       url + `progress/get_course_progress/?course_id=${courseId}`,
+    isSectionCompleted: (sectionId: string) =>
+      url + `progress/is_completed/?section_id=${sectionId}`,
   },
   certificate: {
     certificate: url + "certificates/",
