@@ -2,10 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { mediaUrl } from "@/app/endpoints";
+import { useQuery } from "@tanstack/react-query";
+import { getStudentCount } from "@/app/server";
+import SkeletonCourseLoader from "./SkeletonCourseLoader";
+import { Users } from "lucide-react";
 interface Props {
   course: any;
 }
 const TeacherCourseCard = ({ course }: Props) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["student-count", course.id],
+    queryFn: () => getStudentCount(course.id),
+  });
+
+  if (isLoading) return <SkeletonCourseLoader />;
   return (
     <div className="relative block rounded-lg border p-3 shadow-sm shadow-indigo-100">
       {!course.is_published && (
@@ -26,6 +36,15 @@ const TeacherCourseCard = ({ course }: Props) => {
         <dl>
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-gray-500">$ {course?.price}</p>
+            {data?.student_count > 0 && (
+              <p className="flex items-center gap-1 text-sm">
+                <Users size={15} />
+                <span>
+                  {data?.student_count}{" "}
+                  {data?.student_count === 1 ? "Student" : "Students"}
+                </span>
+              </p>
+            )}
           </div>
 
           <div>

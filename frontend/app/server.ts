@@ -58,8 +58,19 @@ export const createCourse = async (data: any) =>
 export const updateCourse = async (slug: string, data: any) =>
   await axios.patch(endpoints.courses.detail(slug), data, createHeaders());
 
+export const deleteCourse = async (slug: string) =>
+  await axios.delete(endpoints.courses.delete(slug), createHeaders());
+
 export const getAllCourses = async () => {
   const res = await axios.get(endpoints.courses.allCourses, createHeaders());
+  return res.data;
+};
+
+export const getStudentCount = async (courseId: string) => {
+  const res = await axios.get(
+    endpoints.courses.studentCount(courseId),
+    createHeaders()
+  );
   return res.data;
 };
 // ! ============ Sections============ !

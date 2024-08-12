@@ -3,7 +3,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { useQuery } from "@tanstack/react-query";
-import { updateCourse, getCategories } from "@/app/server";
+import { updateCourse, getCategories, deleteCourse } from "@/app/server";
 import Spinner from "./Spinner";
 import { Button } from "../ui/button";
 import showToast from "@/lib/toaster";
@@ -14,14 +14,18 @@ import {
   ImagePlusIcon,
   List,
   PenLine,
+  Trash2,
 } from "lucide-react";
 import SectionContainer from "./SectionContainer";
+import ConfirmationDialog from "./ConfirmationDialog";
+import { useRouter } from "next/navigation";
 
 type Props = {
   course: any;
 };
 
 const CourseUpdateForm = ({ course }: Props) => {
+  const  router = useRouter();
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ["categories"],
     queryFn: () => getCategories(),
@@ -126,7 +130,7 @@ const CourseUpdateForm = ({ course }: Props) => {
       if (error?.request?.status === 403) {
         showToast(
           "error",
-          "You cannot unpublish a course with students enrolled."
+          "You cannot un-publish a course with students enrolled."
         );
         return;
       }
@@ -136,18 +140,54 @@ const CourseUpdateForm = ({ course }: Props) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      setUpdating(true);
+      const res = await deleteCourse(course.slug);
+      if (res.status === 204) {
+        showToast("success", "Course deleted successfully.");
+        router.push("/instructor/courses");
+      }
+    } catch (error:any) {
+      if (error?.response?.data?.detail) {
+        showToast("error", "You cannot delete a course with students enrolled.");
+        return;
+      }
+      showToast("error", "Failed to delete course.");
+    } finally {
+      setUpdating(false);
+    }
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold mb-6">Course Details</h1>
-        <Button
-          loading={updating || isLoading}
-          onClick={handlePublishStatus}
-          className={`text-lg`}
-          variant={isPublished ? "destructive" : "default"}
-        >
-          {isPublished ? "UnPublish" : "Publish"}
-        </Button>
+        <div className="flex items-center gap-2">
+          <ConfirmationDialog
+            title="Are you sure?"
+            description="Are you sure you want to delete this course? This action cannot be undone."
+            onConfirm={handleDelete}
+            buttonContent={
+              <Button
+                variant={"destructive"}
+                loading={isLoading}
+                className="text-lg w-full flex items-center gap-3"
+              >
+                <Trash2 className="w-5 h-5 inline-block" />
+                Delete Course
+              </Button>
+            }
+          />
+          <Button
+            loading={updating || isLoading}
+            onClick={handlePublishStatus}
+            className={`text-lg`}
+            variant={isPublished ? "destructive" : "default"}
+          >
+            {isPublished ? "UnPublish" : "Publish"}
+          </Button>
+        </div>
       </div>
       <div className="mb-10">
         <form

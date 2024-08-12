@@ -14,11 +14,14 @@ export const endpoints = {
   courses: {
     list: url + "courses/",
     detail: (slug: string) => url + `courses/${slug}/`,
+    delete: (slug: string) => url + `courses/${slug}/`,
     teacherCourses: url + "courses/get_my_courses/",
     publishedCourses: url + "courses/get_published_courses/",
     getStats: url + "courses/get_stats/",
     published: url + "courses/get_published_courses/",
     allCourses: url + "courses/get_all_courses/",
+    studentCount: (courseId: string) =>
+      url + `courses/get_student_count?course_id=${courseId}`,
   },
   sections: {
     section: url + "sections/",

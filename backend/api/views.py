@@ -73,6 +73,17 @@ class CourseViewSet(ModelViewSet):
                     data={"detail": "Can't unpublish course with students enrolled."},
                 )
         return super().update(request, *args, **kwargs)
+    
+    def destroy(self, request, *args, **kwargs):
+        course = self.get_object()
+        if Enrollment.objects.filter(course=course).exclude(user=course.instructor).exists():
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"detail": "Can't delete course with students enrolled."},
+            )
+
+        return super().destroy(request, *args, **kwargs)
+    
 
     @action(detail=False, methods=["GET"])
     # ! This is a custom action that returns published courses
@@ -126,8 +137,24 @@ class CourseViewSet(ModelViewSet):
         )
 
     @action(detail=False, methods=["GET"])
+    # get student count for each course based on the course_id
     def get_student_count(self, request):
-        pass
+        course_id = request.query_params.get("course_id")
+        if not course_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "course_id required in query parameter."},
+            )
+        try:
+            course = Course.objects.get(id=course_id)
+            student_count = Enrollment.objects.filter(course=course).exclude(
+                user=course.instructor
+            ).count()
+            return Response({"student_count": student_count})
+        except Course.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
+            )
 
 
 class SectionViewSet(ModelViewSet):
