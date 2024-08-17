@@ -23,8 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
             "full_name",
             "role",
             "profile_image",
-            "enrollments",
-            "courses",
         ]
 
     def create(self, validated_data):

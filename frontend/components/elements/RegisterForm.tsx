@@ -50,6 +50,7 @@ const RegisterForm = () => {
         role,
       };
       const res = await register(data);
+      console.log(res)
       if (res.status === 201) {
         showToast("success", "Account created successfully.");
         setFullName("");
@@ -143,7 +144,7 @@ const RegisterForm = () => {
         size="lg"
         className="mt-5 w-full"
       >
-        Login
+        Register
       </Button>
       <p className="mt-2">
         Already have an account?

@@ -11,11 +11,13 @@ from django.db import IntegrityError
 from django.db.models import Sum, F, Q
 from django.db.models.functions import TruncMonth
 import calendar
+import math
 
 # ! Recommendation
 import pandas as pd  # type: ignore
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer  # type: ignore
+# from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from nltk.stem.porter import PorterStemmer  # type: ignore
+from nltk.corpus import stopwords  # type: ignore
 from sklearn.metrics.pairwise import cosine_similarity
 
 ps = PorterStemmer()
@@ -73,17 +75,20 @@ class CourseViewSet(ModelViewSet):
                     data={"detail": "Can't unpublish course with students enrolled."},
                 )
         return super().update(request, *args, **kwargs)
-    
+
     def destroy(self, request, *args, **kwargs):
         course = self.get_object()
-        if Enrollment.objects.filter(course=course).exclude(user=course.instructor).exists():
+        if (
+            Enrollment.objects.filter(course=course)
+            .exclude(user=course.instructor)
+            .exists()
+        ):
             return Response(
                 status=status.HTTP_403_FORBIDDEN,
                 data={"detail": "Can't delete course with students enrolled."},
             )
 
         return super().destroy(request, *args, **kwargs)
-    
 
     @action(detail=False, methods=["GET"])
     # ! This is a custom action that returns published courses
@@ -147,9 +152,11 @@ class CourseViewSet(ModelViewSet):
             )
         try:
             course = Course.objects.get(id=course_id)
-            student_count = Enrollment.objects.filter(course=course).exclude(
-                user=course.instructor
-            ).count()
+            student_count = (
+                Enrollment.objects.filter(course=course)
+                .exclude(user=course.instructor)
+                .count()
+            )
             return Response({"student_count": student_count})
         except Course.DoesNotExist:
             return Response(
@@ -436,6 +443,24 @@ class ReviewViewSet(ModelViewSet):
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["GET"])
+    def get_review_detail(self, request):
+        course_id = request.query_params.get("course_id")
+        if not course_id:
+            return Response(
+                status=status.HTTP_406_NOT_ACCEPTABLE,
+                data={"detail": "course_id required in query parameter."},
+            )
+        try:
+            course = Course.objects.get(id=course_id)
+            review = Review.objects.filter(course=course)
+            # TODO : Calculate average rating and number of students enrolled in this course
+            pass
+        except Course.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
+            )
+
 
 class DiscussionViewSet(ModelViewSet):
     queryset = Discussion.objects.all().select_related("user", "section")
@@ -635,6 +660,76 @@ class CertificateViewSet(ModelViewSet):
             )
 
 
+# class RecommendedCourseViewSet(ModelViewSet):
+#     queryset = Course.objects.select_related("instructor", "category").filter(
+#         is_published=True
+#     )
+#     serializer_class = CourseListSerializer
+
+#     def get_queryset(self):
+#         current_slug = self.request.query_params.get("course", None)
+#         if not current_slug:
+#             return Course.objects.none()
+
+#         courses = Course.objects.filter(is_published=True).values_list(
+#             "id", "title", "description", "instructor", "category", "slug"
+#         )
+#         instructors = User.objects.values_list("id", "full_name")
+#         categories = Category.objects.values_list("id", "name")
+
+#         courses_df = pd.DataFrame(
+#             courses,
+#             columns=["id", "title", "description", "instructor", "category", "slug"],
+#         )
+#         instructors_df = pd.DataFrame(instructors, columns=["id", "full_name"])
+#         categories_df = pd.DataFrame(categories, columns=["id", "name"])
+
+#         instructors_df["full_name"] = instructors_df["full_name"].str.replace(" ", "")
+#         categories_df["name"] = categories_df["name"].str.replace(" ", "")
+
+#         courses_df["instructor"] = courses_df["instructor"].map(
+#             dict(instructors_df.values.tolist())
+#         )
+#         courses_df["category"] = courses_df["category"].map(
+#             dict(categories_df.values.tolist())
+#         )
+
+#         courses_df["tags"] = (
+#             courses_df["title"]
+#             + " "
+#             + courses_df["description"]
+#             + " "
+#             + courses_df["instructor"]
+#             + " "
+#             + courses_df["category"]
+#             + " "
+#         )
+#         courses_df["tags"] = courses_df["tags"].apply(stem)
+
+#         cv = TfidfVectorizer(max_features=5000, stop_words="english")
+#         vector = cv.fit_transform(courses_df["tags"]).toarray()
+#         similarity = cosine_similarity(vector)
+
+#         def recommend_courses(course_slug):
+#             if course_slug not in courses_df["slug"].values:
+#                 return []
+#             course_index = courses_df[courses_df["slug"] == course_slug].index[0]
+#             similar_courses = list(enumerate(similarity[course_index]))
+#             sorted_similar_courses = sorted(
+#                 similar_courses, key=lambda x: x[1], reverse=True
+#             )
+#             recommended_courses = []
+#             for i in sorted_similar_courses[1:5]:
+#                 recommended_courses.append(courses_df.iloc[i[0]]["title"])
+#             return recommended_courses
+
+#         recommended_courses = recommend_courses(current_slug)
+#         if not recommended_courses:
+#             return Course.objects.none()
+
+#         queryset = Course.objects.filter(title__in=recommended_courses)
+#         return queryset
+
 class RecommendedCourseViewSet(ModelViewSet):
     queryset = Course.objects.select_related("instructor", "category").filter(
         is_published=True
@@ -647,14 +742,14 @@ class RecommendedCourseViewSet(ModelViewSet):
             return Course.objects.none()
 
         courses = Course.objects.filter(is_published=True).values_list(
-            "id", "title", "description", "instructor", "category", "slug"
+            "id", "title", "instructor", "category", "slug"
         )
         instructors = User.objects.values_list("id", "full_name")
         categories = Category.objects.values_list("id", "name")
 
         courses_df = pd.DataFrame(
             courses,
-            columns=["id", "title", "description", "instructor", "category", "slug"],
+            columns=["id", "title", "instructor", "category", "slug"],
         )
         instructors_df = pd.DataFrame(instructors, columns=["id", "full_name"])
         categories_df = pd.DataFrame(categories, columns=["id", "name"])
@@ -669,27 +764,88 @@ class RecommendedCourseViewSet(ModelViewSet):
             dict(categories_df.values.tolist())
         )
 
+        stop_words = set(stopwords.words("english"))
+
+        def remove_stopwords(text):
+            return " ".join(
+                word for word in text.lower().split() if word not in stop_words
+            )
+
         courses_df["tags"] = (
             courses_df["title"]
-            + " "
-            + courses_df["description"]
             + " "
             + courses_df["instructor"]
             + " "
             + courses_df["category"]
-            + " "
-        )
-        courses_df["tags"] = courses_df["tags"].apply(stem)
+        ).apply(remove_stopwords)
 
-        cv = TfidfVectorizer(max_features=5000, stop_words="english")
-        vector = cv.fit_transform(courses_df["tags"]).toarray()
-        similarity = cosine_similarity(vector)
+        # Compute TF for each document
+        documents = [tags.split() for tags in courses_df["tags"]]
+        tf_matrix = []
+
+        for doc in documents:
+            doc_tf = {}
+            total_words = len(doc)
+            for word in set(doc):
+                doc_tf[word] = doc.count(word) / total_words
+            tf_matrix.append(doc_tf)
+
+        # Compute IDF
+        unique_words = set(word for doc in documents for word in doc)
+        num_documents = len(documents)
+        idf = {}
+
+        for word in unique_words:
+            doc_count = sum(1 for doc in documents if word in doc)
+            idf[word] = math.log(num_documents / doc_count)
+
+        # Compute TF-IDF matrix
+        tf_idf_matrix = []
+
+        for tf_doc in tf_matrix:
+            doc_tfidf = {}
+            for word, tf in tf_doc.items():
+                doc_tfidf[word] = tf * idf[word]
+            tf_idf_matrix.append(doc_tfidf)
+
+        # Organize TF-IDF values into a matrix form
+        all_words = sorted(list(unique_words))
+        matrix = []
+
+        for doc_tfidf in tf_idf_matrix:
+            row = []
+            for word in all_words:
+                if word in doc_tfidf:
+                    row.append(doc_tfidf[word])
+                else:
+                    row.append(0.0)
+            matrix.append(row)
+
+        # Calculate cosine similarity among all documents in the matrix
+        similarity_matrix = []
+
+        def dot_product(v1, v2):
+            return sum(x * y for x, y in zip(v1, v2))
+
+        def magnitude(v):
+            return math.sqrt(sum(x * x for x in v))
+
+        def cosine_similarity(v1, v2):
+            return dot_product(v1, v2) / (magnitude(v1) * magnitude(v2))
+
+        # Compute similarity matrix
+        for i in range(len(matrix)):
+            row = []
+            for j in range(len(matrix)):
+                similarity = cosine_similarity(matrix[i], matrix[j])
+                row.append(similarity)
+            similarity_matrix.append(row)
 
         def recommend_courses(course_slug):
             if course_slug not in courses_df["slug"].values:
                 return []
             course_index = courses_df[courses_df["slug"] == course_slug].index[0]
-            similar_courses = list(enumerate(similarity[course_index]))
+            similar_courses = list(enumerate(similarity_matrix[course_index]))
             sorted_similar_courses = sorted(
                 similar_courses, key=lambda x: x[1], reverse=True
             )
@@ -704,8 +860,6 @@ class RecommendedCourseViewSet(ModelViewSet):
 
         queryset = Course.objects.filter(title__in=recommended_courses)
         return queryset
-
-
 # ! Data for Admin Panel
 class AdminPanelViewSet(ModelViewSet):
     queryset = User.objects.all()

@@ -113,6 +113,7 @@ const ProfileCourseContainer = ({ course }: Props) => {
           width="320"
           height="240"
           controls
+          preload="auto"
           autoPlay
           onEnded={handleVideoEnd}
           className="w-full"

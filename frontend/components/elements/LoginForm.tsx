@@ -43,7 +43,13 @@ const LoginForm = () => {
         localStorage.setItem("role", role);
         localStorage.setItem("user_id", user_id.toString());
         showToast("success", "Login successful.");
-        router.push("/");
+
+        if (role === "admin") {
+          router.push("/admin");
+        }
+        else{
+          router.push("/");
+        }
       }
     } catch (error: any) {
       if (error?.response?.status === 401) {

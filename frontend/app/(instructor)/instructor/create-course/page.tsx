@@ -23,6 +23,11 @@ const CreateCourse = () => {
       showToast("error", "Title must be less than 70 characters.");
       return;
     }
+    // title cannot have only numbers
+    if (/^\d+$/.test(title.trim())) {
+      showToast("error", "Title must contain letters.");
+      return;
+    }
     try {
       if (!user) {
         return;

@@ -47,8 +47,18 @@ const CourseUpdateForm = ({ course }: Props) => {
       showToast("error", "Title is required.");
       return;
     }
+    // title cannot have only numbers
+    if (/^\d+$/.test(title.trim())) {
+      showToast("error", "Title must contain letters.");
+      return;
+    }
     if (description.length < 15) {
       showToast("error", "Description must be at least 15 characters.");
+      return;
+    }
+    // description cannot have only numbers
+    if (/^\d+$/.test(description.trim())) {
+      showToast("error", "Description must contain letters.");
       return;
     }
     if (title.length > 70) {

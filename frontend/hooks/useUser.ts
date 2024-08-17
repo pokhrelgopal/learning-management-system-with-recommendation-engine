@@ -13,7 +13,7 @@ const useUser = () => {
   const { data, isLoading, error } = useQuery<User>({
     queryKey: ["me"],
     queryFn: getMe,
-    retry: 0,
+    retry: 1,
   });
 
   return {
