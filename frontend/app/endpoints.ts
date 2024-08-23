@@ -55,6 +55,8 @@ export const endpoints = {
   },
   review: {
     review: url + "reviews/",
+    reviewDetail: (courseId: string) =>
+      url + `reviews/get_review_detail?course_id=${courseId}`,
   },
   discussion: {
     discussion: url + "discussions/",

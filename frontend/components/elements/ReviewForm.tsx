@@ -32,6 +32,9 @@ const ReviewForm = ({ courseId }: Props) => {
       return showToast("error", "Review must be at least 10 characters long.");
     if (review.length > 200)
       return showToast("error", "Review must be at most 200 characters long.");
+    //review cant have just numbers
+    if (/^\d+$/.test(review))
+      return showToast("error", "Review cannot be only numbers.");
     try {
       setLoading(true);
       const payload = {

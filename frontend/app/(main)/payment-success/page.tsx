@@ -6,8 +6,9 @@ import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import Spinner from "@/components/elements/Spinner";
-import { completePayment, createPayment } from "@/app/server";
+import { completePayment } from "@/app/server";
 import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+
 const PaymentSuccess = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -32,12 +33,11 @@ const PaymentSuccess = () => {
     ) {
       return;
     }
-    async function pay() {
+    
+    const pay = async () => {
       try {
         setPaying(true);
-        const data = {
-          pidx: pidx,
-        };
+        const data = { pidx: pidx };
         await completePayment(data);
         queryClient.invalidateQueries("cart" as InvalidateQueryFilters);
       } catch (error) {
@@ -45,75 +45,50 @@ const PaymentSuccess = () => {
       } finally {
         setPaying(false);
       }
-    }
+    };
+
     pay();
-  }, [
-    error,
-    purchase_order_id,
-    transaction_id,
-    user,
-    router,
-    status,
-    pidx,
-    amount,
-    queryClient,
-  ]);
+  }, [user, error, status, purchase_order_id, transaction_id, pidx, amount, queryClient]);
+
   if (isLoading) return <Spinner />;
-  if (status === "User canceled")
+  if (status === "User canceled") {
     return (
-      <div>
-        <div className="bg-gray-100 ">
-          <div className="bg-white p-6  md:mx-auto">
-            <X className="text-red-600 w-16 h-16 mx-auto my-6" />
-            <div className="text-center">
-              <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">
-                Payment Cancelled!
-              </h3>
-              <p className="text-gray-600 my-2">
-                It seems you have cancelled the payment.
-              </p>
-              <div className="py-10 text-center">
-                <Link href="/my-courses">
-                  <Button loading={paying} size={"lg"}>
-                    Go to course
-                    <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  return (
-    <div>
-      <div className="bg-gray-100 ">
-        <div className="bg-white p-6  md:mx-auto">
-          <svg
-            viewBox="0 0 24 24"
-            className="text-green-600 w-16 h-16 mx-auto my-6"
-          >
-            <path
-              fill="currentColor"
-              d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
-            ></path>
-          </svg>
+      <div className="bg-gray-100">
+        <div className="bg-white p-6 md:mx-auto">
+          <X className="text-red-600 w-16 h-16 mx-auto my-6" />
           <div className="text-center">
-            <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">
-              Payment Done!
-            </h3>
-            <p className="text-gray-600 my-2">
-              Thank you for completing your secure online payment.
-            </p>
-            <p> Have a great day! </p>
+            <h3 className="md:text-2xl text-base text-gray-900 font-semibold">Payment Cancelled!</h3>
+            <p className="text-gray-600 my-2">It seems you have cancelled the payment.</p>
             <div className="py-10 text-center">
               <Link href="/my-courses">
-                <Button loading={paying} size={"lg"}>
+                <Button loading={paying} size="lg">
                   Go to course
                   <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="bg-gray-100">
+      <div className="bg-white p-6 md:mx-auto">
+        <svg viewBox="0 0 24 24" className="text-green-600 w-16 h-16 mx-auto my-6">
+          <path fill="currentColor" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z" />
+        </svg>
+        <div className="text-center">
+          <h3 className="md:text-2xl text-base text-gray-900 font-semibold">Payment Done!</h3>
+          <p className="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
+          <p>Have a great day!</p>
+          <div className="py-10 text-center">
+            <Link href="/my-courses">
+              <Button loading={paying} size="lg">
+                Go to course
+                <ArrowRightCircle className="w-5 h-5 inline-block ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

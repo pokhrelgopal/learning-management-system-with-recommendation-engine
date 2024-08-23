@@ -15,7 +15,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = React.useState("personal-details");
   const active = "bg-white text-indigo-600";
   return (
-    <div className="mt-5">
+    <div className="mt-5 min-h-[600px]">
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="bg-gray-100 min-w-80 p-2 lg:p-4 rounded-xl h-fit w-fit">
           <ul className="lg:space-y-3 flex lg:block">
@@ -117,15 +117,20 @@ const ChangePassword = () => {
 const PersonalDetails = () => {
   const [updating, setUpdating] = React.useState(false);
   const { user, isLoading } = useUser();
-  const [fullName, setFullName] = React.useState(user?.full_name || "");
-  const [email, setEmail] = React.useState(user?.email || "");
-  const [profile, setProfile] = React.useState(mediaUrl + user?.profile_image);
+  const [fullName, setFullName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [profile, setProfile] = React.useState("");
   const [profileFile, setProfileFile] = React.useState<File | null>(null);
 
   const queryClient = useQueryClient();
+
+  // Update state when user data changes
   React.useEffect(() => {
-    setFullName(user?.full_name || "");
-    setEmail(user?.email || "");
+    if (user) {
+      setFullName(user.full_name || "");
+      setEmail(user.email || "");
+      setProfile(user.profile_image ? mediaUrl + user.profile_image : "");
+    }
   }, [user]);
 
   const updateDetails = async () => {
@@ -134,10 +139,6 @@ const PersonalDetails = () => {
       return;
     }
 
-    if (!/^[a-zA-Z ]+$/.test(fullName)) {
-      showToast("error", "Full name should only have alphabets and spaces.");
-      return;
-    }
     if (!/^[a-zA-Z ]+$/.test(fullName)) {
       showToast("error", "Full name should only have alphabets and spaces.");
       return;
@@ -187,32 +188,35 @@ const PersonalDetails = () => {
     if (!fileInput) return;
     fileInput.click();
   };
+
   return (
     <div className="lg:w-1/2">
       <h2 className="text-2xl font-bold mb-6">Update Details</h2>
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="relative mb-6 flex justify-center">
-          <Image
-            src={profile}
-            alt="Profile Image"
-            width={500}
-            height={500}
-            className="rounded-full h-32 w-32 object-cover"
-          />
-          <span className="absolute bottom-0 right-48 cursor-pointer bg-green-500 rounded-full">
-            <ImageUp
-              onClick={handleImageClick}
-              size={24}
-              className="text-white p-1"
+        {profile && (
+          <div className="relative mb-6 flex justify-center">
+            <Image
+              src={profile}
+              alt="Profile Image"
+              width={500}
+              height={500}
+              className="rounded-full h-32 w-32 object-cover"
             />
-          </span>
-          <Input
-            id="fileInput"
-            type="file"
-            className="mt-3 hidden"
-            onChange={handleFileChange}
-          />
-        </div>
+            <span className="absolute bottom-0 right-48 cursor-pointer bg-green-500 rounded-full">
+              <ImageUp
+                onClick={handleImageClick}
+                size={24}
+                className="text-white p-1"
+              />
+            </span>
+            <Input
+              id="fileInput"
+              type="file"
+              className="mt-3 hidden"
+              onChange={handleFileChange}
+            />
+          </div>
+        )}
         <div className="mb-3">
           <Label className="text-lg" htmlFor="current-password">
             Full Name

@@ -8,13 +8,14 @@ from api.serializers import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import IntegrityError
-from django.db.models import Sum, F, Q
+from django.db.models import Sum, F, Q, Avg, Count
 from django.db.models.functions import TruncMonth
 import calendar
 import math
 
 # ! Recommendation
 import pandas as pd  # type: ignore
+
 # from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from nltk.stem.porter import PorterStemmer  # type: ignore
 from nltk.corpus import stopwords  # type: ignore
@@ -451,11 +452,22 @@ class ReviewViewSet(ModelViewSet):
                 status=status.HTTP_406_NOT_ACCEPTABLE,
                 data={"detail": "course_id required in query parameter."},
             )
+
         try:
             course = Course.objects.get(id=course_id)
-            review = Review.objects.filter(course=course)
-            # TODO : Calculate average rating and number of students enrolled in this course
-            pass
+            reviews = Review.objects.filter(course=course).exclude(user=course.instructor)
+            avg_rating = reviews.aggregate(Avg("rating"))["rating__avg"]
+            review_count = reviews.count()
+            enrollment_count = course.enrollments.exclude(user=course.instructor).count()
+
+            return Response(
+                data={
+                    "average_rating": avg_rating,
+                    "review_count": review_count,
+                    "enrollment_count": enrollment_count,
+                }
+            )
+
         except Course.DoesNotExist:
             return Response(
                 status=status.HTTP_404_NOT_FOUND, data={"detail": "Course not found."}
@@ -730,6 +742,7 @@ class CertificateViewSet(ModelViewSet):
 #         queryset = Course.objects.filter(title__in=recommended_courses)
 #         return queryset
 
+
 class RecommendedCourseViewSet(ModelViewSet):
     queryset = Course.objects.select_related("instructor", "category").filter(
         is_published=True
@@ -860,6 +873,8 @@ class RecommendedCourseViewSet(ModelViewSet):
 
         queryset = Course.objects.filter(title__in=recommended_courses)
         return queryset
+
+
 # ! Data for Admin Panel
 class AdminPanelViewSet(ModelViewSet):
     queryset = User.objects.all()

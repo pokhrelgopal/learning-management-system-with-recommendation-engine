@@ -42,6 +42,15 @@ const SelectedSection = ({ section }: Props) => {
 
     try {
       setSubmitting(true);
+      if (/^\d+$/.test(message)) {
+        return showToast("error", "Message cannot have only numbers.");
+      }
+      if (message.length > 300) {
+        return showToast(
+          "error",
+          "Message cannot be more than 300 characters."
+        );
+      }
       const payload = {
         message,
         section_id: section.id,

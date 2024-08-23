@@ -21,7 +21,7 @@ const EnrolledCourseComponent = () => {
   if (error) return <Error />;
 
   return (
-    <div>
+    <div className="min-h-[600px]">
       {data?.length === 0 && (
         <>
           <p className="text-lg">You are not enrolled in any courses yet.</p>

@@ -8,10 +8,14 @@ import {
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
+import {
+  useQueryClient,
+  InvalidateQueryFilters,
+  useQuery,
+} from "@tanstack/react-query";
 import useUser from "@/hooks/useUser";
 import showToast from "@/lib/toaster";
-import { addToCart } from "@/app/server";
+import { addToCart, getReviewDetail } from "@/app/server";
 import EnrollNowComponent from "./EnrollNowComponent";
 import useEnrollment from "@/hooks/useEnrollment";
 import Spinner from "./Spinner";
@@ -24,6 +28,13 @@ const CourseInfoCard = ({ course }: Props) => {
   const { enrolled, isLoading } = useEnrollment(course.id);
   const { user } = useUser();
   const queryClient = useQueryClient();
+
+  const { data: reviewDetail, isLoading: reviewLoading } = useQuery<any>({
+    queryKey: ["reviewDetail", course.id],
+    queryFn: () => getReviewDetail(course.id),
+    enabled: !!course.id,
+  });
+
   const handleAddToCart = async (id: any) => {
     if (!user) {
       showToast("error", "Please login to add to cart.");
@@ -48,9 +59,10 @@ const CourseInfoCard = ({ course }: Props) => {
       showToast("error", "Failed to add to cart.");
     }
   };
-  if (isLoading) {
+  if (isLoading || reviewLoading) {
     return <Spinner />;
   }
+
   return (
     <>
       <div className="bg-gray-50 rounded-xl p-4">
@@ -72,13 +84,15 @@ const CourseInfoCard = ({ course }: Props) => {
           </ul>
         </div>
         <div className="mt-4 space-y-2">
-          {!enrolled&&<Button
-            onClick={() => handleAddToCart(course.id)}
-            className="text-lg w-full flex items-center gap-3"
-          >
-            <ShoppingCart className="w-5 h-5 inline-block" />
-            <span>Add to Cart</span>
-          </Button>}
+          {!enrolled && (
+            <Button
+              onClick={() => handleAddToCart(course.id)}
+              className="text-lg w-full flex items-center gap-3"
+            >
+              <ShoppingCart className="w-5 h-5 inline-block" />
+              <span>Add to Cart</span>
+            </Button>
+          )}
           <EnrollNowComponent course={course} courseId={course.id} />
         </div>
       </div>
@@ -89,18 +103,24 @@ const CourseInfoCard = ({ course }: Props) => {
         <div className="w-full">
           <p className="text-gray-600 flex items-center justify-between space-y-2">
             <span>Rating</span>
-            <span>⭐⭐⭐⭐⭐</span>
+            <span>{reviewDetail?.average_rating?.toFixed(1)} ⭐</span>
           </p>
           <p className="text-gray-600 flex items-center justify-between space-y-2">
-            <span>2492 Students</span>
-            <span>880 Ratings</span>
+            <span>
+              {reviewDetail?.enrollment_count}
+              {reviewDetail?.enrollment_count > 1 ? " students" : " student"}
+            </span>
+            <span>
+              {reviewDetail?.review_count}
+              {reviewDetail?.review_count > 1 ? " reviews" : " review"}
+            </span>
           </p>
         </div>
       </div>
       <div className="bg-gray-50 rounded-xl p-4 mt-3">
         <p className="flex justify-between items-center w-full">
           <span className="text-lg font-bold">Publisher</span>
-          <span className="text-gray-500 cursor-pointer">View profile</span>
+          {/* <span className="text-gray-500 cursor-pointer">View profile</span> */}
         </p>
         <div className="mt-5 flex items-center gap-4">
           <Image

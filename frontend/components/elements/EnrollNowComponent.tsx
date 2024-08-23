@@ -16,12 +16,13 @@ type Props = {
 };
 
 const EnrollNowComponent = ({ courseId, course }: Props) => {
-  const { user, isLoading: userLoading } = useUser();
+  const { user } = useUser();
 
   const [paying, setPaying] = React.useState(false);
   const router = useRouter();
   const { enrolled, isLoading } = useEnrollment(courseId);
   const handleEnrollment = async () => {
+
     try {
       setPaying(true);
       const formData = {
@@ -31,9 +32,9 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
         purchase_order_id: courseId,
         purchase_order_name: course?.title,
       };
-      console.log(formData);
+      // console.log(formData);
       const response = await initiatePayment(formData);
-      console.log(response);
+      //console.log(response);
       const { payment_url, pidx } = response;
       if (!payment_url) {
         showToast("error", "Failed to initiate payment.");

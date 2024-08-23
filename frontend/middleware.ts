@@ -67,6 +67,10 @@ export function middleware(req: AuthenticatedRequest) {
     (req.nextUrl.pathname.includes("/profile") ||
       req.nextUrl.pathname.includes("/my-courses") ||
       req.nextUrl.pathname.includes("/profile/courses") ||
+      req.nextUrl.pathname.includes("/admin") ||
+      // req.nextUrl.pathname.includes("/certificate") ||
+      req.nextUrl.pathname.includes("/checkout") ||
+      req.nextUrl.pathname.includes("/payment-success") ||
       req.nextUrl.pathname.includes("/instructor") ||
       req.nextUrl.pathname.includes("/instructor/courses"))
   ) {

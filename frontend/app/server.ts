@@ -142,6 +142,12 @@ export const studentSpending = async (studentId: string) => {
 // ! ============ Rating ============ !
 export const createRating = async (data: any) =>
   await axios.post(endpoints.review.review, data, createHeaders());
+export const getReviewDetail = async (courseId: string) => {
+  const res = await axios.get(
+    endpoints.review.reviewDetail(courseId),
+  );
+  return res.data;
+};
 
 // ! ============ Discussion ============ !
 export const getSectionDiscussion = async (sectionId: string) => {
