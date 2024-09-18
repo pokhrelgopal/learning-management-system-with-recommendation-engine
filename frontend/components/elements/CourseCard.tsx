@@ -49,9 +49,9 @@ const CourseCard = ({ course }: Props) => {
   };
   return (
     <div className="relative block rounded-lg border p-2 shadow-sm shadow-indigo-100">
-      <p className="absolute -top-0.5 -left-0.5 bg-indigo-700 text-white px-3 py-1 rounded-r-full text-sm">
+      {/* <p className="absolute -top-0.5 -left-0.5 bg-indigo-700 text-white px-3 py-1 rounded-r-full text-sm">
         {course?.category?.name}
-      </p>
+      </p> */}
       <Link href={`/courses/${course?.slug}`}>
         <Image
           src={
@@ -68,8 +68,14 @@ const CourseCard = ({ course }: Props) => {
       </Link>
       <div className="mt-2">
         <dl className="">
+          <div className="flex justify-end">
+            <span className="text-sm bg-green-100 px-3 py-1 rounded-full my-2 flex items-center gap-2">
+              <span className="rounded-full h-2 w-2 bg-indigo-400"></span>
+              <span> {course?.category?.name}</span>{" "}
+            </span>
+          </div>
           <div className="flex items-center justify-between mb-2">
-            <p className="font-semibold text-gray-500">Rs {course?.price}</p>
+            <p className="text-sm text-gray-700">Rs {course?.price}</p>
             <p>
               <ShoppingCart
                 onClick={() => handleAddToCart(course.id)}
@@ -79,7 +85,7 @@ const CourseCard = ({ course }: Props) => {
           </div>
 
           <div>
-            <dd className="font-medium text-lg">
+            <dd className="font-medium text-lg mb-2">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -98,7 +104,7 @@ const CourseCard = ({ course }: Props) => {
               </TooltipProvider>
             </dd>
           </div>
-          <dd className=" text-gray-500 flex items-center gap-2">
+          <dd className=" text-gray-500 flex items-center gap-2 text-sm">
             <Edit3 className="w-4 h-4 inline-block" />
             <span>{course?.instructor?.full_name}</span>
           </dd>
