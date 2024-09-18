@@ -16,9 +16,7 @@ type UserData = {
   id: string;
   full_name: string;
   email: string;
-  profile_image: string;
-  date_added: string;
-  last_active: string;
+  is_verified: boolean;
 };
 
 export default function UserTable() {

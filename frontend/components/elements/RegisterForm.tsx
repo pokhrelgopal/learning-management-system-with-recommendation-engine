@@ -50,7 +50,7 @@ const RegisterForm = () => {
         role,
       };
       const res = await register(data);
-      console.log(res)
+      console.log(res);
       if (res.status === 201) {
         showToast("success", "Account created successfully.");
         setFullName("");
@@ -68,7 +68,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <form className="w-full lg:w-96" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="w-96 rounded-lg shadow bg-gray-50 py-3 px-5"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="my-5 flex justify-center">
         <Logo />
       </div>

@@ -7,6 +7,7 @@ export const endpoints = {
     login: url + "user/token/",
     me: url + "user/get_user/",
     update: (id: string) => url + `user/${id}/`,
+    approve: (id: string) => url + `user/approve_instructor/`,
   },
   categories: {
     list: url + "categories/",

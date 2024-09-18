@@ -27,6 +27,15 @@ export const getMe = async () => {
 export const updateUser = async (id: string, data: any) =>
   await axios.patch(endpoints.user.update(id), data, createHeaders());
 
+export const approveUser = async (id: string) =>
+  await axios.post(
+    endpoints.user.approve(id),
+    {
+      user_id: id,
+    },
+    createHeaders()
+  );
+
 // ! ============ Categories ============ !
 export const getCategories = async () => {
   const res = await axios.get(endpoints.categories.list);
@@ -143,9 +152,7 @@ export const studentSpending = async (studentId: string) => {
 export const createRating = async (data: any) =>
   await axios.post(endpoints.review.review, data, createHeaders());
 export const getReviewDetail = async (courseId: string) => {
-  const res = await axios.get(
-    endpoints.review.reviewDetail(courseId),
-  );
+  const res = await axios.get(endpoints.review.reviewDetail(courseId));
   return res.data;
 };
 

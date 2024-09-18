@@ -14,6 +14,7 @@ import Logo from "../particles/Logo";
 interface Decoded {
   role: string;
   user_id: number;
+  verified: boolean;
 }
 
 const LoginForm = () => {
@@ -31,14 +32,16 @@ const LoginForm = () => {
       const res = await login({ email, password });
       if (res.status === 200) {
         const access = res.data.access;
-        if (access) {
-          setCookie("access", access, {
-            expires: new Date(Date.now() + 86400000),
-            secure: true,
-            sameSite: "strict",
-          });
+        const { role, user_id, verified }: Decoded = jwtDecode(access);
+        if (role == "instructor" && !verified) {
+          showToast("error", "You are not verified at.");
+          return;
         }
-        const { role, user_id }: Decoded = jwtDecode(access);
+        setCookie("access", access, {
+          expires: new Date(Date.now() + 86400000),
+          secure: true,
+          sameSite: "strict",
+        });
         localStorage.setItem("token", access);
         localStorage.setItem("role", role);
         localStorage.setItem("user_id", user_id.toString());
@@ -46,8 +49,7 @@ const LoginForm = () => {
 
         if (role === "admin") {
           router.push("/admin");
-        }
-        else{
+        } else {
           router.push("/");
         }
       }
@@ -62,7 +64,10 @@ const LoginForm = () => {
     }
   };
   return (
-    <form className="w-96 rounded-lg" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="w-96 rounded-lg shadow bg-gray-50 p-5 "
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="my-5 flex justify-center">
         <Logo />
       </div>
