@@ -10,11 +10,11 @@ type Props = {
 };
 
 const CourseSectionCard = ({ section, isActive, onClick }: Props) => {
-  const activeClass = "bg-blue-200";
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ["section", section.id],
     queryFn: () => isSectionCompleted(section.id),
   });
+  const activeClass = "bg-indigo-600 text-white";
   if (isLoading)
     return (
       <div className="animate-pulse pl-2 py-5 bg-gray-100 rounded-lg w-full flex items-center gap-2">

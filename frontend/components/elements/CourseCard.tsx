@@ -7,6 +7,13 @@ import Link from "next/link";
 import React from "react";
 import { useQueryClient, InvalidateQueryFilters } from "@tanstack/react-query";
 import { mediaUrl } from "@/app/endpoints";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 interface Props {
   course: any;
 }
@@ -41,7 +48,10 @@ const CourseCard = ({ course }: Props) => {
     }
   };
   return (
-    <div className="block rounded-lg border p-4 shadow-sm shadow-indigo-100">
+    <div className="relative block rounded-lg border p-2 shadow-sm shadow-indigo-100">
+      <p className="absolute -top-0.5 -left-0.5 bg-indigo-700 text-white px-3 py-1 rounded-r-full text-sm">
+        {course?.category?.name}
+      </p>
       <Link href={`/courses/${course?.slug}`}>
         <Image
           src={
@@ -49,6 +59,7 @@ const CourseCard = ({ course }: Props) => {
               ? course?.thumbnail
               : mediaUrl + course?.thumbnail
           }
+          priority
           alt={course?.title}
           width={300}
           height={200}
@@ -56,9 +67,9 @@ const CourseCard = ({ course }: Props) => {
         />
       </Link>
       <div className="mt-2">
-        <dl>
+        <dl className="">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-500">$ {course?.price}</p>
+            <p className="font-semibold text-gray-500">Rs {course?.price}</p>
             <p>
               <ShoppingCart
                 onClick={() => handleAddToCart(course.id)}
@@ -68,22 +79,29 @@ const CourseCard = ({ course }: Props) => {
           </div>
 
           <div>
-            <dt className="sr-only">Title</dt>
-
-            <dd className="font-medium text-lg">{course?.title}</dd>
-          </div>
-        </dl>
-      </div>
-      <div className="mt-2">
-        <dl>
-          <div>
-            <dt className="sr-only">Instructor</dt>
-
-            <dd className="text-sm text-gray-500 flex items-center gap-2">
-              <Edit3 className="w-4 h-4 inline-block" />
-              <span>{course?.instructor?.full_name}</span>
+            <dd className="font-medium text-lg">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <p>
+                      {course?.title.length > 30
+                        ? course?.title.slice(0, 30) + "..."
+                        : course?.title}
+                    </p>
+                  </TooltipTrigger>
+                  {course?.title.length > 30 && (
+                    <TooltipContent>
+                      <p>{course?.title}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </dd>
           </div>
+          <dd className=" text-gray-500 flex items-center gap-2">
+            <Edit3 className="w-4 h-4 inline-block" />
+            <span>{course?.instructor?.full_name}</span>
+          </dd>
         </dl>
       </div>
     </div>

@@ -27,7 +27,7 @@ const items = [
 ];
 
 const MenuItems = () => {
-  const activeNavClass = "underline underline-offset-8";
+  const activeNavClass = "text-indigo-600";
   const currentPath = usePathname();
 
   return (

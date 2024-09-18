@@ -10,6 +10,7 @@ const Logo = () => {
         src="/logo.png"
         alt="Logo"
         width={400}
+        priority
         height={400}
       />
     </Link>

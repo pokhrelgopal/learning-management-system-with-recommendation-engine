@@ -3,7 +3,6 @@ import React from "react";
 import { getCourses } from "@/app/server";
 import CourseContainer from "@/components/elements/CourseContainer";
 import Error from "@/components/elements/Error";
-import Spinner from "@/components/elements/Spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
@@ -66,7 +65,7 @@ const Courses = () => {
             placeholder="Search Courses"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyPress={handleKeyPress} // Add this line
+            onKeyPress={handleKeyPress}
           />
           <Button onClick={handleSearch}>
             Search

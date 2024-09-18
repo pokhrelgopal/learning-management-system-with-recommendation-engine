@@ -42,6 +42,15 @@ const CourseUpdateForm = ({ course }: Props) => {
   const [isPublished, setIsPublished] = React.useState(course.is_published);
   const [updating, setUpdating] = React.useState(false);
 
+  React.useEffect(() => {
+    setTitle(course.title);
+    setDescription(course.description || "");
+    setCategory(course.category?.id || null);
+    setPrice(course.price);
+    setThumbnail(course.thumbnail);
+    setIsPublished(course.is_published);
+  }, [course]);
+
   const handleUpdate = async () => {
     if (title.trim() === "") {
       showToast("error", "Title is required.");
@@ -97,6 +106,15 @@ const CourseUpdateForm = ({ course }: Props) => {
       const res = await updateCourse(course.slug, payload);
       if (res.status === 200) {
         showToast("success", "Course updated successfully.");
+        
+        if (title !== course.title) {
+          const newURL = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-");
+          let finalURL = newURL.toLowerCase();
+          if (finalURL.charAt(finalURL.length - 1) === "-") {
+            finalURL = finalURL.slice(0, -1);
+          }
+          router.push(`/instructor/courses/${finalURL}`);
+        }
       }
     } catch (error) {
       showToast("error", "Failed to update course.");

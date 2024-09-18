@@ -15,7 +15,7 @@ const Instructor = () => {
     queryFn: () => getStats(),
   });
   if (isLoading) return <Spinner />;
-  const { courses, published_courses, students, income } = stats;
+  const { courses, students, income } = stats;
   return (
     <article className="mt-5">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
@@ -43,7 +43,7 @@ const Instructor = () => {
             <CircleDollarSign size={32} className="block" />
           </p>
           <div>
-            <p className="text-3xl font-bold mt-3">$ {income}</p>
+            <p className="text-3xl font-bold mt-3">Rs {income}</p>
             <p className="text-lg">Income</p>
           </div>
         </div>

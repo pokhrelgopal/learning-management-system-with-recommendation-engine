@@ -24,6 +24,10 @@ const EnrollNowComponent = ({ courseId, course }: Props) => {
   const handleEnrollment = async () => {
 
     try {
+      if (!user) {
+        router.push("/login");
+        return;
+      }
       setPaying(true);
       const formData = {
         return_url: `http://localhost:3000/payment-success`,

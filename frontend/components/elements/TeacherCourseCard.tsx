@@ -17,9 +17,9 @@ const TeacherCourseCard = ({ course }: Props) => {
 
   if (isLoading) return <SkeletonCourseLoader />;
   return (
-    <div className="relative block rounded-lg border p-3 shadow-sm shadow-indigo-100">
+    <div className="relative block rounded-lg border p-1.5 shadow-sm shadow-indigo-100">
       {!course.is_published && (
-        <p className="absolute -top-0.5 -left-0.5 bg-red-500 text-white px-4 py-1.5 rounded-r-full">
+        <p className="absolute top-1.5 left-1.5 bg-red-500 text-white text-sm px-4 py-1.5 rounded-lg">
           Unpublished
         </p>
       )}
@@ -35,9 +35,9 @@ const TeacherCourseCard = ({ course }: Props) => {
       <div className="mt-2">
         <dl>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-500">$ {course?.price}</p>
+            <p className="text-gray-700">Rs {course?.price}</p>
             {data?.student_count > 0 && (
-              <p className="flex items-center gap-1 text-sm">
+              <p className="flex items-center gap-1">
                 <Users size={15} />
                 <span>
                   {data?.student_count}{" "}

@@ -68,7 +68,7 @@ const CourseInfoCard = ({ course }: Props) => {
       <div className="bg-gray-50 rounded-xl p-4">
         <p className="mb-2">Full Course</p>
         <p className="space-x-5">
-          <span className="text-2xl font-bold">$ {course?.price}</span>
+          <span className="text-2xl font-bold">Rs. {course?.price}</span>
         </p>
         <div className="mt-4">
           <p className="text-lg">Course Includes :</p>

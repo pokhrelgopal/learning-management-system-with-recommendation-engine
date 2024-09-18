@@ -513,6 +513,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -2101,6 +2117,15 @@
         "description": "backend.users.migrations.0002_alter_user_options_remove_user_first_name_and_more",
         "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"users\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name=\"user\",\n            options={\"ordering\": [\"-created_at\"], \"verbose_name_plural\": \"Users\"},\n        ),\n        migrations.RemoveField(",
         "detail": "backend.users.migrations.0002_alter_user_options_remove_user_first_name_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.users.migrations.0003_user_is_verified",
+        "description": "backend.users.migrations.0003_user_is_verified",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"users\", \"0002_alter_user_options_remove_user_first_name_and_more\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"user\",\n            name=\"is_verified\",\n            field=models.BooleanField(default=False),\n        ),",
+        "detail": "backend.users.migrations.0003_user_is_verified",
         "documentation": {}
     },
     {

@@ -7,7 +7,7 @@ interface Props {
 }
 const AdminCourseCard = ({ course }: Props) => {
   return (
-    <div className="relative block rounded-lg border p-3 shadow-sm shadow-indigo-100">
+    <div className="relative block rounded-lg border p-1.5 shadow-sm shadow-indigo-100">
       {!course.is_published && (
         <p className="absolute -top-0.5 -left-0.5 bg-red-500 text-white px-4 py-1.5 rounded-r-full">
           Unpublished
@@ -26,13 +26,13 @@ const AdminCourseCard = ({ course }: Props) => {
       <div className="mt-2">
         <dl>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-500">$ {course?.price}</p>
+            <p className="text-gray-700">Rs. {course?.price}</p>
           </div>
 
           <div>
             <dt className="sr-only">Title</dt>
 
-            <dd className="font-medium text-lg">{course?.title}</dd>
+            <dd className="font-medium">{course?.title}</dd>
           </div>
         </dl>
       </div>

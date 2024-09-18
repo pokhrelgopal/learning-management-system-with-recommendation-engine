@@ -177,7 +177,7 @@ class SectionViewSet(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         section = self.get_object()
-        if Enrollment.objects.filter(course=section.course).exists():
+        if Enrollment.objects.filter(course=section.course).exclude(user=section.course.instructor).exists():
             return Response(
                 status=status.HTTP_403_FORBIDDEN,
                 data={"detail": "Can't delete section with students enrolled."},
@@ -455,10 +455,14 @@ class ReviewViewSet(ModelViewSet):
 
         try:
             course = Course.objects.get(id=course_id)
-            reviews = Review.objects.filter(course=course).exclude(user=course.instructor)
+            reviews = Review.objects.filter(course=course).exclude(
+                user=course.instructor
+            )
             avg_rating = reviews.aggregate(Avg("rating"))["rating__avg"]
             review_count = reviews.count()
-            enrollment_count = course.enrollments.exclude(user=course.instructor).count()
+            enrollment_count = course.enrollments.exclude(
+                user=course.instructor
+            ).count()
 
             return Response(
                 data={

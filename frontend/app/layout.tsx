@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Alata } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-const alata = Alata({ subsets: ["latin"], weight: ["400"] });
+const alata = Jost({ subsets: ["latin"] });
 import Providers from "./providers";
 
 export const metadata: Metadata = {

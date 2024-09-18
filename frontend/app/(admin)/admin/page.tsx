@@ -52,7 +52,7 @@ const AdminDashboard = () => {
               <CircleDollarSign size={32} className="block" />
             </p>
             <div>
-              <p className="text-3xl font-bold mt-3">$ {total_payments}</p>
+              <p className="text-3xl font-bold mt-3">Rs {total_payments}</p>
               <p className="text-lg">Total Transactions</p>
             </div>
           </div>

@@ -1,69 +1,95 @@
-import { mediaUrl } from "@/app/endpoints";
-import { instructorEarnings, studentSpending } from "@/app/server";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { TableCell, TableRow } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronDown, Trash2, Pencil, Check, X } from "lucide-react";
+import { mediaUrl } from "@/app/endpoints";
+import { instructorEarnings } from "@/app/server";
 
-type Props = {
-  data: any;
+type UserData = {
+  id: string;
+  full_name: string;
+  email: string;
+  profile_image: string;
+  date_added: string;
+  last_active: string;
 };
 
-const UserCard = ({ data }: Props) => {
+type Props = {
+  data: UserData;
+};
+
+export default function UserRow({ data }: Props) {
   const { data: earnings, isLoading } = useQuery({
     queryKey: ["earnings", data.id],
     queryFn: () => instructorEarnings(data.id),
   });
 
-  const { data: spending, isLoading: loading } = useQuery({
-    queryKey: ["spending", data.id],
-    queryFn: () => studentSpending(data.id),
-  });
-
-  if (isLoading || loading) {
+  if (isLoading) {
     return (
-      <div className="flex items-center justify-between m-3">
-        <div className="flex items-center gap-2 animate-pulse">
-          <div className="rounded-full h-10 w-10 bg-gray-300"></div>
-          <div className="h-4 w-20 bg-gray-300 rounded"></div>
-        </div>
-        <div className="h-4 w-40 bg-gray-300 rounded my-1"></div>
-        <div className="h-4 w-20 bg-gray-300 rounded my-1"></div>
-        <div className="h-4 w-24 bg-gray-300 rounded my-1"></div>
-      </div>
+      <TableRow>
+        <TableCell colSpan={6}>
+          <div className="flex items-center justify-between animate-pulse">
+            <div className="flex items-center gap-2">
+              <div className="rounded-full h-10 w-10 bg-gray-300"></div>
+              <div className="h-4 w-20 bg-gray-300 rounded"></div>
+            </div>
+            <div className="h-4 w-40 bg-gray-300 rounded"></div>
+            <div className="h-4 w-20 bg-gray-300 rounded"></div>
+            <div className="h-4 w-24 bg-gray-300 rounded"></div>
+          </div>
+        </TableCell>
+      </TableRow>
     );
   }
-  console.log(spending);
+
   return (
     <TableRow>
-      <TableCell className="flex items-center gap-2">
-        <Image
-          src={mediaUrl + data.profile_image}
-          alt="avatar"
-          width={100}
-          height={100}
-          className="rounded-full h-10 w-10 object-cover"
-        />
-
-        <span>{data.full_name}</span>
+      <TableCell></TableCell>
+      <TableCell className="font-medium">
+        <p className="flex items-center">
+          <span className="flex flex-col">
+            <span className="text-lg">{data.full_name}</span>
+            <span className="text-sm text-muted-foreground">{data.email}</span>
+          </span>
+        </p>
       </TableCell>
-      <TableCell>{data.email}</TableCell>
-      <TableCell>
-        {data.role === "student"
-          ? data.enrollments?.length
-          : data.courses?.length}
-      </TableCell>
+      <TableCell>Verified</TableCell>
       <TableCell className="text-right">
-        {data.role === "student"
-          ? spending?.total_spending > 0
-            ? `$ ${spending?.total_spending}`
-            : "-"
-          : earnings?.total_earning > 0
-          ? `$ ${earnings?.total_earning}`
-          : "-"}
+        {earnings?.total_earning > 0 ? `$${earnings.total_earning}` : "-"}
+      </TableCell>
+      <TableCell>
+        <div className="flex justify-end space-x-2">
+          <Button variant="ghost" size="icon">
+            <Trash2 className="h-4 w-4" />
+          </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem className="flex items-center gap-2">
+                <Check className="h-4 w-4" />
+                <span>Approve</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <X className="h-4 w-4" />
+                <span>DisApprove</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </TableCell>
     </TableRow>
   );
-};
-
-export default UserCard;
+}

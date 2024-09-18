@@ -63,7 +63,7 @@ const CartComponent = () => {
               </SheetDescription>
             ) : (
               <div>
-                <ScrollArea className="h-[550px] w-full lg:max-w-[350px]">
+                <ScrollArea className="max-h-[550px] whitespace-nowrap w-full lg:max-w-[350px]">
                   <div className="space-y-4 p-2">
                     {cart?.map((item: any) => (
                       <div

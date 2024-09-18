@@ -29,10 +29,10 @@ const adminMenu = [
     title: "Courses",
     href: "/admin/courses",
   },
-  {
-    title: "Students",
-    href: "/admin/students",
-  },
+  // {
+  //   title: "Students",
+  //   href: "/admin/students",
+  // },
   {
     title: "Instructors",
     href: "/admin/instructors",

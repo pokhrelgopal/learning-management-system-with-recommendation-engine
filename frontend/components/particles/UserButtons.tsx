@@ -25,11 +25,11 @@ const UserButtons = ({ user }: Props) => {
           <CartComponent />
           <div className="hidden lg:block">
             <Popover>
-              <PopoverTrigger>
-                <p className="bg-black  px-2.5 py-1.5 rounded-md text-white flex items-center gap-2">
+              <PopoverTrigger asChild>
+                <Button className="flex items-center gap-2">
                   <span>{user.full_name}</span>
                   <ChevronDownCircle size={16} />
-                </p>
+                </Button>
               </PopoverTrigger>
               <PopoverContent className="z-[100000] w-40 space-y-3 p-1">
                 <p

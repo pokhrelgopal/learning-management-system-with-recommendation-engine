@@ -32,6 +32,14 @@ const AddSectionDialog = ({ queryClient, courseId }: Props) => {
       showToast("error", "Fill all fields.");
       return;
     }
+    if (/^\d+$/.test(title) || /^\s+$/.test(title)) {
+      showToast("error", "Title can not have only numbers or only spaces.");
+      return;
+    }
+    if (title.length > 150) {
+      showToast("error", "Title can not have more than 150 characters.");
+      return;
+    }
     try {
       setUpdating(true);
       const payload = new FormData();

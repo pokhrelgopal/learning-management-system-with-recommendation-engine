@@ -19,11 +19,18 @@ const CreateCourse = () => {
       showToast("error", "Title is required.");
       return;
     }
+    if (!/^[a-zA-Z0-9\s]*$/.test(title.trim())) {
+      showToast("error", "Title can only contain letters and numbers.");
+      return;
+    }
+    if (!/^[a-zA-Z0-9\s]*$/.test(title.trim())) {
+      showToast("error", "Title can only contain letters and numbers.");
+      return;
+    }
     if (title.trim().length > 70) {
       showToast("error", "Title must be less than 70 characters.");
       return;
     }
-    // title cannot have only numbers
     if (/^\d+$/.test(title.trim())) {
       showToast("error", "Title must contain letters.");
       return;

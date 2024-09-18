@@ -13,7 +13,6 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import Spinner from "./Spinner";
 import CourseSectionCard from "./CourseSectionCard";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 
 type Props = {

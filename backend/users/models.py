@@ -54,6 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         default="profile_images/user.jpg",
     )
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
