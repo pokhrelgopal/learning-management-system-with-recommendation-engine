@@ -114,9 +114,9 @@ export default function UserRow({ data }: Props) {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
-          <Button variant="ghost" size="icon">
+          {/* <Button variant="ghost" size="icon">
             <Trash2 className="h-4 w-4" />
-          </Button>
+          </Button> */}
         </div>
       </TableCell>
     </TableRow>

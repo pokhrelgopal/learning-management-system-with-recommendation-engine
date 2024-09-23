@@ -34,7 +34,7 @@ const LoginForm = () => {
         const access = res.data.access;
         const { role, user_id, verified }: Decoded = jwtDecode(access);
         if (role == "instructor" && !verified) {
-          showToast("error", "You are not verified at.");
+          showToast("error", "You are not verified yet.");
           return;
         }
         setCookie("access", access, {

@@ -57,6 +57,15 @@ export function middleware(req: AuthenticatedRequest) {
 
   if (
     isLoggedIn &&
+    role == "admin" &&
+    (req.nextUrl.pathname.endsWith("/courses") ||
+      req.nextUrl.pathname.endsWith("/my-courses"))
+  ) {
+    return NextResponse.rewrite(new URL("/admin", req.url));
+  }
+
+  if (
+    isLoggedIn &&
     (req.nextUrl.pathname.includes("/login") ||
       req.nextUrl.pathname.includes("/register"))
   ) {

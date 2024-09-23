@@ -27,12 +27,9 @@ const adminMenu = [
   },
   {
     title: "Courses",
-    href: "/admin/courses",
+    href: "/admin/admin-courses",
   },
-  // {
-  //   title: "Students",
-  //   href: "/admin/students",
-  // },
+
   {
     title: "Categories",
     href: "/admin/categories",

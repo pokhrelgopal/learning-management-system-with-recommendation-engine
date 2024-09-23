@@ -6,18 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import UserRow from "@/components/elements/UserCard";
 import { useQuery } from "@tanstack/react-query";
 import { getInstructors } from "@/app/server";
 import Spinner from "@/components/elements/Spinner";
-
-type UserData = {
-  id: string;
-  full_name: string;
-  email: string;
-  is_verified: boolean;
-};
 
 export default function UserTable() {
   const { data, isLoading } = useQuery<any>({
