@@ -11,6 +11,9 @@ export const endpoints = {
   },
   categories: {
     list: url + "categories/",
+    add: url + "categories/",
+    update: (id: string) => url + `categories/${id}/`,
+    delete: (id: string) => url + `categories/${id}/`,
   },
   courses: {
     list: url + "courses/",

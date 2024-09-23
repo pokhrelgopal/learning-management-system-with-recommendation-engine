@@ -34,6 +34,10 @@ const adminMenu = [
   //   href: "/admin/students",
   // },
   {
+    title: "Categories",
+    href: "/admin/categories",
+  },
+  {
     title: "Instructors",
     href: "/admin/instructors",
   },

@@ -41,6 +41,14 @@ export const getCategories = async () => {
   const res = await axios.get(endpoints.categories.list);
   return res.data;
 };
+export const createCategory = async (data: any) =>
+  await axios.post(endpoints.categories.add, data, createHeaders());
+
+export const updateCategory = async (id: string, data: any) =>
+  await axios.patch(endpoints.categories.update(id), data, createHeaders());
+
+export const deleteCategory = async (id: string) =>
+  await axios.delete(endpoints.categories.delete(id), createHeaders());
 // ! ============ Courses ============ !
 export const getCourses = async () => {
   const res = await axios.get(endpoints.courses.published);
