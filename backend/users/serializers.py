@@ -8,6 +8,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token["role"] = user.role
+        token["verified"] = user.is_verified
         return token
 
 
@@ -23,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
             "full_name",
             "role",
             "profile_image",
+            "is_verified",
         ]
 
     def create(self, validated_data):

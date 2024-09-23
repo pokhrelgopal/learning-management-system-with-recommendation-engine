@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
     def __str__(self):
-        return self.email
+        return f"{self.full_name} - {self.role}"
 
     def can_change(self, user):
         return user.is_superuser or user == self

@@ -6,9 +6,10 @@ from utils.generate import certificate
 
 
 class CategoryListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ["id", "name", "created_at", "updated_at", "courses"]
 
 
 class CourseSerializer(serializers.ModelSerializer):

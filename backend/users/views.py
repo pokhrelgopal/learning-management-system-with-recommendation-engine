@@ -69,6 +69,19 @@ class UserViewSet(ModelViewSet):
         students = User.objects.filter(role="student")
         return Response(UserSerializer(students, many=True).data)
 
+    # approve instructor, it takes user id as parameter and does user.is_verified = True
+    @action(detail=False, methods=["POST"], permission_classes=[IsAdminUser])
+    def approve_instructor(self, request):
+        user_id = request.data.get("user_id")
+        user = User.objects.filter(id=user_id).first()
+        if user:
+            user.is_verified = True
+            user.save()
+            return Response(UserSerializer(user).data)
+        return Response(
+            status=status.HTTP_404_NOT_FOUND, data={"detail": "User not found"}
+        )
+
     @action(detail=False, methods=["GET"], permission_classes=[IsAdminUser])
     def get_instructors(self, request):
         from api.models import Payment

@@ -36,6 +36,24 @@ class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            return Response(
+                status=status.HTTP_409_CONFLICT, data={"detail": "Duplicate Entry."}
+            )
+
+    def destroy(self, request, *args, **kwargs):
+        category = self.get_object()
+        if Course.objects.filter(category=category).exists():
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"detail": "Can't delete category with courses."},
+            )
+
+        return super().destroy(request, *args, **kwargs)
+
     def get_serializer(self, *args, **kwargs):
         if self.action == "list":
             return CategoryListSerializer(*args, **kwargs)
@@ -177,7 +195,11 @@ class SectionViewSet(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         section = self.get_object()
-        if Enrollment.objects.filter(course=section.course).exclude(user=section.course.instructor).exists():
+        if (
+            Enrollment.objects.filter(course=section.course)
+            .exclude(user=section.course.instructor)
+            .exists()
+        ):
             return Response(
                 status=status.HTTP_403_FORBIDDEN,
                 data={"detail": "Can't delete section with students enrolled."},
