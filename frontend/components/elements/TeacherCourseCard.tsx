@@ -17,9 +17,9 @@ const TeacherCourseCard = ({ course }: Props) => {
 
   if (isLoading) return <SkeletonCourseLoader />;
   return (
-    <div className="relative block rounded-lg border p-1.5 shadow-sm shadow-indigo-100">
+    <div className="relative block rounded-lg border p-2 shadow-sm shadow-indigo-100">
       {!course.is_published && (
-        <p className="absolute top-1.5 left-1.5 bg-red-500 text-white text-sm px-4 py-1.5 rounded-lg">
+        <p className="absolute top-2 left-2 bg-red-500 text-white text-sm px-4 py-1.5 rounded-lg">
           Unpublished
         </p>
       )}

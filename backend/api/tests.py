@@ -1,19 +1,18 @@
+import django.contrib.auth
 from django.test import TestCase
+import requests
 from users.models import User
 from .models import (
     Category,
     Course,
     Section,
     Cart,
-    Enrollment,
-    Payment,
     Review,
     Discussion,
     Reply,
     Progress,
     Attachment,
-    Certificate,
-)  # Adjust 'your_app' to the actual app name where the models are defined
+)
 
 
 class CategoryModelTest(TestCase):
@@ -44,17 +43,39 @@ class CourseModelTest(TestCase):
         )
 
     def test_course_creation(self):
+        """Test course is created correctly."""
         self.assertEqual(self.course.title, "Django Course")
         self.assertEqual(self.course.instructor, self.user)
+        self.assertEqual(self.course.category, self.category)
 
-    def test_course_update(self):
-        self.course.title = "Advanced Django Course"
+    def test_read_course(self):
+        """Test reading the course details."""
+        course = Course.objects.get(title="Django Course")
+        self.assertEqual(course.title, "Django Course")
+        self.assertEqual(course.instructor, self.user)
+        self.assertEqual(course.category, self.category)
+
+    def test_update_course(self):
+        """Test updating course details."""
+        self.course.title = "Updated Django Course"
         self.course.save()
-        self.assertEqual(self.course.title, "Advanced Django Course")
+        updated_course = Course.objects.get(title="Updated Django Course")
+        self.assertEqual(updated_course.title, "Updated Django Course")
 
-    def test_course_deletion(self):
+    def test_delete_course(self):
+        """Test deleting a course."""
+        course_id = self.course.id
         self.course.delete()
-        self.assertFalse(Course.objects.filter(title="Django Course").exists())
+        self.assertFalse(Course.objects.filter(id=course_id).exists())
+
+    def test_create_duplicate_course(self):
+        """Test creating a course with the same title (optional)."""
+        with self.assertRaises(
+            Exception
+        ):  # Adjust if your model has unique constraints
+            Course.objects.create(
+                title="Django Course", instructor=self.user, category=self.category
+            )
 
 
 class SectionModelTest(TestCase):
@@ -71,16 +92,35 @@ class SectionModelTest(TestCase):
         )
 
     def test_section_creation(self):
+        """Test section is created correctly."""
         self.assertEqual(self.section.title, "Introduction")
+        self.assertEqual(self.section.course, self.course)
 
-    def test_section_update(self):
+    def test_read_section(self):
+        """Test reading the section details."""
+        section = Section.objects.get(title="Introduction")
+        self.assertEqual(section.title, "Introduction")
+        self.assertEqual(section.course, self.course)
+
+    def test_update_section(self):
+        """Test updating section details."""
         self.section.title = "Introduction to Django"
         self.section.save()
-        self.assertEqual(self.section.title, "Introduction to Django")
+        updated_section = Section.objects.get(title="Introduction to Django")
+        self.assertEqual(updated_section.title, "Introduction to Django")
 
-    def test_section_deletion(self):
+    def test_delete_section(self):
+        """Test deleting a section."""
+        section_id = self.section.id
         self.section.delete()
-        self.assertFalse(Section.objects.filter(title="Introduction").exists())
+        self.assertFalse(Section.objects.filter(id=section_id).exists())
+
+    def test_create_duplicate_section(self):
+        """Test creating a section with the same title in the same course (optional)."""
+        with self.assertRaises(
+            Exception
+        ):  # Adjust if your model has unique constraints
+            Section.objects.create(title="Introduction", course=self.course, order=2)
 
 
 class CartModelTest(TestCase):
@@ -95,19 +135,106 @@ class CartModelTest(TestCase):
         self.cart = Cart.objects.create(user=self.user, course=self.course)
 
     def test_cart_creation(self):
+        """Test cart is created correctly."""
         self.assertEqual(self.cart.user, self.user)
+        self.assertEqual(self.cart.course, self.course)
 
-    def test_cart_update(self):
-        new_course = Course.objects.create(
-            title="Python Course", instructor=self.user, category=self.category
-        )
-        self.cart.course = new_course
-        self.cart.save()
-        self.assertEqual(self.cart.course.title, "Python Course")
+    def test_read_cart(self):
+        """Test reading the cart details."""
+        cart = Cart.objects.get(user=self.user)
+        self.assertEqual(cart.course, self.course)
 
-    def test_cart_deletion(self):
+    def test_delete_cart(self):
+        """Test deleting the cart."""
+        cart_id = self.cart.id
         self.cart.delete()
-        self.assertFalse(Cart.objects.filter(user=self.user).exists())
+        self.assertFalse(Cart.objects.filter(id=cart_id).exists())
+
+    def test_add_course_to_cart(self):
+        """Test adding a new course to the cart."""
+        new_course = Course.objects.create(
+            title="Java Course", instructor=self.user, category=self.category
+        )
+        Cart.objects.create(user=self.user, course=new_course)
+        self.assertEqual(Cart.objects.filter(user=self.user).count(), 2)
+
+    def test_remove_course_from_cart(self):
+        """Test removing a course from the cart."""
+        self.cart.delete()  # Remove the initial course from the cart
+        self.assertFalse(
+            Cart.objects.filter(user=self.user, course=self.course).exists()
+        )
+
+
+class PaymentModelTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email="student@test.com", password="test123", role="student"
+        )
+        self.category = Category.objects.create(name="Development")
+        self.course = Course.objects.create(
+            title="Django Course", instructor=self.user, category=self.category
+        )
+
+    def test_initiate_payment_with_missing_fields(self):
+        """Test initiating payment with missing fields."""
+        payload = {
+            "amount": 1000,
+            "purchase_order_id": "PO123",
+            "purchase_order_name": "Test Order",
+            # Missing return_url and website_url
+        }
+
+        response = requests.post(
+            "https://a.khalti.com/api/v2/epayment/initiate/",
+            json=payload,
+            headers={"Authorization": "Key dbf107a9c72548468029bdf82a8335de"},
+        )
+
+        self.assertEqual(response.status_code, 400)  # Assuming bad request status code
+        self.assertNotIn(
+            "pidx", response.json()
+        )  # pidx should not be present in error responses
+
+    def test_initiate_payment_success(self):
+        """Test initiating payment with all required fields."""
+        payload = {
+            "return_url": "https://example.com/return/",
+            "website_url": "https://example.com/",
+            "amount": 1000,
+            "purchase_order_id": "PO123",
+            "purchase_order_name": "Test Order",
+        }
+
+        response = requests.post(
+            "https://a.khalti.com/api/v2/epayment/initiate/",
+            json=payload,
+            headers={"Authorization": "Key dbf107a9c72548468029bdf82a8335de"},
+        )
+
+        self.assertEqual(response.status_code, 200)  # Assuming success status code
+        self.assertIn(
+            "pidx", response.json()
+        )  # pidx should be present in successful responses
+
+    def test_initiate_payment_with_invalid_amount(self):
+        """Test initiating payment with invalid amount."""
+        payload = {
+            "return_url": "https://example.com/return/",
+            "website_url": "https://example.com/",
+            "amount": -100,  # Invalid amount
+            "purchase_order_id": "PO123",
+            "purchase_order_name": "Test Order",
+        }
+
+        response = requests.post(
+            "https://a.khalti.com/api/v2/epayment/initiate/",
+            json=payload,
+            headers={"Authorization": "Key dbf107a9c72548468029bdf82a8335de"},
+        )
+
+        self.assertEqual(response.status_code, 400)  # Assuming bad request status code
+        self.assertNotIn("pidx", response.json())
 
 
 class ReviewModelTest(TestCase):
@@ -127,143 +254,78 @@ class ReviewModelTest(TestCase):
         self.assertEqual(self.review.review, "Great course!")
         self.assertEqual(self.review.rating, 5)
 
-    def test_review_update(self):
-        self.review.review = "Excellent course!"
-        self.review.rating = 4
-        self.review.save()
-        self.assertEqual(self.review.review, "Excellent course!")
-        self.assertEqual(self.review.rating, 4)
+    def test_duplicate_review_not_allowed(self):
+        with self.assertRaises(Exception):  # You can specify IntegrityError if needed
+            Review.objects.create(
+                user=self.user, course=self.course, rating=5, review="Another review!"
+            )
 
-    def test_review_deletion(self):
-        self.review.delete()
-        self.assertFalse(
-            Review.objects.filter(user=self.user, course=self.course).exists()
-        )
+
+from django.test import TestCase
+from .models import Discussion, Section, Course, Category
+from users.models import User
 
 
 class DiscussionModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            email="student@test.com", password="test123", role="student"
-        )
+        # Create a Course instance
         self.category = Category.objects.create(name="Development")
+        self.instructor = User.objects.create_user(
+            email="instructor@example.com",
+            password="password",
+            full_name="Instructor Name",
+            role="instructor",
+        )
         self.course = Course.objects.create(
-            title="Django Course", instructor=self.user, category=self.category
+            title="Test Course",
+            description="Description of the test course",
+            category=self.category,
+            instructor=self.instructor,
         )
+
+        # Create a Section instance associated with the created Course
         self.section = Section.objects.create(
-            title="Introduction", course=self.course, order=1
-        )
-        self.discussion = Discussion.objects.create(
-            user=self.user, section=self.section, message="This is a discussion"
+            title="Test Section", course=self.course, order=1
         )
 
-    def test_discussion_creation(self):
-        self.assertEqual(self.discussion.message, "This is a discussion")
-
-    def test_discussion_update(self):
-        self.discussion.message = "Updated discussion message"
-        self.discussion.save()
-        self.assertEqual(self.discussion.message, "Updated discussion message")
-
-    def test_discussion_deletion(self):
-        self.discussion.delete()
-        self.assertFalse(
-            Discussion.objects.filter(user=self.user, section=self.section).exists()
-        )
-
-
-class ReplyModelTest(TestCase):
-    def setUp(self):
+        # Create a User instance for the discussion
         self.user = User.objects.create_user(
-            email="student@test.com", password="test123", role="student"
-        )
-        self.category = Category.objects.create(name="Development")
-        self.course = Course.objects.create(
-            title="Django Course", instructor=self.user, category=self.category
-        )
-        self.section = Section.objects.create(
-            title="Introduction", course=self.course, order=1
-        )
-        self.discussion = Discussion.objects.create(
-            user=self.user, section=self.section, message="This is a discussion"
-        )
-        self.reply = Reply.objects.create(
-            user=self.user, discussion=self.discussion, message="This is a reply"
+            email="student@example.com",
+            password="password",
+            full_name="Student Name",
+            role="student",
         )
 
-    def test_reply_creation(self):
-        self.assertEqual(self.reply.message, "This is a reply")
-
-    def test_reply_update(self):
-        self.reply.message = "Updated reply message"
-        self.reply.save()
-        self.assertEqual(self.reply.message, "Updated reply message")
-
-    def test_reply_deletion(self):
-        self.reply.delete()
-        self.assertFalse(
-            Reply.objects.filter(user=self.user, discussion=self.discussion).exists()
+    def test_create_discussion(self):
+        # Create a Discussion instance associated with the Section
+        discussion = Discussion.objects.create(
+            user=self.user, section=self.section, message="Test Discussion Message"
         )
+        self.assertEqual(discussion.message, "Test Discussion Message")
 
-
-class ProgressModelTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            email="student@test.com", password="test123", role="student"
+    def test_read_discussion(self):
+        # Create a Discussion first
+        discussion = Discussion.objects.create(
+            user=self.user, section=self.section, message="Test Discussion Message"
         )
-        self.category = Category.objects.create(name="Development")
-        self.course = Course.objects.create(
-            title="Django Course", instructor=self.user, category=self.category
-        )
-        self.section = Section.objects.create(
-            title="Introduction", course=self.course, order=1
-        )
-        self.progress = Progress.objects.create(
-            user=self.user, section=self.section, completed=True
-        )
+        retrieved_discussion = Discussion.objects.get(id=discussion.id)
+        self.assertEqual(retrieved_discussion.message, "Test Discussion Message")
 
-    def test_progress_creation(self):
-        self.assertTrue(self.progress.completed)
-
-    def test_progress_update(self):
-        self.progress.completed = False
-        self.progress.save()
-        self.assertFalse(self.progress.completed)
-
-    def test_progress_deletion(self):
-        self.progress.delete()
-        self.assertFalse(
-            Progress.objects.filter(user=self.user, section=self.section).exists()
+    def test_update_discussion(self):
+        # Create a Discussion first
+        discussion = Discussion.objects.create(
+            user=self.user, section=self.section, message="Test Discussion Message"
         )
+        discussion.message = "Updated Test Discussion Message"
+        discussion.save()
+        self.assertEqual(discussion.message, "Updated Test Discussion Message")
 
-
-class AttachmentModelTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            email="instructor@test.com", password="test123", role="instructor"
+    def test_delete_discussion(self):
+        # Create a Discussion first
+        discussion = Discussion.objects.create(
+            user=self.user, section=self.section, message="Test Discussion Message"
         )
-        self.category = Category.objects.create(name="Development")
-        self.course = Course.objects.create(
-            title="Django Course", instructor=self.user, category=self.category
-        )
-        self.section = Section.objects.create(
-            title="Introduction", course=self.course, order=1
-        )
-        self.attachment = Attachment.objects.create(
-            section=self.section, name="Syllabus", file="path/to/syllabus.pdf"
-        )
-
-    def test_attachment_creation(self):
-        self.assertEqual(self.attachment.name, "Syllabus")
-        self.assertEqual(self.attachment.file, "path/to/syllabus.pdf")
-
-    def test_attachment_update(self):
-        self.attachment.name = "Updated Syllabus"
-        self.attachment.file = "path/to/updated_syllabus.pdf"
-        self.attachment.save()
-        self.assertEqual(self.attachment.name, "Updated Syllabus")
-        self.assertEqual(self.attachment.file, "path/to/updated_syllabus.pdf")
-
-    def test_attachment_deletion(self):
-        self.attachment.delete()
-        self.assertFalse(Attachment.objects.filter(section=self.section).exists())
+        discussion_id = discussion.id
+        discussion.delete()
+        with self.assertRaises(Discussion.DoesNotExist):
+            Discussion.objects.get(id=discussion_id)

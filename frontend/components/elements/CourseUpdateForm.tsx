@@ -19,13 +19,14 @@ import {
 import SectionContainer from "./SectionContainer";
 import ConfirmationDialog from "./ConfirmationDialog";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   course: any;
 };
 
 const CourseUpdateForm = ({ course }: Props) => {
-  const  router = useRouter();
+  const router = useRouter();
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ["categories"],
     queryFn: () => getCategories(),
@@ -87,6 +88,11 @@ const CourseUpdateForm = ({ course }: Props) => {
       showToast("error", "Price must be greater than $10.");
       return;
     }
+    //price must be less than 1000
+    if (price > 1000) {
+      showToast("error", "Price must be less than $1000.");
+      return;
+    }
 
     try {
       setUpdating(true);
@@ -106,9 +112,11 @@ const CourseUpdateForm = ({ course }: Props) => {
       const res = await updateCourse(course.slug, payload);
       if (res.status === 200) {
         showToast("success", "Course updated successfully.");
-        
+
         if (title !== course.title) {
-          const newURL = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-");
+          const newURL = title
+            .replace(/[^a-zA-Z0-9 ]/g, "")
+            .replace(/\s+/g, "-");
           let finalURL = newURL.toLowerCase();
           if (finalURL.charAt(finalURL.length - 1) === "-") {
             finalURL = finalURL.slice(0, -1);
@@ -176,9 +184,12 @@ const CourseUpdateForm = ({ course }: Props) => {
         showToast("success", "Course deleted successfully.");
         router.push("/instructor/courses");
       }
-    } catch (error:any) {
+    } catch (error: any) {
       if (error?.response?.data?.detail) {
-        showToast("error", "You cannot delete a course with students enrolled.");
+        showToast(
+          "error",
+          "You cannot delete a course with students enrolled."
+        );
         return;
       }
       showToast("error", "Failed to delete course.");
@@ -192,6 +203,13 @@ const CourseUpdateForm = ({ course }: Props) => {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold mb-6">Course Details</h1>
         <div className="flex items-center gap-2">
+          {isPublished && (
+            <Link href={`/my-courses/${course.slug}`} passHref>
+              <Button className={`text-lg`} variant={"default"}>
+                View as Student
+              </Button>
+            </Link>
+          )}
           <ConfirmationDialog
             title="Are you sure?"
             description="Are you sure you want to delete this course? This action cannot be undone."

@@ -399,7 +399,10 @@ class EnrollmentViewSet(ModelViewSet):
     def my_enrollments(self, request):
         if request.user.is_anonymous:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        enrollments = Enrollment.objects.filter(user=request.user)
+        enrollments = Enrollment.objects.filter(user=request.user).exclude(
+            course__instructor=request.user
+        )
+
         serializer = EnrollmentSerializer(enrollments, many=True)
         return Response(serializer.data)
 
